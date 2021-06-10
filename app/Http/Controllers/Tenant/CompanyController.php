@@ -24,9 +24,9 @@ class CompanyController extends Controller
             'cnpj' => Str::random(10),
             'domain' => Str::random(5).'empresax.com',
             'db_database' => 'db_x'.Str::random(5),
-            'db_hostname' => 'mysql',
+            'db_hostname' => 'localhost',
             'db_username' => 'root',
-            'db_password' => 'root'
+            'db_password' => null
         ]);
 
         event(new CompanyCreated($company));
