@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Http\Livewire\Components\FarolFaturamento;
+
+
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Livewire\Component;
+
+class ChartFaturamento extends Component
+{
+    public $data;
+    protected $listeners = ['emitFiltros' => 'filtrar'];
+    public function mount()
+    {
+        $faturamento = DB::select("CALL dw_atual.faturamento_dia(".Carbon::today()->year.",".Carbon::today()->month.")");
+        $this->fatoraFaturamento($faturamento);
+    }
+
+    public function filtrar($filtros)
+    {
+        $faturamento = DB::select("CALL dw_atual.faturamento_dia(".$filtros['year'].",".$filtros['month'].")");
+        $this->fatoraFaturamento($faturamento);
+        $this->dispatchBrowserEvent('atualizaChart');
+    }
+
+    private function fatoraFaturamento($faturamento)
+    {
+        $this->data = ['day'=> [], 'value' => []];
+        $faturamento = (array)$faturamento;
+        foreach ($faturamento as $fat){
+            array_push($this->data['day'], $fat->Dia);
+            array_push($this->data['value'], intval($fat->Receita));
+        }
+    }
+
+    public function render()
+    {
+        return view('livewire.components.farol-faturamento.chart-faturamento');
+    }
+}

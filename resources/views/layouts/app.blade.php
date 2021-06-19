@@ -17,13 +17,16 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+
+
+        <!-- HighCharts -->
+        <script type="text/javascript" src="https://code.highcharts.com/stock/highstock.js"></script>
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')
-
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -37,7 +40,7 @@
             <!-- Page Content -->
             <main>
                 <div class="grid grid-cols-5">
-                    <div>
+                    <div class="bg-blue-500">
                         @livewire('sidebar')
                     </div>
                     <div class="col-span-4">
@@ -47,8 +50,11 @@
             </main>
         </div>
 
+        <livewire:scripts />
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+        @livewireChartsScripts
         @stack('modals')
+        @stack('scripts')
 
-        @livewireScripts
     </body>
 </html>
