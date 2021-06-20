@@ -24,7 +24,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SECRET_KEY }}
           ARGS: "--ignore-times --compress --verbose --exclude=.git --exclude=.github --exclude=node_modules --no-perms --no-owner --no-group --recursive"
-          REMOTE_HOST: ${{ secrets.FTP_HOST }}
+          REMOTE_HOST: 23.111.184.123
           REMOTE_HOST_PORT: 22022
           REMOTE_USER: bexserver
           TARGET_DIRECTORY: /var/www/mvpbex/
