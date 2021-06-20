@@ -18,7 +18,6 @@ jobs:
       - name: Pull Docker image
         run: |
           docker pull "node:lts-slim"
-          npm install yarn && yarn install && yarn run production
 
       - name: Laravel Rsync Deploy
         uses: SHSharkar/Laravel-Rsync-Deploy@master
