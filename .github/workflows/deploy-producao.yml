@@ -17,7 +17,7 @@ jobs:
 
       - name: Pull Docker image
         run: |
-          docker pull "node:lts-alpine"
+          docker pull "node:lts-slim"
           npm install && npm run production
 
       - name: Laravel Rsync Deploy
