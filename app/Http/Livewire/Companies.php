@@ -41,7 +41,7 @@ class Companies extends Component
         $company = Company::create([
             'name' => $this->name,
             'cnpj' => $this->cnpj,
-            'domain' => strtolower(str_replace(' ','',$this->name)).".mvpback.test",
+            'domain' => strtolower(str_replace(' ','',$this->name)).".mvpbex.local",
             'db_database' => $this->database,
             'db_hostname' => $this->hostname,
             'db_username' => $this->username,

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'domain_main' => 'mvpback.test'
+    'domain_main' => 'mvpbex.local'
 ];
