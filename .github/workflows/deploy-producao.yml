@@ -10,7 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: MilesChou/composer-action/install@master
+      - uses: MilesChou/composer-action/7.3/install@master
+        with:
+            args: install update
       - run: |
           cp .env.example .env
           php artisan key:generate --ansi
