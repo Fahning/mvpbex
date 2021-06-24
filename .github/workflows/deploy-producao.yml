@@ -12,9 +12,8 @@ jobs:
 
       - uses: MilesChou/composer-action/7.3/install@master
         with:
-            args: install php5-intl
+            args: sudo apt-get install php7.3-intl
       - run: |
-          composer update
           cp .env.example .env
           php artisan key:generate --ansi
 
