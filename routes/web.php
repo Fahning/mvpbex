@@ -25,4 +25,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/financeiro', function () 
 })->name('financeiro');
 
 
-Route::get('companies', Companies::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('companies', Companies::class)->name('companies');

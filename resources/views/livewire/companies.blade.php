@@ -49,6 +49,7 @@
 
         <div class="grid grid-cols-2 mr-10 border rounded-md bg-white shadow-md col-span-4">
                 @foreach($companies as $company)
+
                     <div wire:click="edit" class="h-20 m-2 bg-gray-100 border-gray-600 dark:bg-gray-200 bg-opacity-95 border-opacity-60 | p-2 border-solid rounded-md border | flex justify-around cursor-pointer | hover:bg-gray-400 dark:hover:bg-gray-600 hover:border-transparent | transition-colors duration-500">
                         <div class="flex flex-col justify-center">
                             <p class="text-gray-900 dark:text-gray-300 font-semibold">
