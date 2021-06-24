@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Components\AnaliseSegmento;
+namespace App\Http\Livewire\Components\AnaliseClientes;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class ChartSegmento extends Component
+class ChartClientes extends Component
 {
     public $series = [];
     public $categories = [];
@@ -15,10 +15,10 @@ class ChartSegmento extends Component
 
     public function mount()
     {
-        $teste = DB::select("CALL dw_atual.fat_persp(".Carbon::today()->year.",".Carbon::today()->month.", 'Segmento')");
+        $teste = DB::select("CALL dw_atual.fat_persp(".Carbon::today()->year.",".Carbon::today()->month.", 'Cliente')");
         foreach ($teste as $t)
         {
-            array_push($this->categories, $t->Segmento);
+            array_push($this->categories, $t->Cliente);
             array_push($this->series, intval($t->Receita));
         }
     }
@@ -27,17 +27,16 @@ class ChartSegmento extends Component
     {
         $this->categories = [];
         $this->series = [];
-        $teste = DB::select("CALL dw_atual.fat_persp(".$filtro['year'].",".$filtro['month'].", 'Segmento')");
+        $teste = DB::select("CALL dw_atual.fat_persp(".$filtro['year'].",".$filtro['month'].", 'Cliente')");
         foreach ($teste as $t)
         {
-            array_push($this->categories, $t->Segmento);
+            array_push($this->categories, $t->Cliente);
             array_push($this->series, intval($t->Receita));
         }
         $this->dispatchBrowserEvent('updateChart');
     }
-
     public function render()
     {
-        return view('livewire.components.analise-segmento.chart-segmento');
+        return view('livewire.components.analise-clientes.chart-clientes');
     }
 }

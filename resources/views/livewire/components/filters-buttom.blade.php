@@ -8,31 +8,32 @@
             <div class="px-2 pt-2 pb-4 bg-white rounded-md shadow-lg dark-mode:bg-gray-700">
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                     <form method="post">
-                        <label for="month">Mês: </label>
-                        <select class="mb-4 rounded-md w-full" name="month" id="month" wire:model.defer="month">
-                            <option selected value="">Mês Atual</option>
-                            <option value="1">Janeiro</option>
-                            <option value="2">Fevereiro</option>
-                            <option value="3">Março</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Maio</option>
-                            <option value="6">Junho</option>
-                            <option value="7">Julho</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Setembro</option>
-                            <option value="10">Outubro</option>
-                            <option value="11">Novembro</option>
-                            <option value="12">Dezembro</option>
-                        </select>
-
-                        <label for="month">Ano:</label>
-                        <select class="mb-4 rounded-md w-full" name="year" id="year" wire:model.defer="year">
-                                <option value="">Ano Atual</option>
-                            @foreach($years as $y)
-                                <option value="{{$y}}">{{$y}}</option>
-                            @endforeach
-                        </select>
-                        <buttom @click="open = !open" type="submit" wire:click.provent="filtrar" class="border-2 border-transparent bg-blue-500 p-2 w-full font-bold uppercase text-white rounded transition-all hover:border-blue-500 hover:bg-transparent hover:text-blue-500">Filtrar</buttom>
+                        <label >Mês:
+                            <select class="mb-4 rounded-md w-full"  wire:model.defer="month">
+                                <option selected value="">Mês Atual</option>
+                                <option value="1">Janeiro</option>
+                                <option value="2">Fevereiro</option>
+                                <option value="3">Março</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Maio</option>
+                                <option value="6">Junho</option>
+                                <option value="7">Julho</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                            </select>
+                        </label>
+                        <label >Ano:
+                            <select class="mb-4 rounded-md w-full"  wire:model.defer="year">
+                                    <option value="">Ano Atual</option>
+                                @foreach($years as $y)
+                                    <option value="{{$y}}">{{$y}}</option>
+                                @endforeach
+                            </select>
+                        </label>
+                        <buttom @click="open = !open" wire:click.provent="filtrar" class="border-2 border-transparent bg-blue-500 p-2 w-full font-bold uppercase text-white rounded transition-all hover:border-blue-500 hover:bg-transparent hover:text-blue-500">Filtrar</buttom>
                     </form>
                 </div>
             </div>

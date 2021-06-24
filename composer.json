@@ -5,7 +5,9 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
+        "ext-intl": "*",
+        "ext-json": "*",
         "asantibanez/livewire-charts": "^2.3",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -14,14 +16,13 @@
         "laravel/jetstream": "^2.3",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.0",
-        "ext-intl": "*",
-        "ext-json": "*"
+        "livewire/livewire": "^2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
+        "lucascudo/laravel-pt-br-localization": "^1.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3"

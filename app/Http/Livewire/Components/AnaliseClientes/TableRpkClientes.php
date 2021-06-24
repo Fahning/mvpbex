@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components;
+namespace App\Http\Livewire\Components\AnaliseClientes;
 
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -13,6 +13,6 @@ class TableRpkClientes extends Component
     public function render()
     {
         $this->tableRpkClientes = DB::select("call dw_atual.tabela_persp_filtros(".$this->year.", ".$this->month.", 'Cliente')");
-        return view('livewire.components.table-rpk-clientes');
+        return view('livewire.components.analise-clientes.table-rpk-clientes');
     }
 }

@@ -12,30 +12,33 @@
                 @endif
             </div>
         </x-slot>
-        <x-slot name="content" >
-             @if (count($insights) > 0)
+        <x-slot name="content">
+            @if (count($insights) > 0)
                 <!-- Account Management -->
                 <div class="px-4 py-2 text-xs text-gray-400 ">
                     {{'Lista de Insights'}}
                 </div>
-                @foreach($insights as $insight)
-                    <div class="border-t-2 border-white"></div>
-                    <div wire:click.prevent="abreModal({{$insight->id}})" class="grid grid-cols-1 bg-gray-100 p-2 cursor-pointer hover:bg-gray-200" style="width: 400px" title="{{$insight->descricao}}">
-                        <div class="flex justify-between">
-                            <div class="text-sm font-bold uppercase font text-gray-700">
-                                {{ $insight->tipo }}
+                <div class="overflow-auto max-h-80">
+                    @foreach($insights as $insight)
+                        <div class="border-t-2 border-white"></div>
+                        <div wire:click.prevent="abreModal({{$insight->id}})" class="grid grid-cols-1 bg-gray-100 p-2 cursor-pointer hover:bg-gray-200" style="width: 400px" title="{{$insight->descricao}}">
+                            <div class="flex justify-between">
+                                <div class="text-sm font-bold uppercase font text-gray-700">
+                                    {{ $insight->tipo }}
+                                </div>
+                                <div class="font-thin italic text-gray-700">
+                                    {{ \Carbon\Carbon::create($insight->sk_data)->format('d/m/Y') }}
+                                </div>
                             </div>
-                            <div class="font-thin italic text-gray-700">
-                                {{ \Carbon\Carbon::create($insight->sk_data)->format('d/m/Y') }}
+                            <div class="border-t-1 border-gray-500"></div>
+                            <div class="text-sm text-gray-700 text-sm truncate ">
+                                {{$insight->descricao}}
                             </div>
                         </div>
-                        <div class="border-t-1 border-gray-500"></div>
-                        <div class="text-sm text-gray-700 text-sm truncate ">
-                            {{$insight->descricao}}
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+                    @endforeach
+                @endif
+                </div>
         </x-slot>
     </x-jet-dropdown>
 </div>
+@livewire('components.menus.modal-insight')

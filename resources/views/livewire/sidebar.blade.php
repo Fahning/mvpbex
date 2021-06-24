@@ -1,8 +1,17 @@
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 <div class="md:flex flex-col md:flex-row md:min-h-screen w-full">
     <div @click.away="open = false" class="flex flex-col w-full md:w-full text-gray-700 bg-blue-500 dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0" x-data="{ open: false }">
-        <div class="h-1/4 bg-gray-300 text-center ">
-            Aqui vai o que?
+        <div class="flex flex-col justify-center items-center h-1/4 bg-gray-300 text-center ">
+            <div>
+                <div class="w-28 h-28 bg-blue-500 border-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </div>
+            </div>
+            <div>
+                {{Auth::user()->name}}
+            </div>
         </div>
         <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
             <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">Menu</a>

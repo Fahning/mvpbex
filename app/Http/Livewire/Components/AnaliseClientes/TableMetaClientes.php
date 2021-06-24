@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components;
+namespace App\Http\Livewire\Components\AnaliseClientes;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +14,6 @@ class TableMetaClientes extends Component
     public function render()
     {
         $this->table = DB::select("call dw_atual.tabela_segmento(".Carbon::today()->year.", ".Carbon::today()->month.")");
-        return view('livewire.components.table-meta-clientes');
+        return view('livewire.components.analise-clientes.table-meta-clientes');
     }
 }

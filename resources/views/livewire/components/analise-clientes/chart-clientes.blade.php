@@ -1,14 +1,14 @@
 <div>
     <div class="bg-white p-3 border shadow-md rounded-md z-0">
         <div class="text-center font-bold">Faturamento Por Clientes</div>
-        <div id="charSegmento" style="height:280px;"></div>
+        <div id="charClientes" style="height:280px;"></div>
     </div>
 </div>
 
 @push('scripts')
     <script>
         document.addEventListener('livewire:load', () => {
-            Highcharts.chart('charSegmento', {
+            Highcharts.chart('charClientes', {
                 chart: {
                     type: 'bar'
                 },
@@ -60,7 +60,7 @@
                 },
             })
             document.addEventListener('updateChart', () => {
-                Highcharts.chart('charSegmento', {
+                Highcharts.chart('charClientes', {
                     chart: {
                         type: 'bar'
                     },
@@ -71,7 +71,13 @@
                         categories: @this.categories,
                         title: {
                             text: null
-                        }
+                        },
+                        min: 0,
+                        max: 10,
+                        scrollbar: {
+                            enabled: true
+                        },
+                        tickLength: 0
                     },
                     yAxis: {
                         min: 0,

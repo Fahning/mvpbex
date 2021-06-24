@@ -3,16 +3,18 @@
 namespace App\Http\Middleware\Tenant;
 
 use App\Models\Company;
+use App\Models\User;
 use App\Tenant\ManagerTenant;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TenantMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  \Closure  $next
      * @return mixed
      */
@@ -24,6 +26,7 @@ class TenantMiddleware
             return $next($request);
 
         $company = $this->getCompany($request->getHost());
+
         if (!$company && $request->url() != route('404.tenant')) {
             return redirect()->route('404.tenant');
         }else if($request->url() != route('404.tenant') && !$manager->domainIsMain()){
@@ -33,7 +36,7 @@ class TenantMiddleware
         return $next($request);
     }
 
-    public function getCompany($host){
-        return Company::where('domain', $host)->first();
+    public function getCompany($domain){
+        return Company::where('domain', $domain)->first();
     }
 }

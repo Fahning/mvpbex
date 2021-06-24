@@ -20,7 +20,6 @@
                         text: null
                     }
                 },
-
                 xAxis: {
                     labels:{
                         enabled:false

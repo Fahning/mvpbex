@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components;
+namespace App\Http\Livewire\Components\AnaliseBases;
 
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -14,6 +14,6 @@ class TableRpkBases extends Component
     public function render()
     {
         $this->tableRpkBases = DB::select("call dw_atual.tabela_persp_filtros(".$this->year.", ".$this->month.", 'Base')");
-        return view('livewire.components.table-rpk-bases');
+        return view('livewire.components.analise-bases.table-rpk-bases');
     }
 }
