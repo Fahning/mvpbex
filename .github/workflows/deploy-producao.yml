@@ -10,9 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-#      - uses: MilesChou/composer-action/7.3/install@master
-      - name: Composer Action
-        uses: MilesChou/composer-action@v1.0.2
+      - name: Instaldo composer
+      - uses: MilesChou/composer-action/7.3/install@master
         with:
           args: install --prefer-dist --no-dev
       - run: |
@@ -23,7 +22,7 @@ jobs:
         run: |
           docker pull "node:lts-slim"
 
-      - name: Laravel Rsync Deploy
+      - name: Fazendo deploy da aplicação
         uses: SHSharkar/Laravel-Rsync-Deploy@master
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SECRET_KEY }}
