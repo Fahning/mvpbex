@@ -1,5 +1,5 @@
 <div class="ml-3 relative">
-    <x-jet-dropdown align="right" width="">
+    <x-jet-dropdown align="right">
         <x-slot name="trigger">
             <div class="rounded-full bg-white shadow-md p-1  {{count($insights) == 0 ? 'cursor-not-allowed' : 'cursor-pointer'}}" title="{{count($insights) == 0 ? 'Nenhum Insight no momento' : ''}}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 {{count($insights) == 0 ? 'text-gray-200' : 'text-gray-400'}}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -14,7 +14,7 @@
         </x-slot>
         <x-slot name="content">
             @if (count($insights) > 0)
-                <!-- Account Management -->
+                <!-- Lista de Insights -->
                 <div class="px-4 py-2 text-xs text-gray-400 ">
                     {{'Lista de Insights'}}
                 </div>
