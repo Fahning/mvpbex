@@ -12,7 +12,7 @@ jobs:
 
       - uses: MilesChou/composer-action/7.3/install@master
         with:
-            args: sudo apt-get install php7.3-intl
+            args: apt-get install php7.3-intl
       - run: |
           cp .env.example .env
           php artisan key:generate --ansi
