@@ -11,6 +11,9 @@ jobs:
       - uses: actions/checkout@v2
 
 #      - uses: MilesChou/composer-action/7.3/install@master
+      - name: Composer Action
+        uses: MilesChou/composer-action@v1.0.2
+
       - run: |
           cp .env.example .env
           php artisan key:generate --ansi
