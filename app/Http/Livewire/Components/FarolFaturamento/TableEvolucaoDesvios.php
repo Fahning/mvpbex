@@ -11,7 +11,7 @@ class TableEvolucaoDesvios extends Component
     public $menor;
     public function render()
     {
-        $table = DB::select("CALL dw_atual.tabela_faturamentos()");
+        $table = DB::select("CALL tabela_faturamentos()");
         foreach ($table as $t){
             if($this->maior < $t->Realizado){
                 $this->maior = $t->Realizado;

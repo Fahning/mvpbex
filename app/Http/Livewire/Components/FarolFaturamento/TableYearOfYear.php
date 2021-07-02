@@ -9,7 +9,7 @@ class TableYearOfYear extends Component
 {
     public function render()
     {
-        $table = DB::select("SELECT * FROM dw_atual.yoy_sal");
+        $table = DB::select("SELECT * FROM yoy_sal");
 
         return view('livewire.components.farol-faturamento.table-year-of-year', compact('table'));
     }

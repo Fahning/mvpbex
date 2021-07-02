@@ -33,7 +33,7 @@
                                 @endforeach
                             </select>
                         </label>
-                        <buttom @click="open = !open" wire:click.provent="filtrar" class="border-2 border-transparent bg-blue-500 p-2 w-full font-bold uppercase text-white rounded transition-all hover:border-blue-500 hover:bg-transparent hover:text-blue-500">Filtrar</buttom>
+                        <buttom @click="open = !open" wire:click.provent="filtrar" class="border-2 border-transparent bg-blue-500 p-2 w-full font-bold uppercase text-white rounded transition-all hover:border-blue-500 hover:bg-transparent hover:text-blue-500 cursor-pointer">Filtrar</buttom>
                     </form>
                 </div>
             </div>

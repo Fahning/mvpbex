@@ -62,7 +62,6 @@
 @push('scripts')
     <script>
         document.addEventListener('livewire:update', () => {
-        console.log(@this.insightModal.chart_um.sk_data);
             Highcharts.chart('charModal', {
                 title: {
                     text: null

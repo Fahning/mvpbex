@@ -13,13 +13,13 @@ class ChartFaturamento extends Component
     protected $listeners = ['emitFiltros' => 'filtrar'];
     public function mount()
     {
-        $faturamento = DB::select("CALL dw_atual.faturamento_dia(".Carbon::today()->year.",".Carbon::today()->month.")");
+        $faturamento = DB::select("CALL faturamento_dia(".Carbon::today()->year.",".Carbon::today()->month.")");
         $this->fatoraFaturamento($faturamento);
     }
 
     public function filtrar($filtros)
     {
-        $faturamento = DB::select("CALL dw_atual.faturamento_dia(".$filtros['year'].",".$filtros['month'].")");
+        $faturamento = DB::select("CALL faturamento_dia(".$filtros['year'].",".$filtros['month'].")");
         $this->fatoraFaturamento($faturamento);
         $this->dispatchBrowserEvent('atualizaChart');
     }

@@ -1,6 +1,6 @@
 <div>
     <div class="bg-white p-3 border shadow-md rounded-md z-0">
-        <div class="text-center font-bold">Faturamento Por Clientes</div>
+        <div class="text-center font-bold">Faturamento Por Clientes ({{monthToString($month)}} de {{$year}})</div>
         <div id="charClientes" style="height:280px;"></div>
     </div>
 </div>

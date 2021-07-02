@@ -14,9 +14,9 @@ class NewMeta extends Component
     public $newMeta;
 
     public function mount(){
-        $this->metaAtual = DB::select("select valor from dim_meta WHERE YEAR(referencia) = ".Carbon::today()->year." AND MONTH(referencia) = ".Carbon::today()->addMonth()->month);
+        $this->metaAtual = DB::select("select META from dim_meta WHERE ANO = ".Carbon::today()->year." AND MES = ".Carbon::today()->addMonth()->month);
         if(!empty($this->newMeta)){
-            $this->newMeta = $this->newMeta[0]->valor;
+            $this->newMeta = $this->newMeta[0]->META;
         }
     }
     public function newMeta(){

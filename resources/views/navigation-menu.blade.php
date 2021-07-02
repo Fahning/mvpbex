@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="flex flex-row items-center">
-                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <div class=" sm:flex sm:items-center sm:ml-6">
                     <!-- START Insights -->
                         @livewire('components.menus.button-insights')
                     <!-- END Insights -->

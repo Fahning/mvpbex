@@ -10,12 +10,16 @@ class ChartBases extends Component
 {
     public $series = [];
     public $categories = [];
+    public $year;
+    public $month;
 
     protected $listeners = ['emitFiltros' => 'update'];
 
     public function mount()
     {
-        $teste = DB::select("CALL dw_atual.fat_persp(".Carbon::today()->year.",".Carbon::today()->month.", 'Base')");
+        $this->year = Carbon::today()->year;
+        $this->month = Carbon::today()->month;
+        $teste = DB::select("CALL fat_persp(".$this->year.",".$this->month.", 'Base')");
 
         foreach ($teste as $t)
         {
@@ -28,7 +32,9 @@ class ChartBases extends Component
     {
         $this->categories = [];
         $this->series = [];
-        $teste = DB::select("CALL dw_atual.fat_persp(".$filtro['year'].",".$filtro['month'].", 'Base')");
+        $this->year = $filtro['year'];
+        $this->month = $filtro['month'];
+        $teste = DB::select("CALL fat_persp(".$this->year.",".$this->month.", 'Base')");
         foreach ($teste as $t)
         {
             array_push($this->categories, $t->Base);

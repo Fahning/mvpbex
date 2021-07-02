@@ -34,7 +34,7 @@
                                 @if($value > 0)
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            {{$value}}%
+                                            {{formatPorcent($value)}}%
                                         </div>
                                         <div class="h-5 w-5 bg-green-500 border rounded-full">
                                         </div>
@@ -42,7 +42,7 @@
                                 @else
                                     <div  class="grid grid-cols-2">
                                         <div>
-                                            {{$value}}%
+                                            {{formatPorcent($value)}}%
                                         </div>
                                         <div class="h-5 w-5 bg-red-500 border rounded-full">
                                         </div>

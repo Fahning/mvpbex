@@ -11,6 +11,7 @@ class TabelaDistribuicao extends Component
     public $tableDistribuicao;
     public $year;
     public $month;
+    public $maior = 0;
 
     protected $listeners = ['emitFiltros' => 'filtrar'];
 
@@ -18,14 +19,24 @@ class TabelaDistribuicao extends Component
     {
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
-        $this->tableDistribuicao = DB::select("call dw_atual.dist_cargas(".$this->year.", ".$this->month.",'Peso')");
+        $this->tableDistribuicao = DB::select("call dist_cargas(".$this->year.", ".$this->month.",'Peso')");
+        foreach ($this->tableDistribuicao as $t){
+            if($this->maior < $t->{"Qtde de CTRC"}){
+                $this->maior = $t->{"Qtde de CTRC"};
+            }
+        }
     }
 
     public function filtrar($filtro)
     {
         $this->year = $filtro['year'];
         $this->month = $filtro['month'];
-        $this->tableDistribuicao = DB::select("CALL dw_atual.dist_cargas(".$this->year.", ".$this->month.",'Peso')");
+        $this->tableDistribuicao = DB::select("CALL dist_cargas(".$this->year.", ".$this->month.",'Peso')");
+        foreach ($this->tableDistribuicao as $t){
+            if($this->maior < $t->{"Qtde de CTRC"}){
+                $this->maior = $t->{"Qtde de CTRC"};
+            }
+        }
     }
 
     public function render()

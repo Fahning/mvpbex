@@ -13,7 +13,7 @@ class Indicadores extends Component
     protected $listeners = ['emitFiltros' => 'filtrar'];
     public function mount()
     {
-        $indicators = DB::select("CALL dw_atual.faturamento_farol(2021,".Carbon::today()->month.")");
+        $indicators = DB::select("CALL faturamento_farol(2021,".Carbon::today()->month.")");
         if(!empty($indicators)){
             $this->indicators = (array)$indicators[0];
         }else{

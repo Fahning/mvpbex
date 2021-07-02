@@ -6,8 +6,13 @@ use App\Models\Company;
 use App\Models\User;
 use App\Tenant\ManagerTenant;
 use Closure;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
+use Laravel\Sanctum\Sanctum;
 
 class TenantMiddleware
 {
@@ -28,10 +33,9 @@ class TenantMiddleware
         $company = $this->getCompany($request->getHost());
         if (!$company && $request->url() != route('404.tenant')) {
             return redirect()->route('404.tenant');
-        }else if($request->url() != route('404.tenant') && !$manager->domainIsMain()){
+        }else if($request->url() != route('404.tenant')){
             $manager->setConnection($company);
         }
-
         return $next($request);
     }
 

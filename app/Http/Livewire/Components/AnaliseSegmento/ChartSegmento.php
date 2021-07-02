@@ -15,7 +15,7 @@ class ChartSegmento extends Component
 
     public function mount()
     {
-        $teste = DB::select("CALL dw_atual.fat_persp(".Carbon::today()->year.",".Carbon::today()->month.", 'Segmento')");
+        $teste = DB::select("CALL fat_persp(".Carbon::today()->year.",".Carbon::today()->month.", 'Segmento')");
         foreach ($teste as $t)
         {
             array_push($this->categories, $t->Segmento);
@@ -27,7 +27,7 @@ class ChartSegmento extends Component
     {
         $this->categories = [];
         $this->series = [];
-        $teste = DB::select("CALL dw_atual.fat_persp(".$filtro['year'].",".$filtro['month'].", 'Segmento')");
+        $teste = DB::select("CALL fat_persp(".$filtro['year'].",".$filtro['month'].", 'Segmento')");
         foreach ($teste as $t)
         {
             array_push($this->categories, $t->Segmento);

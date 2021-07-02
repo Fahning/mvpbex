@@ -16,14 +16,14 @@ class ChartRealizadoOrcado extends Component
     public function mount()
     {
         $this->year = Carbon::today()->year;
-        $faturamento = DB::select("call dw_atual.realizado_orcado(".$this->year.")");
+        $faturamento = DB::select("call realizado_orcado(".$this->year.")");
         $this->formatData($faturamento);
     }
 
     public function filtrar($filtros)
     {
         $this->year = $filtros['year'];
-        $faturamento = DB::select("call dw_atual.realizado_orcado(".$this->year.")");
+        $faturamento = DB::select("call realizado_orcado(".$this->year.")");
         $this->formatData($faturamento);
         $this->dispatchBrowserEvent('atualizaChart');
     }

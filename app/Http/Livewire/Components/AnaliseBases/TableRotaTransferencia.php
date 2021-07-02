@@ -2,28 +2,50 @@
 
 namespace App\Http\Livewire\Components\AnaliseBases;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class TableRotaTransferencia extends Component
 {
     public $tableRotaTransferencia;
-    public $year = 2021;
-    public $month = 6;
+    public $year;
+    public $month;
+    public $maiorReceita;
+    public $maiorCTRC;
 
     protected $listeners = ['emitFiltros' => 'filtrar'];
 
     public function mount()
     {
-        $this->tableRotaTransferencia = DB::select("call dw_atual.tabela_receita_rota(".$this->year.", ".$this->month.",'Transferencia')");
+        $this->year = Carbon::today()->year;
+        $this->month = Carbon::today()->month;
+        $this->tableRotaTransferencia = DB::select("call tabela_receita_rota(".$this->year.", ".$this->month.",'Transferencia')");
+        foreach ($this->tableRotaTransferencia as $t){
+            if($this->maiorCTRC < $t->{"Qtde CTRC"}){
+                $this->maiorCTRC = $t->{"Qtde CTRC"};
+            }
+
+            if($this->maiorReceita < $t->Receita){
+                $this->maiorReceita = $t->Receita;
+            }
+        }
     }
 
     public function filtrar($filtro)
     {
         $this->year = $filtro['year'];
         $this->month = $filtro['month'];
-        $this->tableRotaTransferencia = DB::select("CALL dw_atual.tabela_receita_rota(".$this->year.", ".$this->month.",'Transferencia')");
+        $this->tableRotaTransferencia = DB::select("CALL tabela_receita_rota(".$this->year.", ".$this->month.",'Transferencia')");
+        foreach ($this->tableRotaTransferencia as $t){
+            if($this->maiorCTRC < $t->{"Qtde CTRC"}){
+                $this->maiorCTRC = $t->{"Qtde CTRC"};
+            }
 
+            if($this->maiorReceita < $t->Receita){
+                $this->maiorReceita = $t->Receita;
+            }
+        }
     }
 
     public function render()

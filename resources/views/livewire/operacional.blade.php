@@ -4,5 +4,7 @@
             Operacional
         </p>
         <hr class="border-2 rounded-md">
+
+        @livewire('components.inventario.table-inventario')
     </div>
 </x-app-layout>

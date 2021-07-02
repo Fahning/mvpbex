@@ -5,7 +5,7 @@
             <div class="{{$indicator > 0 ? 'bg-white' : 'bg-red-300'}} p-3 border shadow-md shadow-red rounded-md">
                 <p class="font-bold">{{ $key }}</p>
                 @if ($key == 'Desvio')
-                    <p>{{ $indicator }}%</p>
+                    <p>{{ formatPorcent($indicator) }}%</p>
                 @else
                     <p>{{ formatReceita($indicator) }}</p>
                 @endif

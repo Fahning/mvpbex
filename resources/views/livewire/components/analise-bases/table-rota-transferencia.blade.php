@@ -1,5 +1,5 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
-    <div class="text-center font-bold mt-4">Analise de Rota de Transferência por Bases ({{$month}} de {{$year}})</div>
+    <div class="text-center font-bold mt-4">Analise de Rota de Transferência por Bases ({{monthToString($month)}} de {{$year}})</div>
     <div class="overflow-auto max-h-80">
         <table class="table-auto border-collapse w-full mt-4">
             <thead>
@@ -14,7 +14,29 @@
                 <tr class="hover:bg-gray-100 border-b border-gray-200 py-2">
                     @foreach($row as $key => $value)
                         @if($key == 'Receita')
-                            <td class="px-4 py-1">{{formatReceita($value)}}</th>
+                            <td class="px-4 py-0.5">
+                                <div class="relative">
+                                    <div class="overflow-hidden h-7 text-xs flex rounded bg-pink-200">
+                                        <div style="width:{{number_format(($value/$maiorReceita) * 100, 2, '.', '')}}%" class="shadow-none flex flex-col  whitespace-nowrap text-white justify-center bg-pink-500">
+                                            <div class="font-bold text-black px-3">
+                                                {{formatReceita($value)}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                        @elseif($key == "Qtde CTRC")
+                            <td class="px-4 py-0.5">
+                                <div class="relative">
+                                    <div class="overflow-hidden h-7 text-xs flex rounded bg-green-200">
+                                        <div style="width:{{number_format(($value/$maiorCTRC) * 100, 2, '.', '')}}%" class="shadow-none flex flex-col  whitespace-nowrap text-white justify-center bg-green-500">
+                                            <div class="font-bold text-black px-3">
+                                                {{$value}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
                         @else
                             <td class="px-4 py-1">{{$value}}</th>
                         @endif

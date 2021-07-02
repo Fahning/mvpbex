@@ -1,6 +1,6 @@
 <div>
     <div class="bg-white p-3 border shadow-md rounded-md z-0">
-        <div class="text-center font-bold">Faturamento Por Bases</div>
+        <div class="text-center font-bold mt-4">Faturamento Por Bases ({{monthToString($month)}} de {{$year}})</div>
         <div id="charBases" style="height:280px;"></div>
     </div>
 </div>

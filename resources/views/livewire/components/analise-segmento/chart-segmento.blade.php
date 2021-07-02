@@ -1,6 +1,6 @@
 <div>
     <div class="bg-white p-3 border shadow-md rounded-md z-0">
-        <div class="text-center font-bold">Faturamento Por Clientes</div>
+        <div class="text-center font-bold">Faturamento Por Segmento</div>
         <div id="charSegmento" style="height:280px;"></div>
     </div>
 </div>
@@ -21,7 +21,7 @@
                         text: null
                     },
                     min: 0,
-                    max: 10,
+                    max: 8,
                     scrollbar: {
                         enabled: true
                     },

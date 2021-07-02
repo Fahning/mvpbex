@@ -1,11 +1,11 @@
 <x-app-layout>
     @livewire('components.filters-buttom')
-
 {{--    <div class="p-2">--}}
 {{--        <p class="text-2xl font-bold">--}}
 {{--            FAROL DE FATURAMENTO--}}
 {{--        </p>--}}
 {{--        <hr class="border-2 rounded-md">--}}
+
 {{--    </div>--}}
 {{--    <div class="grid grid-cols-9 px-6 mb-6">--}}
 {{--        <div class="col-span-1">--}}
@@ -28,49 +28,49 @@
 {{--        </div>--}}
 {{--    </div>--}}
 
-{{--    <div class="p-2">--}}
-{{--        <p class="text-2xl font-bold">--}}
-{{--            ANÁLISE DO SEGMENTO--}}
-{{--        </p>--}}
-{{--        <hr class="border-2 rounded-md">--}}
-{{--    </div>--}}
-{{--    <div class="grid grid-cols-9 px-6 mb-6">--}}
-{{--        <div class="col-span-9 my-3">--}}
-{{--            @livewire('components.analise-segmento.chart-segmento')--}}
-{{--        </div>--}}
-
-{{--        <div class="col-span-9 my-3">--}}
-{{--            @livewire('components.analise-segmento.table-rpk-segmento')--}}
-{{--        </div>--}}
-
-{{--        <div class="col-span-9 my-3">--}}
-{{--            @livewire('components.analise-segmento.table-meta-segmento')--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
     <div class="p-2">
         <p class="text-2xl font-bold">
-            ANÁLISE DOS CLIENTES
+            ANÁLISE DO SEGMENTO
         </p>
         <hr class="border-2 rounded-md">
     </div>
     <div class="grid grid-cols-9 px-6 mb-6">
         <div class="col-span-9 my-3">
-            @livewire('components.analise-clientes.chart-clientes')
+            @livewire('components.analise-segmento.chart-segmento')
         </div>
 
         <div class="col-span-9 my-3">
-            @livewire('components.analise-clientes.table-rpk-clientes')
+            @livewire('components.analise-segmento.table-rpk-segmento')
         </div>
 
         <div class="col-span-9 my-3">
-            @livewire('components.analise-clientes.table-meta-clientes')
-        </div>
-
-        <div class="col-span-9 my-3">
-            @livewire('components.analise-clientes.tabela-distribuicao')
+            @livewire('components.analise-segmento.table-meta-segmento')
         </div>
     </div>
+
+{{--    <div class="p-2">--}}
+{{--        <p class="text-2xl font-bold">--}}
+{{--            ANÁLISE DOS CLIENTES--}}
+{{--        </p>--}}
+{{--        <hr class="border-2 rounded-md">--}}
+{{--    </div>--}}
+{{--    <div class="grid grid-cols-9 px-6 mb-6">--}}
+{{--        <div class="col-span-9 my-3">--}}
+{{--            @livewire('components.analise-clientes.chart-clientes')--}}
+{{--        </div>--}}
+
+{{--        <div class="col-span-9 my-3">--}}
+{{--            @livewire('components.analise-clientes.table-rpk-clientes')--}}
+{{--        </div>--}}
+
+{{--        <div class="col-span-9 my-3">--}}
+{{--            @livewire('components.analise-clientes.table-meta-clientes')--}}
+{{--        </div>--}}
+
+{{--        <div class="col-span-9 my-3">--}}
+{{--            @livewire('components.analise-clientes.tabela-distribuicao')--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
 {{--    <div class="p-2">--}}
 {{--        <p class="text-2xl font-bold">--}}
@@ -78,6 +78,7 @@
 {{--        </p>--}}
 {{--        <hr class="border-2 rounded-md">--}}
 {{--    </div>--}}
+
 {{--    <div class="grid grid-cols-9 px-6 mb-6">--}}
 {{--        <div class="col-span-9 my-3">--}}
 {{--            @livewire('components.analise-bases.chart-bases')--}}

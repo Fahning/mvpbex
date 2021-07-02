@@ -23,6 +23,14 @@ class ModalInsight extends Component
                 'chart_dois' => json_decode($ins->chart_dois),
                 'chart_tres' => json_decode($ins->chart_tres)
             ];
+        }else{
+            $this->insightModal = [
+                'descricao' => '',
+                'faturamento' => '',
+                'chart_um' => '',
+                'chart_dois' => '',
+                'chart_tres' => ''
+            ];
         }
         $this->dispatchBrowserEvent('abreModal', ['abreModal' => true]);
     }

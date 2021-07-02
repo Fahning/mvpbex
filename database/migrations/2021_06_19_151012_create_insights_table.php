@@ -15,7 +15,7 @@ class CreateInsightsTable extends Migration
     {
         Schema::create('insights', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('tenant_id')->default(0);
+            $table->integer('insight_id')->default(0);
             $table->float('faturamento');
             $table->string('tipo');
             $table->string('nome');
@@ -24,7 +24,12 @@ class CreateInsightsTable extends Migration
             $table->dateTime('sk_data');
             $table->integer('status')->default(0);
             $table->string('cnpj',14)->default(0);
+            $table->string('descricao');
             $table->timestamps();
+        });
+
+        Schema::table('insights', function (Blueprint $table){
+            $table->foreign('insight_id')->references('id')->on('insight_por_tipo')->onDelete('cascade');
         });
     }
 

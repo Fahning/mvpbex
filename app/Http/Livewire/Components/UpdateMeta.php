@@ -15,8 +15,8 @@ class UpdateMeta extends Component
     public $metaAtual;
 
     public function mount(){
-        $this->metaAtual = DB::select("select valor from dim_meta WHERE YEAR(referencia) = ".Carbon::today()->year." AND MONTH(referencia) = ".Carbon::today()->month);
-        $this->metaAtual = $this->metaAtual[0]->valor;
+        $this->metaAtual = DB::select("select META from dim_meta WHERE ANO = ".Carbon::today()->year." AND MES = ".Carbon::today()->month);
+        $this->metaAtual = $this->metaAtual[0]->META;
 
     }
     public function updateMeta(){

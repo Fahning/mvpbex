@@ -9,11 +9,38 @@ use Livewire\Component;
 class TableMetaClientes extends Component
 {
     public $table;
-    public $month = 6;
-    public $year = 2021;
+    public $month;
+    public $year;
+    public $maior = 0;
+
+    protected $listeners = ['emitFiltros' => 'filtrar'];
+
+    public function mount()
+    {
+        $this->year = Carbon::today()->year;
+        $this->month = Carbon::today()->month;
+        $this->table = DB::select("call tabelas_filtros(".$this->year.", ".$this->month.",'Cliente')");
+        foreach ($this->table as $t){
+            if($this->maior < $t->Realizado){
+                $this->maior = $t->Realizado;
+            }
+        }
+    }
+
+    public function filtrar($filtro)
+    {
+        $this->year = $filtro['year'];
+        $this->month = $filtro['month'];
+        $this->table = DB::select("call tabelas_filtros(".$this->year.", ".$this->month.",'Cliente')");
+        foreach ($this->table as $t){
+            if($this->maior < $t->Realizado){
+                $this->maior = $t->Realizado;
+            }
+        }
+    }
+
     public function render()
     {
-        $this->table = DB::select("call dw_atual.tabela_segmento(".Carbon::today()->year.", ".Carbon::today()->month.")");
         return view('livewire.components.analise-clientes.table-meta-clientes');
     }
 }
