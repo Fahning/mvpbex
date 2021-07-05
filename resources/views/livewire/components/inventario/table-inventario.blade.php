@@ -183,7 +183,7 @@
 					        <td class="border-grey-light border hover:bg-gray-100 p-2" style="font-size: 10px">{{FormatDateBr($item)}}</td>
                         @elseif($key == 'CTRC')
 					        <td class="border-grey-light bg-blue-300 border hover:bg-gray-100 p-2 w-24" style="font-size: 10px">{{$item}}</td>
-                        @elseif($key == 'Data-Inclusão')
+                        @elseif($key == 'Ult. Atualização')
 					        <td class="border-grey-light bg-yellow-200 border text-center hover:bg-gray-100 p-2 w-24" style="font-size: 10px">{{FormatDateBr($item)}}</td>
                         @elseif($key == 'Cidade-Base')
                             <td class="border-grey-light border text-center hover:bg-gray-100 p-2 w-24" style="font-size: 10px">{{$item}}</td>

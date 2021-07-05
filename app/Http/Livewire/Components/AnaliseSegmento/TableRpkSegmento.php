@@ -19,7 +19,8 @@ class TableRpkSegmento extends Component
     {
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
-        $this->table = DB::select("call tabela_segmento(".$this->year.", ".$this->month.")");
+        $this->table = DB::select("call bexsal_bdsal.tabela_persp_filtros(".$this->year.", ".$this->month.", 'Segmento')");
+
         foreach ($this->table as $t){
             if($this->maior < $t->{"Qtde CTRC"}){
                 $this->maior = $t->{"Qtde CTRC"};
@@ -31,7 +32,7 @@ class TableRpkSegmento extends Component
     {
         $this->year = $filtro['year'];
         $this->month = $filtro['month'];
-        $this->table = DB::select("call tabela_segmento(".$this->year.", ".$this->month.")");
+        $this->table = DB::select("call tabela_persp_filtros(".$this->year.", ".$this->month.", 'Segmento')");
     }
 
     public function render()

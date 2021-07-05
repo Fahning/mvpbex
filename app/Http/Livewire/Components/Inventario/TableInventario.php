@@ -34,7 +34,7 @@ class TableInventario extends Component
                     [
                         'tabela_ctes.ctrc as CTRC',
                         'tabela_ctes.data_emissao as Emissao',
-                        'tabela_ctes.data_inclu_ocor as Data-Inclusão',
+                        'tabela_ctes.data_inclu_ocor as Ult. Atualização',
                         'relacao_ocorrencias.descricao as Descrição',
                         'tabela_ctes.data_ocor as Ocorrência',
                         'tabela_ctes.und_ocor as Base',

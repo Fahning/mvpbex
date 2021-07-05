@@ -4,7 +4,7 @@
         <table class="table-auto border-collapse w-full mt-4">
             <thead>
             <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
-                @foreach($tableMetaBases[0] as $key => $value)
+                @foreach($tableMetaBases[0] ??= [] as $key => $value)
                     <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">{{$key}}</th>
                 @endforeach
             </tr>

@@ -3,16 +3,10 @@
 namespace App\Http\Middleware\Tenant;
 
 use App\Models\Company;
-use App\Models\User;
 use App\Tenant\ManagerTenant;
 use Closure;
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Schema;
-use Laravel\Sanctum\Sanctum;
+
 
 class TenantMiddleware
 {
