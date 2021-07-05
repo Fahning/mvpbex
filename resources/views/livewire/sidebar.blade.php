@@ -4,9 +4,7 @@
         <div class="flex flex-col justify-center items-center h-1/4 bg-gray-300 text-center ">
             <div>
                 <div class="w-28 h-28 bg-blue-500 border-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
+                    <img src="{{ $avatar }}" alt="{{ Auth::user()->name }}" class="h-full w-full object-cover">
                 </div>
             </div>
             <div>

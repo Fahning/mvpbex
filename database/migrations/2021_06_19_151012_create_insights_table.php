@@ -15,7 +15,7 @@ class CreateInsightsTable extends Migration
     {
         Schema::create('insights', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('insight_id')->default(0);
+            $table->unsignedBigInteger('insight_id')->default(0);
             $table->float('faturamento');
             $table->string('tipo');
             $table->string('nome');
