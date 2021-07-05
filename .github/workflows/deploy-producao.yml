@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Instaldo composer
       - uses: MilesChou/composer-action@master
         with:
@@ -17,11 +16,9 @@ jobs:
       - run: |
           cp .env.example .env
           php artisan key:generate --ansi
-
       - name: Pull Docker image
         run: |
           docker pull "node:lts-slim"
-
       - name: Fazendo deploy da aplicação
         uses: SHSharkar/Laravel-Rsync-Deploy@master
         env:
