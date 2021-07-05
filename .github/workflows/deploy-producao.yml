@@ -22,7 +22,7 @@ jobs:
         run: |
           docker pull "node:lts-slim"
       - name: Laravel Rsync Deploy
-        uses: SHSharkar/Laravel-Rsync-Deploy@master
+      - uses: SHSharkar/Laravel-Rsync-Deploy@master
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SECRET_KEY }}
           ARGS: "--ignore-times --compress --verbose --exclude=.git --exclude=.github --exclude=node_modules --no-perms --no-owner --no-group --recursive"
