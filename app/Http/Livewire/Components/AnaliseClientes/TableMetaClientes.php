@@ -19,8 +19,11 @@ class TableMetaClientes extends Component
     {
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
+        $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
         $this->table = DB::select("call tabelas_filtros(".$this->year.", ".$this->month.",'Cliente')");
         foreach ($this->table as $t){
+            $t->Meta = floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia);
+            unset($t->{'Fator Peso'});
             if($this->maior < $t->Realizado){
                 $this->maior = $t->Realizado;
             }
@@ -31,8 +34,11 @@ class TableMetaClientes extends Component
     {
         $this->year = $filtro['year'];
         $this->month = $filtro['month'];
+        $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
         $this->table = DB::select("call tabelas_filtros(".$this->year.", ".$this->month.",'Cliente')");
         foreach ($this->table as $t){
+            $t->Meta = floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia);
+            unset($t->{'Fator Peso'});
             if($this->maior < $t->Realizado){
                 $this->maior = $t->Realizado;
             }

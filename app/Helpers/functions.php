@@ -31,3 +31,9 @@ if (! function_exists('FormatDateBr')) {
         return Carbon::create($value)->format('d/m/Y');
     }
 }
+
+if (! function_exists('formatPeso')) {
+    function formatPeso($value){
+        return number_format($value,1,",", '.').' Kg';
+    }
+}

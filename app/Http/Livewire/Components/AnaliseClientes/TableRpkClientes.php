@@ -33,6 +33,11 @@ class TableRpkClientes extends Component
         $this->year = $filtro['year'];
         $this->month = $filtro['month'];
         $this->tableRpkClientes = DB::select("call tabela_persp_filtros(".$this->year.", ".$this->month.", 'Cliente')");
+        foreach ($this->tableRpkClientes as $t){
+            if($this->maior < $t->{"Qtde CTRC"}){
+                $this->maior = $t->{"Qtde CTRC"};
+            }
+        }
     }
 
     public function render()

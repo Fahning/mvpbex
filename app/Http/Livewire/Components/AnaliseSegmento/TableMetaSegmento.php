@@ -20,10 +20,10 @@ class TableMetaSegmento extends Component
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
         $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
-        $this->table = DB::select("call calc_meta_base(".$this->year.", ".$this->month.")");
+        $this->table = DB::select("call tabelas_filtros(".$this->year.", ".$this->month.",'Segmento')");
         foreach ($this->table as $t){
-            $t->Meta = floatval($t->peso_base) * floatval($media[0]->vMedia);
-            unset($t->peso_base);
+            $t->Meta = floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia);
+            unset($t->{'Fator Peso'});
             if($this->maior < $t->Realizado){
                 $this->maior = $t->Realizado;
             }
@@ -34,7 +34,15 @@ class TableMetaSegmento extends Component
     {
         $this->year = $filtro['year'];
         $this->month = $filtro['month'];
-        $this->table = DB::select("call tabela_fat_segmento(".$this->year.", ".$this->month.")");
+        $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
+        $this->table = DB::select("call tabelas_filtros(".$this->year.", ".$this->month.",'Segmento')");
+        foreach ($this->table as $t){
+            $t->Meta = floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia);
+            unset($t->{'Fator Peso'});
+            if($this->maior < $t->Realizado){
+                $this->maior = $t->Realizado;
+            }
+        }
     }
 
     public function render()

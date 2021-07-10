@@ -33,6 +33,12 @@ class TableRpkSegmento extends Component
         $this->year = $filtro['year'];
         $this->month = $filtro['month'];
         $this->table = DB::select("call tabela_persp_filtros(".$this->year.", ".$this->month.", 'Segmento')");
+
+        foreach ($this->table as $t){
+            if($this->maior < $t->{"Qtde CTRC"}){
+                $this->maior = $t->{"Qtde CTRC"};
+            }
+        }
     }
 
     public function render()

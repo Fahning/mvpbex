@@ -15,6 +15,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/operacional', function () {
     return view('livewire.operacional');
 })->name('operacional');
+Route::middleware(['auth:sanctum', 'verified'])->get('/analise-custos', function () {
+    return view('livewire.components.operacional.analise-de-custos');
+})->name('analise-custos');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/definir-meta', function () {
     return view('livewire.definir-meta');

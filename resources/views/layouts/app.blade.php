@@ -12,6 +12,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="{{ URL::asset('css/floatInput.css') }}">
 
         @livewireStyles
 
@@ -21,7 +22,9 @@
 
         <!-- HighCharts -->
         <script type="text/javascript" src="https://code.highcharts.com/stock/highstock.js"></script>
+
     </head>
+
     <body class="font-sans antialiased">
         <x-jet-banner />
 
@@ -52,8 +55,12 @@
         <livewire:scripts />
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
         @livewireChartsScripts
+        <script src="{{ URL::asset('js/floatInput.js') }}" defer></script>
         @stack('modals')
         @stack('scripts')
 
     </body>
 </html>
+
+
+

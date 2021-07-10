@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div  class="flex flex-col"
+        <div  class="flex flex-col bg-white shadow border rounded-md p-3"
               x-show="showFiltro"
               x-transition:enter="transition ease-out duration-300"
               x-transition:enter-start="opacity-0 transform scale-90"
@@ -52,7 +52,7 @@
               x-transition:leave-start="opacity-100 transform scale-100"
               x-transition:leave-end="opacity-0 transform scale-90"
         >
-            <div x-data="{selectPeriodo: ''}" class="flex mt-3">
+            <div x-data="{selectPeriodo: ''}" class="flex ">
                 <select x-model="selectPeriodo" class="font-bold border-0 focus:ring rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium" name="selectPeriodo" id="selectPeriodo" wire:model.defer="selectPeriodo">
                     <option selected hidden>Periodo</option>
                     <option value="">Todos</option>
@@ -66,14 +66,19 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-7 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
-                    <select  class="ml-2 font-bold border-0 focus:ring rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium"  name="ano" id="ano" wire:model="ano">
-                        <option selectvalue="">Todos</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                    </select>
+                    <div class="relative h-10 input-component w-32">
+                        <select  class="ml-2 font-bold h-full w-full border-gray-300 px-2 transition-all border-blue rounded-md"  name="ano" id="ano" empty wire:model="ano">
+                            <option value="">Todos</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                        </select>
+                        <label for="address" class="absolute left-4 transition-all bg-white px-1">
+                            Address
+                        </label>
+                    </div>
                 </div>
 
 
