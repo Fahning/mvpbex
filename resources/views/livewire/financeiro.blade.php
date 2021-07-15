@@ -1,13 +1,13 @@
 <x-app-layout>
     @livewire('components.filters-buttom')
     <div class="p-2">
-        <p class="text-2xl font-bold">
+        <p class="text-2xl font-bold text-center">
             FAROL DE FATURAMENTO
         </p>
         <hr class="border-2 rounded-md">
 
     </div>
-    <div class="grid grid-cols-9 px-6 mb-6">
+    <div class="grid grid-cols-9 mb-6">
         <div class="col-span-1">
             @livewire('components.farol')
         </div>
@@ -26,12 +26,12 @@
     </div>
 
     <div class="p-2">
-        <p class="text-2xl font-bold">
+        <p class="text-2xl font-bold text-center">
             ANÁLISE DO SEGMENTO
         </p>
         <hr class="border-2 rounded-md">
     </div>
-    <div class="grid grid-cols-9 px-6 mb-6">
+    <div class="grid grid-cols-9 mb-6">
         <div class="col-span-9 my-3">
             @livewire('components.analise-segmento.chart-segmento')
         </div>
@@ -46,12 +46,12 @@
     </div>
 
     <div class="p-2">
-        <p class="text-2xl font-bold">
+        <p class="text-2xl font-bold text-center">
             ANÁLISE DOS CLIENTES
         </p>
         <hr class="border-2 rounded-md">
     </div>
-    <div class="grid grid-cols-9 px-6 mb-6">
+    <div class="grid grid-cols-9 mb-6">
         <div class="col-span-9 my-3">
             @livewire('components.analise-clientes.chart-clientes')
         </div>
@@ -70,13 +70,13 @@
     </div>
 
     <div class="p-2">
-        <p class="text-2xl font-bold">
+        <p class="text-2xl font-bold text-center">
             ANÁLISE DAS BASES
         </p>
         <hr class="border-2 rounded-md">
     </div>
 
-    <div class="grid grid-cols-9 px-6 mb-6">
+    <div class="grid grid-cols-9 mb-6">
         <div class="col-span-9 my-3">
             @livewire('components.analise-bases.chart-bases')
         </div>

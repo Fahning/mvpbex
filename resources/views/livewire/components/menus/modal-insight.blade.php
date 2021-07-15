@@ -61,7 +61,7 @@
 </div>
 @push('scripts')
     <script>
-        document.addEventListener('livewire:update', () => {
+        document.addEventListener('livewire:loaded', () => {
             Highcharts.chart('charModal', {
                 title: {
                     text: null
@@ -78,7 +78,7 @@
                     labels:{
                         enabled:false
                     },
-                    categories: @this.insightModal.faturamento.sk_data
+                    categories: []
                 },
                 legend: {
                     enabled: false,
@@ -95,7 +95,7 @@
                 },
                 series: [{
                     name: 'Faturamento',
-                    data: @this.insightModal.faturamento.faturamento
+                    data: []
                 }],
                 tooltip: {
                     formatter:function(){
@@ -136,7 +136,7 @@
                     labels:{
                         enabled:false
                     },
-                    categories: @this.insightModal.chart_um.sk_data
+                    categories: []
                 },
                 legend: {
                     enabled: false,
@@ -153,7 +153,7 @@
                 },
                 series: [{
                     name: 'Faturamento',
-                    data: @this.insightModal.chart_um.faturamento
+                    data: []
                 }],
                 tooltip: {
                     formatter:function(){
@@ -194,7 +194,7 @@
                     labels:{
                         enabled:false
                     },
-                    categories: @this.insightModal.chart_dois.sk_data
+                    categories: []
                 },
                 legend: {
                     enabled: false,
@@ -211,7 +211,7 @@
                 },
                 series: [{
                     name: 'Faturamento',
-                    data: @this.insightModal.chart_dois.faturamento
+                    data: []
                 }],
                 tooltip: {
                     formatter:function(){
@@ -252,7 +252,7 @@
                     labels:{
                         enabled:false
                     },
-                    categories: @this.insightModal.chart_tres.sk_data
+                    categories: []
                 },
                 legend: {
                     enabled: false,
@@ -269,7 +269,245 @@
                 },
                 series: [{
                     name: 'Faturamento',
-                    data: @this.insightModal.chart_tres.faturamento
+                    data: []
+                }],
+                tooltip: {
+                    formatter:function(){
+                        return  this.x + '<br>' + Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(this.point.y)
+                    }
+                },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                },
+                credits: {
+                    enabled: false
+                }
+            });
+        })
+
+        document.addEventListener('livewire:update', () => {
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('isSidebarOpen', false)
+            })
+            Highcharts.chart('charModal', {
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                yAxis: {
+                    title: {
+                        text: null
+                    }
+                },
+                xAxis: {
+                    labels:{
+                        enabled:false
+                    },
+                    categories: @this.insightModal != null ? @this.insightModal.faturamento.sk_data : []
+                },
+                legend: {
+                    enabled: false,
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Faturamento',
+                    data: @this.insightModal != null ? @this.insightModal.faturamento.faturamento : []
+                }],
+                tooltip: {
+                    formatter:function(){
+                        return  this.x + '<br>' + Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(this.point.y)
+                    }
+                },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                },
+                credits: {
+                    enabled: false
+                }
+            });
+            Highcharts.chart('chartUm', {
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                yAxis: {
+                    title: {
+                        text: null
+                    }
+                },
+                xAxis: {
+                    labels:{
+                        enabled:false
+                    },
+                    categories: @this.insightModal != null ? @this.insightModal.chart_um.sk_data : []
+                },
+                legend: {
+                    enabled: false,
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Faturamento',
+                    data: @this.insightModal != null ? @this.insightModal.chart_um.faturamento : []
+                }],
+                tooltip: {
+                    formatter:function(){
+                        return  this.x + '<br>' + Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(this.point.y)
+                    }
+                },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                },
+                credits: {
+                    enabled: false
+                }
+            });
+            Highcharts.chart('chartDois', {
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                yAxis: {
+                    title: {
+                        text: null
+                    }
+                },
+                xAxis: {
+                    labels:{
+                        enabled:false
+                    },
+                    categories: @this.insightModal != null ? @this.insightModal.chart_dois.sk_data : []
+                },
+                legend: {
+                    enabled: false,
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Faturamento',
+                    data: @this.insightModal != null ? @this.insightModal.chart_dois.faturamento : []
+                }],
+                tooltip: {
+                    formatter:function(){
+                        return  this.x + '<br>' + Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(this.point.y)
+                    }
+                },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                },
+                credits: {
+                    enabled: false
+                }
+            });
+            Highcharts.chart('chartTres', {
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                yAxis: {
+                    title: {
+                        text: null
+                    }
+                },
+                xAxis: {
+                    labels:{
+                        enabled:false
+                    },
+                    categories: @this.insightModal != null ? @this.insightModal.chart_tres.sk_data : []
+                },
+                legend: {
+                    enabled: false,
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Faturamento',
+                    data: @this.insightModal != null ? @this.insightModal.chart_tres.faturamento : []
                 }],
                 tooltip: {
                     formatter:function(){

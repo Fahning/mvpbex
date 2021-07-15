@@ -4,11 +4,10 @@ namespace App\Http\Livewire\Components\Operacional;
 
 use Livewire\Component;
 
-class AnaliseDeCustos extends Component
+class AnaliseDeEntrega extends Component
 {
-
     public function render()
     {
-        return view('livewire.components.operacional.analise-de-custos');
+        return view('livewire.components.operacional.analise-de-entrega');
     }
 }

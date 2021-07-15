@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -25,42 +26,73 @@
 
     </head>
 
-    <body class="font-sans antialiased">
-        <x-jet-banner />
 
-        <div class="bg-gray-100" >
-            @livewire('navigation-menu')
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+    <body class="h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
+    <div class="w-full" x-data="setupMenu()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
+        <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
+            <!-- Loading screen -->
+            <div
+                x-ref="loading"
+                class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-indigo-800"
+            >
+                Loading.....
+            </div>
 
-            <!-- Page Content -->
-            <main>
-                <div class="grid grid-cols-5">
-                    <div class="">
-                        @livewire('sidebar')
-                    </div>
-                    <div class="col-span-4">
-                        {{ $slot }}
-                    </div>
-                </div>
-            </main>
+            <!-- Sidebar -->
+            @include('livewire.sidebar')
+
         </div>
 
-        <livewire:scripts />
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
-        @livewireChartsScripts
-        <script src="{{ URL::asset('js/floatInput.js') }}" defer></script>
-        @stack('modals')
-        @stack('scripts')
+        <!-- Panels -->
 
-    </body>
+        <!-- Settings Panel -->
+        @livewire('components.operacional.filtros')
+    </div>
+    </div>
+
+    @livewireChartsScripts
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <script src="{{ URL::asset('js/floatInput.js') }}" defer></script>
+    @stack('modals')
+    <livewire:scripts />
+    @stack('scripts')
+
+</body>
 </html>
+<script>
+    const setupMenu = () => {
+        return {
+            isSidebarOpen: false,
+            currentSidebarTab: null,
+            isSettingsPanelOpen: false,
+            isSubHeaderOpen: false,
+            watchScreen() {
+                if (window.innerWidth <= 1024) {
+                    this.isSidebarOpen = false
+                }
+            },
+        }
+    }
+</script>
 
 
 
+
+<style>
+    /* Works on Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #6d6df3;
+    }
+
+    /* Works on Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: #6d6df3;
+        border-radius: 20px;
+    }
+</style>

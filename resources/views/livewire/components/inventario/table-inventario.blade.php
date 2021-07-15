@@ -1,6 +1,6 @@
 <div >
     <div class="flex flex-col" x-data="{showFiltro: false }">
-        <div class="flex mt-2">
+        <div class="flex">
             <!-- INPUT DE BUSCASE -->
             <div class="flex-1 pr-4">
                 <div class="relative md:w-1/3">
@@ -43,16 +43,14 @@
             </div>
         </div>
 
-        <div  class="flex flex-col bg-white shadow border rounded-md p-3"
+        <div  class="flex flex-col bg-white shadow border rounded-md p-3 mt-3"
               x-show="showFiltro"
-              x-transition:enter="transition ease-out duration-300"
-              x-transition:enter-start="opacity-0 transform scale-90"
-              x-transition:enter-end="opacity-100 transform scale-100"
-              x-transition:leave="transition ease-in duration-300"
-              x-transition:leave-start="opacity-100 transform scale-100"
-              x-transition:leave-end="opacity-0 transform scale-90"
+              x-transition:enter="transform-gpu ease-out duration-300"
+              x-transition:enter-start="-translate-y-4 opacity-0"
+              x-transition:leave="transform-gpu ease-out duration-200"
+              x-transition:leave-end="-translate-y-4 opacity-0"
         >
-            <div x-data="{selectPeriodo: ''}" class="flex ">
+            <div x-data="{selectPeriodo: ''}" class="flex">
                 <select x-model="selectPeriodo" class="font-bold border-0 focus:ring rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium" name="selectPeriodo" id="selectPeriodo" wire:model.defer="selectPeriodo">
                     <option selected hidden>Periodo</option>
                     <option value="">Todos</option>

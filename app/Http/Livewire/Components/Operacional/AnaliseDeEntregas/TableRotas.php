@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Components\Operacional\AnaliseDeCustos;
+namespace App\Http\Livewire\Components\Operacional\AnaliseDeEntregas;
 
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -9,7 +9,7 @@ class TableRotas extends Component
 {
     public function render()
     {
-        return view('livewire.components.operacional.analise-de-custos.table-rotas', [
+        return view('livewire.components.operacional.analise-de-entregas.table-rotas', [
             'tableRotas' =>DB::table('conhecimento_baixa', 'cb')
             ->leftJoin('movromaneio',function($join) {
                     $join->on(DB::raw("CONCAT(cb.unidade,cb.ctrb_os)"), 'movromaneio.ctrb');

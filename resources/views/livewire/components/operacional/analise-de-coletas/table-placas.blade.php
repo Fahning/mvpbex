@@ -1,7 +1,35 @@
-
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
-    <div class="text-center font-bold mt-4">Custos por Veículo</div>
+    <div
+        wire:loading
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white"
+        aria-hidden="true"
+    >
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="h-24 w-24" style="margin: auto;  display: block; shape-rendering: auto;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                <circle cx="50" cy="50" fill="none" stroke="#a4a1a1" stroke-width="7" r="35" stroke-dasharray="164.93361431346415 56.97787143782138">
+                  <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+                </circle>
+            </svg>
+        </span>
+    </div>
+    <div class="text-center font-bold pt-3">Custos por Veículo</div>
+    <div class="flex">
+        <div class="relative h-10 input-component">
+            <select  class="ml-2 font-bold h-full w-full border-gray-300 px-2 transition-all border-blue rounded-md" wire:model="tipoTable">
+                <option value="cb.placa">Veículo</option>
+                <option value="cb.unidade">Unidade</option>
+                <option value="cb.setor">Rota</option>
+                <option value="veic.RELACIONAMENTO">Relacionamento</option>
+                <option value="veic.TIPO">Modelo</option>
+            </select>
+            <label for="address" class="absolute left-4 transition-all bg-white px-1">
+                Perspectiva
+            </label>
+        </div>
+
+    </div>
     <div class="overflow-auto max-h-80">
+        @if(count($table) > 0)
         <table class="table-auto border-collapse w-full mt-4" >
             <thead>
             <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
@@ -41,7 +69,7 @@
                             </th>
                         @elseif($key == 'Peso')
                             <td class="px-4 py-1 w-22">{{formatPeso($value ?? 0)}}</th>
-                        @elseif($key == 'Custo % Frete')
+                        @elseif($key == 'Diária/Frete')
                             <td class="px-4 py-1 w-22">{{formatPorcent($value ?? 0)}}%</th>
                         @else
                             <td class="px-4 py-1">{{$value ?? '0'}}</th>
@@ -51,6 +79,20 @@
             @endforeach
             </tbody>
         </table>
+        @else
+            <div class="container flex flex-col mt-36 items-center justify-center text-2xl font-bold text-gray-400" >
+                <span>
+                       Nenhum dado para ser exibido
+               </span>
+                <span wire:loading>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="h-24 w-24" style="margin: auto;  display: block; shape-rendering: auto;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#a4a1a1" stroke-width="7" r="35" stroke-dasharray="164.93361431346415 56.97787143782138">
+                          <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+                        </circle>
+                    </svg>
+                </span>
+            </div>
+        @endif
     </div>
 </div>
 

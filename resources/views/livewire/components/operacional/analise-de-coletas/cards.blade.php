@@ -22,10 +22,6 @@
     </div>
 
     <div class="flex flex-wrap justify-center">
-        <div class="flex flex-col items-center bg-white justify-center border shadow rounded-xl w-56 h-32 m-10">
-            <span class="flex items-center shadow-lg justify-center font-bold text-md text-white bg-blue-500 rounded-xl -mt-9 w-48 h-16">Faturamento</span>
-            <span class="text-center font-bold mt-7 text-2xl">{{formatReceita($faturamento[0]->faturamento)}}</span>
-        </div>
         @foreach ($cards as $key => $card)
             <div class="flex flex-col items-center bg-white justify-center border shadow rounded-xl w-56 h-32 m-10">
                 <span class="flex items-center shadow-lg justify-center font-bold text-md text-white bg-blue-500 rounded-xl -mt-9 w-48 h-16">{{ $key }}</span>

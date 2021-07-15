@@ -1,7 +1,7 @@
 <div>
     @if ($paginator->hasPages())
         <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
-            <div class="flex justify-center flex-1 sm:hidden">
+            <div class="flex justify-between flex-1 sm:hidden">
                 <span>
                     @if ($paginator->onFirstPage())
                         <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
@@ -27,7 +27,19 @@
                 </span>
             </div>
 
-            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-center">
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm text-gray-700 leading-5">
+                        <span>{!! __('Mostrando') !!}</span>
+                        <span class="font-medium">{{ $paginator->firstItem() }}</span>
+                        <span>{!! __('até') !!}</span>
+                        <span class="font-medium">{{ $paginator->lastItem() }}</span>
+                        <span>{!! __('de') !!}</span>
+                        <span class="font-medium">{{ $paginator->total() }}</span>
+                        <span>{!! __('resultados') !!}</span>
+                    </p>
+                </div>
+
                 <div>
                     <span class="relative z-0 inline-flex rounded-md shadow-sm">
                         <span>

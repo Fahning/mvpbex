@@ -14,7 +14,7 @@
 
             <select name="tipo" id="tipo" wire:model="tipo" class="rounded-md mx-2">
                 <option value="1">Dinheiro</option>
-                <option value="2">Percentagem</option>
+                <option value="2">Porcentagem</option>
             </select>
             @if($tipo == "1")
                 <div class="flex">

@@ -12,9 +12,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
     return view('livewire.farol-faturamento');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/operacional', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('/inventario', function () {
     return view('livewire.operacional');
-})->name('operacional');
+})->name('inventario');
 Route::middleware(['auth:sanctum', 'verified'])->get('/analise-custos', function () {
     return view('livewire.components.operacional.analise-de-custos');
 })->name('analise-custos');

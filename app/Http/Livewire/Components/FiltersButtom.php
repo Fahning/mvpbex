@@ -11,14 +11,11 @@ class FiltersButtom extends Component
     public $year;
     public $years;
 
+
+
     public function mount()
     {
         $this->years = range(2000, Carbon::today()->year);
-    }
-
-    public function render()
-    {
-        return view('livewire.components.filters-buttom');
     }
 
     public function filtrar()
@@ -29,4 +26,11 @@ class FiltersButtom extends Component
         ];
         $this->emit('emitFiltros', $filtros);
     }
+
+    public function render()
+    {
+        return view('livewire.components.filters-buttom');
+    }
+
+
 }

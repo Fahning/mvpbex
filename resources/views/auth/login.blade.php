@@ -33,7 +33,7 @@
 {{--                    </label>--}}
 {{--                </div>--}}
                 <div class="">
-                    <button type="submit" class="mt-6 border border-gray-400 w-full text-center rounded-full bg-blue-500 border-gray-400 hover:bg-gray-300 hover:shadow-md hover:border-gray-400">
+                    <button type="submit" class="mt-6 border border-gray-400 w-full text-center rounded-full bg-blue-500 border-gray-400 hover:bg-blue-600 hover:shadow-md hover:border-gray-400">
                         <div class="p-2 font-bold text-gray-300">{{ __('Logar') }}</div>
                     </button>
                 </div>

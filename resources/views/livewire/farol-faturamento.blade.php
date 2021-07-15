@@ -1,15 +1,8 @@
 <x-app-layout>
-    <div class="p-2">
-        <p class="text-xl font-bold">
-            Dashboard
-        </p>
-        <hr class="border-2 rounded-md">
-
-        <div class="flex justify-center h-screen items-center">
+        <div class="flex flex-col justify-center h-screen items-center">
             <div class='flex max-w-sm w-full h-64 justify-center bg-white shadow-md rounded-lg overflow-hidden mx-auto flex flex-col p-5'>
                 <!-- This is the input component -->
                 <div class="relative h-10 input-component empty">
-
                     <input
                         id="address"
                         type="text"
@@ -35,7 +28,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
 </x-app-layout>
 

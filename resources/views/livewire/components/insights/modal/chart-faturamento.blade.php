@@ -1,15 +1,14 @@
 <div>
     <div class="bg-white p-3 border shadow-md rounded-md z-0">
         <div class="text-center font-bold">Faturamento Ultimos 3 Meses</div>
-        <div id="charModal" style="height:280px;"></div>
+        <div id="chartFaturamento" style="height:280px;"></div>
     </div>
 </div>
 
 @push('scripts')
     <script>
         document.addEventListener('livewire:load', () => {
-            console.log(@this.insightModal);
-            // Highcharts.chart('charModal', {
+            // Highcharts.chart('chartFaturamento', {
             //     title: {
             //         text: null
             //     },
