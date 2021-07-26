@@ -20,7 +20,7 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Laravel Rsync Deploy
-      uses: Fahning/LaravelRsyncDeployWithTerminalCommand@Main
+      uses: Fahning/LaravelRsyncDeployWithTerminalCommand@main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SECRET_KEY }}
         ARGS: "--ignore-times --compress --verbose --exclude=.git --exclude=.github --exclude=node_modules --no-perms --no-owner --no-group --recursive"
