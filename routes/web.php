@@ -8,9 +8,9 @@ use \App\Http\Livewire\{
 
 Route::view('/404-tenant','errors.404-tenant')->name('404.tenant');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return view('livewire.farol-faturamento');
-})->name('dashboard');
+//Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+//    return view('livewire.farol-faturamento');
+//})->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/inventario', function () {
     return view('livewire.operacional');
