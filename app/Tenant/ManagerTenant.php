@@ -19,7 +19,6 @@ class ManagerTenant
         Config::set('database.connections.tenant.port', '3306');
         Config::set('database.connections.tenant.username', $company->db_username);
         Config::set('database.connections.tenant.password', $company->db_password);
-
         DB::reconnect('tenant');
         Schema::connection('tenant')->getConnection()->reconnect();
     }

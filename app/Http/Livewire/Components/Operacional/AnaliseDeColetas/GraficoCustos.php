@@ -19,9 +19,14 @@ class GraficoCustos extends Component
 
     protected $listeners = ['filtros' => 'filtrar'];
 
-    public function hydrateFiltros($value)
+    public function montaChart()
     {
-        $this->emit('populaGrafico');
+        $this->dispatchBrowserEvent(
+            'renderData',
+            [
+                'newData' => $this->dataGraf
+            ]
+        );
     }
 
     public function filtrar($filtros)
@@ -59,7 +64,12 @@ class GraficoCustos extends Component
             ->get();
 
         $this->dataGraf = $this->formatData($data);
-        $this->emit('populaGrafico');
+        $this->dispatchBrowserEvent(
+            'renderData',
+            [
+                'newData' => $this->dataGraf
+            ]
+        );
     }
 
     public function formatData($faturamento){
@@ -75,8 +85,10 @@ class GraficoCustos extends Component
             array_push($data['custo_peso'], floatval($fat->custo_peso));
             array_push($data['custo_cubagem'], floatval($fat->custo_cubagem));
         }
+        $this->emit('populaGrafico');
         return $data;
     }
+
     public function render()
     {
         $data = DB::table('conhecimento_baixa', 'cb')

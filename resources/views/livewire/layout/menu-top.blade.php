@@ -132,7 +132,7 @@
             </button>
             <!-- Notifications button -->
             <div class="flex">
-                <div class="absolute -mt-2 -mr-5 bg-blue-300 px-1.5 py-0.5 rounded-full" style="font-size: 10px">
+                <div class="absolute {{count($insights) > 0 ? 'animate-bounce' : ''}} -mt-2 -mr-5 bg-blue-300 text-white px-1.5 py-0.5 rounded-full" style="font-size: 10px">
                     {{count($insights)}}
                 </div>
                 <button
@@ -185,13 +185,17 @@
                 aria-orientation="vertical"
                 aria-label="user menu"
             >
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                <a href="{{route('profile.show')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
                 >Perfil</a
                 >
 
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Configurações</a>
+{{--                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Configurações</a>--}}
 
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sair</a>
+                <form method="POST" action="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                    @csrf
+                    <button type="submit" >Sair</button>
+                </form>
+
             </div>
         </div>
     </nav>
@@ -220,7 +224,7 @@
 
             <!-- Links -->
             <div class="flex-1 px-4 space-y-2 overflow-hidden hover:overflow-auto">
-                @if(request()->getHost() == Config::get('tenant.domain_main'))
+                @if(!request()->getHost() == Config::get('tenant.domain_main'))
                     <a href="{{route('companies')}}" class="flex items-center w-full space-x-2 text-white bg-indigo-600 rounded-lg">
                       <span aria-hidden="true" class="p-2 bg-indigo-700 rounded-lg">
                         <svg
@@ -266,11 +270,12 @@
                         <a
                             href="#"
                             @click="openOperacional = !openOperacional"
-                            class="flex items-center space-x-2 text-indigo-600 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"
+                            class="flex items-center space-x-2 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"
+                            :class="openOperacional ? 'bg-indigo-600 text-white' : 'text-indigo-600'"
                         >
                       <span
                           aria-hidden="true"
-                          class="p-2 transition-colors rounded-lg group-hover:bg-indigo-700 group-hover:text-white"
+                          :class="'p-2 transition-colors rounded-lg group-hover:bg-indigo-700 group-hover:text-white'"
                       >
                         <svg
                             class="w-6 h-6"
@@ -292,7 +297,14 @@
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} :d="openOperacional ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'" />
                             </svg>
                         </a>
-                        <div class="bg-gray-100 rounded-md m-1" x-show="openOperacional">
+                        <div
+                            class="bg-gray-100 rounded-md m-1"
+                            x-show="openOperacional"
+                            x-transition:enter="transform-gpu ease-out duration-200"
+                            x-transition:enter-start="-translate-y-2 opacity-0"
+                            x-transition:leave="transform-gpu ease-out duration-200"
+                            x-transition:leave-end="-translate-y-2 opacity-0"
+                        >
                             <a
                                 href="{{route('analise-custos')}}"
                                 class="flex items-center space-x-2 text-indigo-600 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"
@@ -347,7 +359,8 @@
                     </div>
 
                     <!-- MENU FINANCEIRO-->
-                    <div class="flex flex-col" x-data="{ openFinanceiro: false }">
+                    <div class="flex flex-col" x-data="{ openFinanceiro: false }"
+                    >
                         <a
                             href="#"
                             @click="openFinanceiro = !openFinanceiro"
@@ -357,7 +370,6 @@
                       <span
                           aria-hidden="true"
                           :class="'p-2 transition-colors rounded-lg group-hover:bg-indigo-700 group-hover:text-white'"
-                          :class="openFinanceiro ? 'bg-indigo-700 text-white': ''"
                       >
                         <svg
                             class="w-6 h-6"
@@ -379,7 +391,12 @@
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} :d="openFinanceiro ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'" />
                             </svg>
                         </a>
-                        <div class="bg-gray-100 rounded-md m-1" x-show="openFinanceiro">
+                        <div class="bg-gray-100 rounded-md m-1" x-show="openFinanceiro"
+                             x-transition:enter="transform-gpu ease-out duration-200"
+                             x-transition:enter-start="-translate-y-2 opacity-0"
+                             x-transition:leave="transform-gpu ease-out duration-200"
+                             x-transition:leave-end="-translate-y-2 opacity-0"
+                        >
                             <a
                                 href="{{route('financeiro')}}"
                                 class="flex items-center space-x-2 text-indigo-600 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"
