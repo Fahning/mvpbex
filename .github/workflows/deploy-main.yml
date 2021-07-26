@@ -32,8 +32,8 @@ jobs:
       uses: tarunjangra/ssh-remote-cmd@v1
       with:
         command: |
-          cd/var/www/mvpbex/
-          php artisan optimize
+          cd /var/www/mvpbex/ &&
+          php artisan optimize &&
           echo date /t >> logDeploy.txt
         host: ${{ secrets.SECRET_HOST }}
         user: ${{ secrets.SECRET_USER }}
