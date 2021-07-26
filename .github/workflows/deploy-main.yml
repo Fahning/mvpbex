@@ -28,3 +28,10 @@ jobs:
         REMOTE_HOST_PORT: ${{ secrets.SECRET_PORT }}
         REMOTE_USER: ${{ secrets.SECRET_USER }}
         TARGET_DIRECTORY: /var/www/mvpbex/
+    - name: Setup SSH
+      uses: MrSquaare/ssh-setup-action@v1
+      with:
+        host: bexserver@23.111.184.123 -p 22022
+        private-key: ${{ secrets.SECRET_KEY }}
+    - name: Clear cash
+      run: cd/var/www/mvpbex/ && php artisan optimize && echo date /t >> logDeploy.txt
