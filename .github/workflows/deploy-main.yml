@@ -38,6 +38,6 @@ jobs:
     - name: Execute SSH commmands on remote server
       uses: JimCronqvist/action-ssh@master
       with:
-        hosts: 'bexserver@23.111.184.123 -p 22022'
+        hosts: 'bexserver@23.111.184.123:22022'
         privateKey: ${{ secrets.SECRET_KEY }}
         command: ls -lah
