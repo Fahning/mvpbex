@@ -36,8 +36,12 @@ jobs:
 #    - name: Clear cash
 #      run: cd/var/www/mvpbex/ && php artisan optimize && echo date /t >> logDeploy.txt
     - name: Execute SSH commmands on remote server
-      uses: JimCronqvist/action-ssh@master
+      uses: tarunjangra/ssh-remote-cmd@v1
       with:
-        hosts: 'bexserver@23.111.184.123:22022'
-        privateKey: ${{ secrets.SECRET_KEY }}
-        command: ls -lah
+        command: |
+          cd /tmp
+          ls -a
+        host: ${{ secrets.SECRET_HOST }}
+        user: ${{ secrets.SECRET_USER }}
+        key: ${{ secrets.PRIVATE_KEY}}
+        port: ${{ secrets.SECRET_PORT }}
