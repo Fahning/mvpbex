@@ -11,36 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-#      with:
-#        php-version: '7.3'
-#    - uses: actions/checkout@v2
-#    - name: Install Dependencies
-#      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-#    - name: Directory Permissions
-#      run: chmod -R 777 storage bootstrap/cache
-#    - name: Laravel Rsync Deploy
-#      uses: Fahning/LaravelRsyncDeployWithTerminalCommand@main
-#      env:
-#        SSH_PRIVATE_KEY: ${{ secrets.SECRET_KEY }}
-#        ARGS: "--ignore-times --compress --verbose --exclude=.git --exclude=.github --exclude=node_modules --no-perms --no-owner --no-group --recursive"
-#        REMOTE_HOST: ${{ secrets.SECRET_HOST }}
-#        REMOTE_HOST_PORT: ${{ secrets.SECRET_PORT }}
-#        REMOTE_USER: ${{ secrets.SECRET_USER }}
-#        TARGET_DIRECTORY: /var/www/mvpbex/
-#    - name: Setup SSH
-#      uses: MrSquaare/ssh-setup-action@v1
-#      with:
-#        host:
-#        private-key: ${{ secrets.SECRET_KEY }}
-#    - name: Clear cash
-#      run: cd/var/www/mvpbex/ && php artisan optimize && echo date /t >> logDeploy.txt
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: '7.3'
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Directory Permissions
+      run: chmod -R 777 storage bootstrap/cache
+    - name: Laravel Rsync Deploy
+      uses: Fahning/LaravelRsyncDeployWithTerminalCommand@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SECRET_KEY }}
+        ARGS: "--ignore-times --compress --verbose --exclude=.git --exclude=.github --exclude=node_modules --no-perms --no-owner --no-group --recursive"
+        REMOTE_HOST: ${{ secrets.SECRET_HOST }}
+        REMOTE_HOST_PORT: ${{ secrets.SECRET_PORT }}
+        REMOTE_USER: ${{ secrets.SECRET_USER }}
+        TARGET_DIRECTORY: /var/www/mvpbex/
     - name: Execute SSH commmands on remote server
       uses: tarunjangra/ssh-remote-cmd@v1
       with:
         command: |
-          cd /tmp
-          ls -a
+          cd/var/www/mvpbex/
+          php artisan optimize
+          echo date /t >> logDeploy.txt
         host: ${{ secrets.SECRET_HOST }}
         user: ${{ secrets.SECRET_USER }}
         pass: 9731Sale$
