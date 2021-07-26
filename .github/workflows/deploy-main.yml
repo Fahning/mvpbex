@@ -20,7 +20,7 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Laravel Rsync Deploy
-      uses: SHSharkar/Laravel-Rsync-Deploy@master
+      uses: Fahning/LaravelRsyncDeployWithTerminalCommand@Main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SECRET_KEY }}
         ARGS: "--ignore-times --compress --verbose --exclude=.git --exclude=.github --exclude=node_modules --no-perms --no-owner --no-group --recursive"
@@ -28,4 +28,3 @@ jobs:
         REMOTE_HOST_PORT: ${{ secrets.SECRET_PORT }}
         REMOTE_USER: ${{ secrets.SECRET_USER }}
         TARGET_DIRECTORY: /var/www/mvpbex/
-
