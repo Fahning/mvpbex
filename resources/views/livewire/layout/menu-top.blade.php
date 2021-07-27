@@ -33,9 +33,9 @@
         <!-- Logo -->
         <a href="#">
             <img
-                class="w-10 h-auto"
-                src="https://raw.githubusercontent.com/kamona-ui/dashboard-alpine/main/public/assets/images/logo.png"
-                alt="K-UI"
+                class="w-20 h-auto"
+                src="{{url('logo/Bex-principal.png')}}"
+                alt="Bex Logo"
             />
         </a>
 
@@ -46,9 +46,9 @@
                 class="transition-opacity rounded-lg opacity-80 hover:opacity-100 focus:outline-none focus:ring focus:ring-indigo-600 focus:ring-offset-white focus:ring-offset-2"
             >
                 <img
-                    class="w-8 h-8 rounded-lg shadow-md"
-                    src="https://avatars.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4"
-                    alt="Ahmed Kamel"
+                    class="w-10 h-10 rounded-lg shadow-md object-cover"
+                    src="{{$avatar['avatar']}}"
+                    alt="{{$avatar['name']}}"
                 />
                 <span class="sr-only">User menu</span>
             </button>
@@ -84,7 +84,7 @@
                 <img
                     class="w-10 h-auto"
                     src="{{url('logo/Bex-principal.png')}}"
-                    alt="K-UI"
+                    alt="Logo Bex"
                 />
             </a>
         </div>
