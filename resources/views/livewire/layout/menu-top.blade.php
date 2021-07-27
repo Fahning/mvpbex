@@ -223,8 +223,9 @@
             </div>
 
             <!-- Links -->
+
             <div class="flex-1 px-4 space-y-2 overflow-hidden hover:overflow-auto">
-                @if(!request()->getHost() == Config::get('tenant.domain_main'))
+                @if(auth()->user()->cnpj == '00000000000000')
                     <a href="{{route('companies')}}" class="flex items-center w-full space-x-2 text-white bg-indigo-600 rounded-lg">
                       <span aria-hidden="true" class="p-2 bg-indigo-700 rounded-lg">
                         <svg

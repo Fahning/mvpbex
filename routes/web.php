@@ -28,5 +28,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/financeiro', function () 
     return view('livewire.financeiro');
 })->name('financeiro');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('companies', Companies::class)
+Route::middleware(['auth:sanctum', 'verified', 'menu.admin'])->get('companies', Companies::class)
     ->name('companies');
