@@ -13,7 +13,7 @@ class ChartBases extends Component
     public $year;
     public $month;
 
-    protected $listeners = ['emitFiltros' => 'update'];
+    protected $listeners = ['filtros' => 'update'];
 
     public function mount()
     {
@@ -32,8 +32,8 @@ class ChartBases extends Component
     {
         $this->categories = [];
         $this->series = [];
-        $this->year = $filtro['year'];
-        $this->month = $filtro['month'];
+        $this->year = $filtro['ano'];
+        $this->month = $filtro['mes'];
         $teste = DB::select("CALL fat_persp(".$this->year.",".$this->month.", 'Base')");
         foreach ($teste as $t)
         {

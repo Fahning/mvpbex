@@ -14,7 +14,7 @@ class TableRpkClientes extends Component
 
     public $maior = 0;
 
-    protected $listeners = ['emitFiltros' => 'filtrar'];
+    protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
     {
@@ -30,8 +30,8 @@ class TableRpkClientes extends Component
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['year'];
-        $this->month = $filtro['month'];
+        $this->year = $filtro['ano'];
+        $this->month = $filtro['mes'];
         $this->tableRpkClientes = DB::select("call tabela_persp_filtros(".$this->year.", ".$this->month.", 'Cliente')");
         foreach ($this->tableRpkClientes as $t){
             if($this->maior < $t->{"Qtde CTRC"}){

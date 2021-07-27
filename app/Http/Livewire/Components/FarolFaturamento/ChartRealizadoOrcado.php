@@ -11,7 +11,7 @@ class ChartRealizadoOrcado extends Component
     public $year;
     public $data2;
 
-    protected $listeners = ['emitFiltros' => 'filtrar'];
+    protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
     {
@@ -22,7 +22,7 @@ class ChartRealizadoOrcado extends Component
 
     public function filtrar($filtros)
     {
-        $this->year = $filtros['year'];
+        $this->year = $filtros['ano'];
         $faturamento = DB::select("call realizado_orcado(".$this->year.")");
         $this->formatData($faturamento);
         $this->dispatchBrowserEvent('atualizaChart');

@@ -13,7 +13,7 @@ class TableRpkSegmento extends Component
     public $month;
     public $maior = 0;
 
-    protected $listeners = ['emitFiltros' => 'filtrar'];
+    protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
     {
@@ -30,8 +30,8 @@ class TableRpkSegmento extends Component
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['year'];
-        $this->month = $filtro['month'];
+        $this->year = $filtro['ano'];
+        $this->month = $filtro['mes'];
         $this->table = DB::select("call tabela_persp_filtros(".$this->year.", ".$this->month.", 'Segmento')");
 
         foreach ($this->table as $t){

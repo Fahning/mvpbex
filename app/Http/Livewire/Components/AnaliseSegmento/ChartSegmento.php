@@ -11,7 +11,7 @@ class ChartSegmento extends Component
     public $series = [];
     public $categories = [];
 
-    protected $listeners = ['emitFiltros' => 'update'];
+    protected $listeners = ['filtros' => 'update'];
 
     public function mount()
     {
@@ -27,7 +27,7 @@ class ChartSegmento extends Component
     {
         $this->categories = [];
         $this->series = [];
-        $teste = DB::select("CALL fat_persp(".$filtro['year'].",".$filtro['month'].", 'Segmento')");
+        $teste = DB::select("CALL fat_persp(".$filtro['ano'].",".$filtro['mes'].", 'Segmento')");
         foreach ($teste as $t)
         {
             array_push($this->categories, $t->Segmento);

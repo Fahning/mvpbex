@@ -13,7 +13,7 @@ class TabelaDistribuicao extends Component
     public $month;
     public $maior = 0;
 
-    protected $listeners = ['emitFiltros' => 'filtrar'];
+    protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
     {
@@ -29,8 +29,8 @@ class TabelaDistribuicao extends Component
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['year'];
-        $this->month = $filtro['month'];
+        $this->year = $filtro['ano'];
+        $this->month = $filtro['mes'];
         $this->tableDistribuicao = DB::select("CALL dist_cargas(".$this->year.", ".$this->month.",'Peso')");
         foreach ($this->tableDistribuicao as $t){
             if($this->maior < $t->{"Qtde de CTRC"}){

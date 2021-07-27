@@ -10,7 +10,7 @@ use Livewire\Component;
 class ChartFaturamento extends Component
 {
     public $data;
-    protected $listeners = ['emitFiltros' => 'filtrar'];
+    protected $listeners = ['filtros' => 'filtrar'];
     public function mount()
     {
         $faturamento = DB::select("CALL faturamento_dia(".Carbon::today()->year.",".Carbon::today()->month.")");
@@ -19,7 +19,7 @@ class ChartFaturamento extends Component
 
     public function filtrar($filtros)
     {
-        $faturamento = DB::select("CALL faturamento_dia(".$filtros['year'].",".$filtros['month'].")");
+        $faturamento = DB::select("CALL faturamento_dia(".$filtros['ano'].",".$filtros['mes'].")");
         $this->fatoraFaturamento($faturamento);
         $this->dispatchBrowserEvent('atualizaChart');
     }

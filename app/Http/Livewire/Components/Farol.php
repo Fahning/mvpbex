@@ -10,7 +10,7 @@ class Farol extends Component
 {
     public $farol;
 
-    protected $listeners = ['emitFiltros' => 'filtrar'];
+    protected $listeners = ['filtros' => 'filtrar'];
     public function mount()
     {
         $farol = DB::select("CALL farol(".Carbon::today()->year.",".Carbon::today()->month.")");
@@ -21,7 +21,7 @@ class Farol extends Component
 
     public function filtrar($filtros)
     {
-        $farol = DB::select("CALL farol(".$filtros['year'].",".$filtros['month'].")");
+        $farol = DB::select("CALL farol(".$filtros['ano'].",".$filtros['mes'].")");
         $farol = (array)$farol[0]->vMensagem;
         $this->farol = $farol[0];
     }

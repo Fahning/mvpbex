@@ -13,7 +13,7 @@ class TableMetaClientes extends Component
     public $year;
     public $maior = 0;
 
-    protected $listeners = ['emitFiltros' => 'filtrar'];
+    protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
     {
@@ -32,8 +32,8 @@ class TableMetaClientes extends Component
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['year'];
-        $this->month = $filtro['month'];
+        $this->year = $filtro['ano'];
+        $this->month = $filtro['mes'];
         $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
         $this->table = DB::select("call tabelas_filtros(".$this->year.", ".$this->month.",'Cliente')");
         foreach ($this->table as $t){

@@ -14,7 +14,7 @@ class TableRotaEntrega extends Component
     public $maiorReceita;
     public $maiorCTRC;
 
-    protected $listeners = ['emitFiltros' => 'filtrar'];
+    protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
     {
@@ -34,8 +34,8 @@ class TableRotaEntrega extends Component
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['year'];
-        $this->month = $filtro['month'];
+        $this->year = $filtro['ano'];
+        $this->month = $filtro['mes'];
         $this->tableRotaEntrega = DB::select("CALL tabela_receita_rota(".$this->year.", ".$this->month.",'Entrega')");
         foreach ($this->tableRotaEntrega as $t){
             if($this->maiorCTRC < $t->{"Qtde CTRC"}){

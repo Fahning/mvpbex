@@ -13,7 +13,7 @@ class TableRpkBases extends Component
     public $month;
     public $maior = 0;
 
-    protected $listeners = ['emitFiltros' => 'filtrar'];
+    protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
     {
@@ -29,8 +29,8 @@ class TableRpkBases extends Component
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['year'];
-        $this->month = $filtro['month'];
+        $this->year = $filtro['ano'];
+        $this->month = $filtro['mes'];
         $this->tableRpkBases = DB::select("CALL tabela_persp_filtros(".$this->year.", ".$this->month.",'Base')");
         foreach ($this->tableRpkBases as $t){
             if($this->maior < $t->{'Qtde CTRC'}){

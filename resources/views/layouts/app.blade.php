@@ -28,39 +28,40 @@
 
 
     <body class="h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
-    <div class="w-full" x-data="setupMenu()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
-        <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
-            <!-- Loading screen -->
-            <div
-                x-ref="loading"
-                class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-indigo-800"
-            >
-                Loading.....
+        <div class="w-full" x-data="setupMenu()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
+            <div  class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
+                <!-- Loading screen -->
+                <div
+                    x-ref="loading"
+                    class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-indigo-800"
+                >
+                    Carregando.....
+                </div>
+
+                <!-- Sidebar -->
+                @include('livewire.sidebar')
+
             </div>
-
-            <!-- Sidebar -->
-            @include('livewire.sidebar')
-
+            <!-- Filters Panel -->
+            <div
+                 x-show="isSettingsPanelOpen"
+            >
+                @livewire('components.menus.filtros')
+            </div>
         </div>
 
-        <!-- Panels -->
+        @livewireChartsScripts
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+        <script src="{{ URL::asset('js/floatInput.js') }}" defer></script>
+        @stack('modals')
+        <livewire:scripts />
+        @stack('scripts')
 
-        <!-- Settings Panel -->
-        @livewire('components.operacional.filtros')
-    </div>
-    </div>
-
-    @livewireChartsScripts
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
-    <script src="{{ URL::asset('js/floatInput.js') }}" defer></script>
-    @stack('modals')
-    <livewire:scripts />
-    @stack('scripts')
-
-</body>
+    </body>
 </html>
 <script>
     const setupMenu = () => {
+
         return {
             isSidebarOpen: false,
             currentSidebarTab: null,

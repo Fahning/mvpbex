@@ -1,5 +1,6 @@
 <x-app-layout>
-    @livewire('components.filters-buttom')
+{{--    Remover component desse filtro antes de remover linha abaixo --}}
+{{--    @livewire('components.filters-buttom')--}}
     <div class="p-2">
         <p class="text-2xl font-bold text-center">
             FAROL DE FATURAMENTO

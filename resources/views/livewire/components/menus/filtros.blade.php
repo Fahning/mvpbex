@@ -1,6 +1,5 @@
 <div>
     <div
-        x-show="isSettingsPanelOpen"
         class="fixed z-10 inset-0 bg-black bg-opacity-50"
         @click="isSettingsPanelOpen = false"
         aria-hidden="true"
@@ -26,10 +25,12 @@
                     <div class="relative h-10 mt-5 input-component ">
                         <select x-model="selectPeriodo" class="font-bold h-full w-full border-gray-300 px-2 empty transition-all border-blue rounded-lg"  >
                             <option hidden selected value="">Selecionar Período</option>
-                            <option value="0">Por Data</option>
+                            @if(Route::current()->getName() != "financeiro")
+                                <option value="3" >Ano</option>
+                                <option value="2">Trimestre</option>
+                                <option value="0">Por Data</option>
+                            @endif
                             <option value="1">Mês</option>
-                            <option value="2">Trimestre</option>
-                            <option value="3" >Ano</option>
                         </select>
                         <label class="absolute left-4 transition-all bg-white px-1">
                             Período
@@ -128,7 +129,8 @@
                 <!-- /Periodos -->
 
                 <button
-                    wire:click="filtrar"
+                    wire:click="filtrar()"
+                    @click="isSettingsPanelOpen = false"
                     class="w-full px-4 py-2 text-center text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-600 focus:ring-offset-2 focus:ring-offset-gray-100"
                 >
                     Filtrar
