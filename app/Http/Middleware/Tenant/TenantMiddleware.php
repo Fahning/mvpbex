@@ -2,13 +2,10 @@
 
 namespace App\Http\Middleware\Tenant;
 
-use App\Http\Middleware\EncryptCookies;
 use App\Models\Company;
 use App\Tenant\ManagerTenant;
 use Closure;
-use Illuminate\Contracts\Encryption\EncryptException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 
@@ -26,7 +23,6 @@ class TenantMiddleware
     {
         $manager = app(ManagerTenant::class);
         $tenantId = $this->getTenantId();
-
         if($tenantId){
             $company = $this->getCompany($tenantId);
             if (!$company && $request->url() != route('404.tenant') && $request->url() != route('login')) {
@@ -40,7 +36,7 @@ class TenantMiddleware
 
     public function getCompany($tenantId){
         if($tenantId){
-            return Company::where('cnpj', $tenantId)->first();
+            return Company::where('hash_auth', $tenantId)->first();
         }else{
             return false;
         }
@@ -48,12 +44,12 @@ class TenantMiddleware
 
     public function getTenantId()
     {
-        if(Cookie::has('cnpj')){
+        if(Cookie::has('_HS-AT')){
 
-            if(strlen(Cookie::get('cnpj')) > 20){
-                return explode('|', Crypt::decryptString(Cookie::get('cnpj')))[1];
+            if(strlen(Cookie::get('_HS-AT')) > 20){
+                return explode('|', Crypt::decryptString(Cookie::get('_HS-AT')))[1];
             }else{
-                return Cookie::get('cnpj');
+                return Cookie::get('_HS-AT');
             }
         }else {
             return false;

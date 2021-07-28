@@ -2,6 +2,9 @@
     <div class="flex justify-center gap-4 mt-44">
         <div class=" w-2/6">
             <div class="flex justify-center mb-4">
+                <span class="text-2xl text-gray-200 px-8 rounded-full bg-green-500">{{Config::get('database.connections.tenant.database')}}</span>
+            </div>
+            <div class="flex justify-center mb-4">
                 <img class="w-80" src="{{ \Illuminate\Support\Facades\URL::asset('logo/Bex-principal.png')  }}" alt="Logo Bex">
             </div>
 
