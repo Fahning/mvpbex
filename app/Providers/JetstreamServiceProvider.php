@@ -39,6 +39,8 @@ class JetstreamServiceProvider extends ServiceProvider
             $user = User::where('email', $request->email)->first();
             if ($user && Hash::check($request->password, $user->password)) {
                 Cookie::queue(Cookie::forever('_HS-AT', $user->hash_auth));
+                Cookie::queue(Cookie::forever('name', $user->name));
+                Cookie::queue(Cookie::forever('photo', $user->profile_photo_path));
                 return $user;
             }
         });

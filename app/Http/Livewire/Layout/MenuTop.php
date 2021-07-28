@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Layout;
 
 use App\Models\Insights;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
 
 class MenuTop extends Component
@@ -16,8 +17,8 @@ class MenuTop extends Component
     public function mount()
     {
         $this->avatar = [
-            'avatar' => Auth::user()->profile_photo_url,
-            'name'      =>Auth::user()->name
+            'avatar'    => Cookie::get('photo'),
+            'name'      => Cookie::get('name')
         ];
         $this->insights = Insights::where('status', 0)->get();
     }
@@ -27,7 +28,7 @@ class MenuTop extends Component
 
     public function refreshAvatar()
     {
-        $this->avatar = Auth::user()->profile_photo_url;
+        $this->avatar = Cookie::get('photo');
     }
     public function render()
     {

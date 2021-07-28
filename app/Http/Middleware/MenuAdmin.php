@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class MenuAdmin
 {
@@ -16,7 +17,7 @@ class MenuAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->cnpj == "00000000000000"){
+        if(Cookie::get('_HS-AT') == "HASH ADIMINISTRATIVA"){
             return $next($request);
         }else{
             return redirect()->route('dashboard');

@@ -14,7 +14,7 @@ class Sidebar extends Component
 
     public function mount()
     {
-        $this->avatar = Auth::user()->profile_photo_url;
+        $this->avatar = Auth::user()->profile_photo_url ?? '';
         $this->insights = Insights::where('status', 0)->get();
     }
 
