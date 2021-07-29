@@ -8,14 +8,10 @@ use \App\Http\Livewire\{
 
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-    ->middleware(array_filter([
-        'guest:'.config('fortify.guard')
-    ]));
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
-
 
 
 Route::view('/404-tenant','errors.404-tenant')->name('404.tenant');

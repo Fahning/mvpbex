@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Company;
 use App\Tenant\ManagerTenant;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
 class Authenticate extends Middleware
@@ -12,7 +13,6 @@ class Authenticate extends Middleware
 
     protected function authenticate($request, array $guards)
     {
-        $manager = app(ManagerTenant::class);
 
         if (empty($guards)) {
             $guards = [null];
@@ -32,10 +32,10 @@ class Authenticate extends Middleware
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return string|null
      */
-    protected function redirectTo($request)
+    protected function redirectTo($request): ?string
     {
         if (! $request->expectsJson()) {
             return route('login');
