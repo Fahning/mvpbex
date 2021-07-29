@@ -33,9 +33,9 @@ jobs:
       with:
         command: |
           cd /var/www/mvpbex/ &&
-          php artisan optimize &&
-          echo date /t >> logDeploy.txt
+          php artisan migrate &&
+          php artisan optimize
         host: ${{ secrets.SECRET_HOST }}
         user: ${{ secrets.SECRET_USER }}
-        pass: 9731Sale$
+        pass: ${{ secrets.SECRET_PASS }}
         port: ${{ secrets.SECRET_PORT }}
