@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('cnpj');
-            $table->string('hahs_auth');
+            $table->string('hash_auth');
             $table->string('domain')->unique();
             $table->string('db_database')->unique();
             $table->string('db_hostname');

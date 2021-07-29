@@ -29,6 +29,6 @@ class CreateTableInsightTipo extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_insight_tipo');
+        Schema::dropIfExists('insight_por_tipo');
     }
 }
