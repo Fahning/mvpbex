@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,9 +29,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+
         $request->authenticate();
 
         $request->session()->regenerate();
+        Cookie::queue(Cookie::forever('_HS-AT', Auth::user()->hash_auth));
+        Cookie::queue(Cookie::forever('name', Auth::user()->name));
+        Cookie::queue(Cookie::forever('photo', Auth::user()->profile_photo_path));
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
@@ -48,6 +53,9 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+        Cookie::queue(Cookie::forget('_HS-AT'));
+        Cookie::queue(Cookie::forget('name'));
+        Cookie::queue(Cookie::forget('photo'));
 
         return redirect('/');
     }
