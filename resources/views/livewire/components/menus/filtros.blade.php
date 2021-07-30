@@ -20,16 +20,16 @@
             <h2 class="text-lg font-semibold">Filtros</h2>
             <!--filtros-->
             <div class="flex flex-col" style="height: 88vh">
-                <!-- Periodos -->
                 <div x-data="{selectPeriodo: null}" class="flex-1" >
+                <!-- Periodos -->
                     <div class="relative h-10 mt-5 input-component ">
                         <select x-model="selectPeriodo" class="font-bold h-full w-full border-gray-300 px-2 empty transition-all border-blue rounded-lg"  >
                             <option hidden selected value="">Selecionar Período</option>
                             @if(Route::current()->getName() != "financeiro")
-                                <option value="3" >Ano</option>
-                                <option value="2">Trimestre</option>
                                 <option value="0">Por Data</option>
                             @endif
+                            <option value="3" >Ano</option>
+                            <option value="2">Trimestre</option>
                             <option value="1">Mês</option>
                         </select>
                         <label class="absolute left-4 transition-all bg-white px-1">
@@ -124,9 +124,17 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
                 <!-- /Periodos -->
+                    <div class="my-7">
+                        <x-input wire:model.defer="filtros.searchCliente" class="rounded-md" label="Buscar Cliente" id="buscarCliente" name="buscarCliente"></x-input>
+                    </div>
+                    <div class="my-7">
+                        <x-input wire:model.defer="filtros.seachBase" class="rounded-md" label="Buscar Base" id="seachBase" name="seachBase"></x-input>
+                    </div>
+                    <div class="my-7">
+                        <x-input wire:model.defer="filtros.seachSegmento" class="rounded-md" label="Buscar Segmento" id="seachSegmento" name="seachSegmento"></x-input>
+                    </div>
+                </div>
 
                 <button
                     wire:click="filtrar()"

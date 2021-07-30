@@ -19,13 +19,14 @@
 
         @livewireStyles
 
+
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
 
 
         <!-- HighCharts -->
         <script type="text/javascript" src="https://code.highcharts.com/stock/highstock.js"></script>
-
+        <wireui:scripts />
     </head>
 
 

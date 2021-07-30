@@ -42,4 +42,5 @@
         @error('porcentagem') <span>{{ $message }}</span> @enderror
     </div>
 
+
 </div>

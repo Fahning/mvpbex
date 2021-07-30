@@ -13,11 +13,15 @@ class Filtros extends Component
         'ano' => null,
         'mes' => null,
         'trimestre' => null,
+        'searchCliente' => null,
+        'searchBase' => null,
+        'searchSegmentos' => null
     ];
 
     public function filtrar()
     {
         $this->emit('filtros', $this->filtros);
+
     }
 
 

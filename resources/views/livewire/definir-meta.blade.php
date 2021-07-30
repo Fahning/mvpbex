@@ -16,4 +16,5 @@
             @livewire('components.new-meta')
         </div>
     </div>
+
 </x-app-layout>
