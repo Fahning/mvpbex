@@ -27,30 +27,32 @@
                                     </div>
                                 </div>
                             </th>
-                        @elseif($key == 'Meta' || $key == 'Média' || $key == 'Desvio (R$)')
+                        @elseif($key == 'Meta' || $key == 'Média' )
                             <td class="px-4 py-1 w-22">{{formatReceita($value)}}</th>
-                        @elseif($key == 'Mês')
-                            <td class="px-4 py-1">{{ monthToString($value) }}</th>
-                        @elseif($key == 'Desvio (%)')
-                            <td class="px-4 py-1 w-22">
+                        @elseif($key == 'Desvio (R$)')
+                            <td class="px-4 py-1">
                                 @if($value > 0)
-                                    <div class="grid grid-cols-2">
-                                        <div>
-                                            {{formatPorcent($value)}}%
+                                    <div class="flex justify-start">
+                                        <div class="flex-1">
+                                            {{formatReceita($value)}}
                                         </div>
-                                        <div class="h-5 w-5 bg-green-500 border rounded-full">
+                                        <div class="flex-1">
+                                            <div class="h-5 w-5 bg-green-500 border rounded-full">
+                                            </div>
                                         </div>
                                     </div>
                                 @else
-                                    <div  class="grid grid-cols-2">
-                                        <div>
-                                            {{formatPorcent($value)}}%
+                                    <div class="flex justify-start">
+                                        <div class="flex-1">
+                                            {{formatReceita($value)}}
                                         </div>
-                                        <div class="h-5 w-5 bg-red-500 border rounded-full">
+                                        <div class="flex-1">
+                                            <div class="h-5 w-5 bg-red-500 border rounded-full">
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
-                            </th>
+                            </td>
                         @else
                             <td class="px-4 py-1 text-sm" style="width: 320px !important;">{{$value}}</th>
                         @endif

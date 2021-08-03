@@ -25,8 +25,6 @@ class TableEvolucaoDesvios extends Component
                 desvio as 'Desvio (%)'");
         $this->table = DB::table("desvio_media_faturamento")
             ->select($select)
-            ->orderBy('ano', 'desc')
-            ->orderBy('mes', 'desc')
             ->get();
         foreach ($this->table as $t){
             if($this->maior < $t->Realizado){
@@ -48,6 +46,10 @@ class TableEvolucaoDesvios extends Component
             ->select($select)
             ->when($filtro['orderDesvios'], function ($query) use($filtro){
                 $query->orderBy('desvio', $filtro['orderDesvios']);
+            })
+            ->when(!$filtro['orderDesvios'], function ($query) use($filtro){
+                $query->orderBy('ano', 'desc');
+                $query->orderBy('mes', 'desc');
             })
             ->get();
 

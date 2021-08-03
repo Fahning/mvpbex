@@ -7,8 +7,19 @@
 
 @push('scripts')
     <script>
+        function formatDate(date){
+            return date.replace(/(\d*)-(\d*)-(\d*).*/, '$3-$2-$1');
+        }
         document.addEventListener('livewire:load', () => {
             Highcharts.chart('container', {
+                chart: {
+                    type: 'line',
+                    events: {
+                        load: function(event) {
+                        event.target.reflow();
+                        }
+                    }
+                },
                 title: {
                     text: null
                 },
@@ -18,13 +29,21 @@
                 yAxis: {
                     title: {
                         text: null
-                    }
-                },
-                xAxis: {
+                    },
                     labels:{
                         enabled:false
                     },
-                    categories: @this.data.day
+                },
+                xAxis: {
+                    categories: @this.data.day,
+                    labels:{
+                        type: 'datetime',
+                        labels: {
+                            format: '{value:%d}',
+                            rotation: 45,
+                            align: 'left'
+                        }
+                    }
                 },
                 legend: {
                     enabled: false,
@@ -45,7 +64,7 @@
                 }],
                 tooltip: {
                     formatter:function(){
-                        return  this.x + '<br>' + Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(this.point.y)
+                        return  formatDate(this.x) + '<br>' + Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(this.point.y)
                     }
                 },
                 responsive: {
@@ -75,14 +94,21 @@
                 yAxis: {
                     title: {
                         text: null
-                    }
-                },
-
-                xAxis: {
+                    },
                     labels:{
                         enabled:false
                     },
-                    categories: @this.data.day
+                },
+                xAxis: {
+                    categories: @this.data.day,
+                    labels:{
+                        type: 'datetime',
+                        labels: {
+                            format: '{value:%d}',
+                            rotation: 45,
+                            align: 'left'
+                        }
+                    }
                 },
                 legend: {
                     enabled: false,
@@ -103,7 +129,7 @@
                 }],
                 tooltip: {
                     formatter:function(){
-                        return  this.x + '<br>' + Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(this.point.y)
+                        return  formatDate(this.x) + '<br>' + Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(this.point.y)
                     }
                 },
                 responsive: {
