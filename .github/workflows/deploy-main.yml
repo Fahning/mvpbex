@@ -16,7 +16,7 @@ jobs:
         php-version: '7.3'
     - uses: actions/checkout@v2
     - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --prefer-dist
+      run: composer install
 #    - name: Update Dependencies
 #      run: composer update --ignore-platform-reqs
     - name: Directory Permissions
