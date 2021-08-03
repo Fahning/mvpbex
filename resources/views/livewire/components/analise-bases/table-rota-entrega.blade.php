@@ -10,7 +10,7 @@
     </div>
     <div class="overflow-auto max-h-80">
         <x-loading-table/>
-        <table wire:loading.class="hidden"table-auto border-collapse w-full mt-4">
+        <table wire:loading.class="hidden" class="table-auto border-collapse w-full mt-4">
             <thead>
             <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
                 @foreach($tableRotaEntrega[0] ??= [] as $key => $value)
