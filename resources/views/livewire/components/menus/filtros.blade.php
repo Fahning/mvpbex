@@ -16,15 +16,15 @@
         x-transition:leave-end="translate-x-full"
         class="fixed inset-y-0 z-20 right-0 w-64 bg-white border-l border-indigo-100 rounded-l-3xl"
     >
-        <div class="px-4 py-8">
+        <div class="px-4 py-8" x-data="{selectPeriodo: null}">
             <div class="flex justify-between">
                 <div class="text-lg font-semibold">Filtros</div>
-                <x-button wire:click="resetFilters" xs icon="x" spinner  outline  class="mb-1" label="Limpar"/>
+                <x-button wire:click="resetFilters" @click="selectPeriodo = null" xs icon="x" spinner  outline  class="mb-1" label="Limpar"/>
             </div>
             <hr class="py-2">
             <!--filtros-->
             <div class="flex flex-col" style="height: 86vh">
-                <div x-data="{selectPeriodo: null}" class="flex-1 overflow-y-auto" >
+                <div  class="flex-1 overflow-y-auto" >
                     <div>
                         <div class="text-sm text-gray-500">Filtros Globais</div>
                         <hr>
