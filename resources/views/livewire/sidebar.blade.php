@@ -7,6 +7,6 @@
         <main class="w-full overflow-auto px-5" style="max-height: 86vh">
             {{ $slot }}
         </main>
-        @livewire('components.menus.modal-insight')
+{{--        @livewire('components.menus.modal-insight')--}}
     </div>
 </div>

@@ -162,7 +162,7 @@
         </div>
 
         <!-- User avatar -->
-        <div class="relative flex items-center flex-shrink-0 p-2 z-50" x-data="{ isOpen: false }">
+        <div class="relative flex items-center flex-shrink-0 p-2" x-data="{ isOpen: false }">
             <button
                 @click="isOpen = !isOpen; $nextTick(() => {isOpen ? $refs.userMenu.focus() : null})"
                 class="transition-opacity rounded-lg opacity-80 hover:opacity-100 focus:outline-none focus:ring focus:ring-indigo-600 focus:ring-offset-white focus:ring-offset-2"
@@ -463,7 +463,7 @@
                 <div class="overflow-auto " style="max-height: 87vh">
                     @foreach($insights as $insight)
                         <div class="border-t-2 border-white"></div>
-                        <div wire:click="abreModal({{$insight->id}})" @click="currentSidebarTab = 'notificationsTab'" class="grid grid-cols-1 bg-blue-100 p-2 rounded-md cursor-pointer hover:bg-blue-200 w-56"  title="{{$insight->descricao}}">
+                        <div @click="currentSidebarTab = 'notificationsTab'; abreInsight({{$insight->id}})" class="grid grid-cols-1 bg-blue-100 p-2 rounded-md cursor-pointer hover:bg-blue-200 w-56"  title="{{$insight->descricao}}">
                             <div class="flex justify-between">
                                 <div class="text-xs font-bold uppercase font text-gray-700">
                                     {{ $insight->tipo }}
@@ -480,5 +480,34 @@
                     @endforeach
                 </div>
         </section>
+        <x-modal max-width="6xl" wire:model.defer="cardInsight" wire:init="teste">
+            <x-card title="Insight">
+                <div class="animate-pulse flex flex-col" >
+                    <div  wire:loading class="overflow-y-scroll" style="height: 34rem;">
+                        <div class="h-24 bg-gray-400 rounded w-full"></div>
+                        <div class="h-72 my-2 bg-gray-400 rounded w-full"></div>
+                        <div class="flex my-1">
+                            <div class="h-72 mr-2 bg-gray-400 rounded w-full"></div>
+                            <div class="h-72 ml-1 bg-gray-400 rounded w-4/6"></div>
+                        </div>
+                        <div class="flex my-1">
+                            <div class="h-72 mr-2 bg-gray-400 rounded w-full"></div>
+                            <div class="h-72 ml-1 bg-gray-400 rounded w-4/6"></div>
+                        </div>
+                        <div class="flex my-1">
+                            <div class="h-72 mr-2 bg-gray-400 rounded w-full"></div>
+                            <div class="h-72 ml-1 bg-gray-400 rounded w-4/6"></div>
+                        </div>
+                    </div>
+                </div>
+            </x-card>
+        </x-modal>
     </div>
 </div>
+
+<script>
+    function abreInsight(){
+        Livewire.emit('carregaInsight')
+        $openModal('cardInsight')
+    }
+</script>

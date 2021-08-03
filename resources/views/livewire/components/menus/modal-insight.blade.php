@@ -2,7 +2,7 @@
 
     <button
         onclick="openModal(false)"
-        class="absolute top-16 z-50 right-11 bg-red-500 hover:bg-red-600 text-2xl w-10 h-10 rounded-full focus:outline-none text-white">
+        class="absolute top-16 right-11 bg-red-500 hover:bg-red-600 text-2xl w-10 h-10 rounded-full focus:outline-none text-white">
         &cross;
     </button>
     <!-- modal -->
