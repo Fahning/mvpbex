@@ -16,9 +16,9 @@ jobs:
         php-version: '7.3'
     - uses: actions/checkout@v2
     - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Composer updatade Lockfile
-      run: composer update --lock
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+    - name: Update Dependencies
+      run: composer update --ignore-platform-reqs
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Laravel Rsync Deploy
