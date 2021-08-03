@@ -65,6 +65,12 @@
         </div>
 
         <div class="col-span-9 my-3">
+            <div class="p-2 w-full">
+                <p class="text-md font-bold text-center">
+                    PERFIL DE CARGAS
+                </p>
+                <hr class="border-2 rounded-md">
+            </div>
             @livewire('components.analise-clientes.tabela-distribuicao')
         </div>
     </div>
