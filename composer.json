@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
+        "ext-intl": "*",
         "ext-json": "*",
         "asantibanez/livewire-charts": "^2.3",
         "fideloper/proxy": "^4.4",

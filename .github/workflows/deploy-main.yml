@@ -16,9 +16,7 @@ jobs:
         php-version: '7.4'
     - uses: actions/checkout@v2
     - name: Install Dependencies
-      run: composer install
-#    - name: Update Dependencies
-#      run: composer update --ignore-platform-reqs
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Laravel Rsync Deploy
