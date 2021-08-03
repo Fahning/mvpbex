@@ -149,7 +149,7 @@
                         <hr>
                     </div>
                     <div class="mb-7">
-                        <x-input placeholder="Buscar CLiente" wire:model.defer="filtros.searchCliente" class="rounded-md" id="buscarCliente" name="buscarCliente"></x-input>
+                        <x-input placeholder="Buscar Cliente" wire:model.defer="filtros.searchCliente" class="rounded-md" id="buscarCliente" name="buscarCliente"></x-input>
                     </div>
                     <!-- ANALISE DE BASES -->
                     <div class="m-1">

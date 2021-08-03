@@ -56,7 +56,9 @@ class TableRotaTransferencia extends Component
         $this->tableRotaTransferencia = DB::table("v_receita_transf_new")
             ->select( "Cidade Origem", "Cidade Destino", "Receita", "Quantidade CTRC as Qtde CTRC", "Volumes", "Peso")
             ->where('Ano', $this->year)
-            ->where('Cidade Origem', 'LIKE', "'{$filtro}'")
+            ->when($this->rota, function ($query){
+                $query->where('Cidade Origem', 'LIKE', '%' . $this->rota . '%');
+            })
             ->where('M', $this->month)
             ->get();
 
