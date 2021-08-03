@@ -12,6 +12,7 @@ class TabelaDistribuicao extends Component
     public $year;
     public $month;
     public $maior = 0;
+    public $persp;
 
     protected $listeners = ['filtros' => 'filtrar'];
 
@@ -32,6 +33,16 @@ class TabelaDistribuicao extends Component
         $this->year = $filtro['ano'];
         $this->month = $filtro['mes'];
         $this->tableDistribuicao = DB::select("CALL dist_cargas(".$this->year.", ".$this->month.",'Peso')");
+        foreach ($this->tableDistribuicao as $t){
+            if($this->maior < $t->{"Qtde de CTRC"}){
+                $this->maior = $t->{"Qtde de CTRC"};
+            }
+        }
+    }
+
+    public function perspectiva()
+    {
+        $this->tableDistribuicao = DB::select("CALL dist_cargas(".$this->year.", ".$this->month.",'{$this->persp}')");
         foreach ($this->tableDistribuicao as $t){
             if($this->maior < $t->{"Qtde de CTRC"}){
                 $this->maior = $t->{"Qtde de CTRC"};

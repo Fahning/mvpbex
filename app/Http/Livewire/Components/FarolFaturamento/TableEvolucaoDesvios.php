@@ -9,14 +9,54 @@ class TableEvolucaoDesvios extends Component
 {
     public $maior = 0;
     public $menor;
-    public function render()
+    public $table;
+
+    protected $listeners = ['filtros' => 'filtrar'];
+
+
+    public function mount()
     {
-        $table = DB::select("CALL tabela_faturamentos()");
-        foreach ($table as $t){
+        $select = DB::raw("ano as Ano,
+                mes as Mês,
+                receita as Realizado,
+                IF(mes = MONTH(CURRENT_DATE()) AND ano = YEAR(CURRENT_DATE()),
+                meta_acumulada, meta) as Meta,
+                desvio_abs as 'Desvio (R$)',
+                desvio as 'Desvio (%)'");
+        $this->table = DB::table("desvio_media_faturamento")
+            ->select($select)
+            ->orderBy('ano', 'desc')
+            ->orderBy('mes', 'desc')
+            ->get();
+        foreach ($this->table as $t){
             if($this->maior < $t->Realizado){
                 $this->maior = $t->Realizado;
             }
         }
-        return view('livewire.components.farol-faturamento.table-evolucao-desvios', compact('table'));
+    }
+
+    public function filtrar($filtro)
+    {
+        $select = DB::raw("ano as Ano,
+                mes as Mês,
+                receita as Realizado,
+                IF(mes = MONTH(CURRENT_DATE()) AND ano = YEAR(CURRENT_DATE()),
+                meta_acumulada, meta) as Meta,
+                desvio_abs as 'Desvio (R$)',
+                desvio as 'Desvio (%)'");
+        $this->table = DB::table("desvio_media_faturamento")
+            ->select($select)
+            ->orderBy('desvio', $filtro['orderDesvios'])
+            ->get();
+
+        foreach ($this->table as $t){
+            if($this->maior < $t->Realizado){
+                $this->maior = $t->Realizado;
+            }
+        }
+    }
+    public function render()
+    {
+        return view('livewire.components.farol-faturamento.table-evolucao-desvios');
     }
 }

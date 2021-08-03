@@ -1,7 +1,8 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
+    <div class="text-center font-bold mt-4">Evolução dos Desvios</div>
     <div class="overflow-x-auto">
-        <div class="text-center font-bold mt-4">Evolução dos Desvios</div>
-        <table class="table-auto border-collapse w-full mt-4">
+        <x-loading-table/>
+        <table wire:loading.class="hidden" class="table-auto border-collapse w-full mt-4">
             <thead>
             <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
                 @foreach($table[0] ??= [] as $key => $value)

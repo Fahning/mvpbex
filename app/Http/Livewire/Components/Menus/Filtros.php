@@ -17,6 +17,7 @@ class Filtros extends Component
         'trimestre' => null,
         'searchCliente' => null,
         'searchBase' => null,
+        'orderDesvios' => null,
         'searchSegmentos' => null
     ];
 

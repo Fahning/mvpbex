@@ -5,7 +5,7 @@ use Carbon\Carbon;
 
 if (! function_exists('formatReceita')) {
     function formatReceita($value){
-        $value = intval($value);
+        $value = floatval($value);
         return 'R$: '.strval(number_format($value,2,",","."));
     }
 }

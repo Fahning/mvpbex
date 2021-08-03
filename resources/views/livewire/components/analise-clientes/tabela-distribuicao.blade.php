@@ -1,6 +1,18 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
     <div class="text-center font-bold mp-4">Frequência por peso no faturamento ({{monthToString($month)}} de {{$year}})</div>
-
+    <div class="flex items-end">
+        <x-native-select
+            label="Selecionar Perspectiva"
+            placeholder="Escolha a perspectiva"
+            :options="['Peso', 'Volumes', 'Cubagem']"
+            wire:model.defer="persp"
+        />
+        <div wire:click="perspectiva" class="bg-green-400 rounded-lg h-9 w-9 ml-2 flex justify-center items-center cursor-pointer hover:bg-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+    </div>
     <div class="overflow-auto max-h-80">
         <x-loading-table/>
         <table wire:loading.class="hidden" class="table-auto border-collapse w-full mt-4" >

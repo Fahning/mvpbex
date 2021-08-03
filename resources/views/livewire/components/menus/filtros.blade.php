@@ -18,11 +18,16 @@
     >
         <div class="px-4 py-8">
             <h2 class="text-lg font-semibold">Filtros</h2>
+            <hr class="py-2">
             <!--filtros-->
-            <div class="flex flex-col" style="height: 88vh">
-                <div x-data="{selectPeriodo: null}" class="flex-1" >
+            <div class="flex flex-col" style="height: 86vh">
+                <div x-data="{selectPeriodo: null}" class="flex-1 overflow-y-auto" >
+                    <div>
+                        <div class="text-sm text-gray-500">Filtros Globais</div>
+                        <hr>
+                    </div>
                 <!-- Periodos -->
-                    <div class="relative h-10 mt-5 input-component ">
+                    <div class="relative h-10 my-5 input-component ">
                         <select x-model="selectPeriodo" class="font-bold h-full w-full border-gray-300 px-2 empty transition-all border-blue rounded-lg"  >
                             <option hidden selected value="">Selecionar Período</option>
                             @if(Route::current()->getName() != "financeiro")
@@ -124,11 +129,34 @@
                             </div>
                         </div>
                     </div>
-                <!-- /Periodos -->
-                    <div class="my-7">
-                        <x-input wire:model.defer="filtros.searchCliente" class="rounded-md" label="Buscar Cliente" id="buscarCliente" name="buscarCliente"></x-input>
+
+                    <div class="my-5">
+                        <x-select
+                            placeholder="Ordenar Desvios"
+                            :options="[
+                                ['name' => 'Maiores Desvios',  'id' => 'desc'],
+                                ['name' => 'Menores Desvios', 'id' => 'asc'],
+                            ]"
+                            option-label="name"
+                            option-value="id"
+                            wire:model.defer="filtros.orderDesvios"
+                        />
                     </div>
-                    <div class="my-7">
+                <!-- /Periodos -->
+                    <!-- ANALISE DE CLIENTES -->
+                    <div class="m-1">
+                        <div class="text-sm text-gray-500">Filtros Analise de Clientes</div>
+                        <hr>
+                    </div>
+                    <div class="mb-7">
+                        <x-input placeholder="Buscar CLiente" wire:model.defer="filtros.searchCliente" class="rounded-md" id="buscarCliente" name="buscarCliente"></x-input>
+                    </div>
+                    <!-- ANALISE DE BASES -->
+                    <div class="m-1">
+                        <div class="text-sm text-gray-500 text-upper">Filtros Analise de Bases</div>
+                        <hr>
+                    </div>
+                    <div class="mb-7">
                         <x-select
                             placeholder="Selecionar Bases"
                             multiselect
@@ -136,7 +164,12 @@
                             wire:model.defer="filtros.searchBase"
                         />
                     </div>
-                    <div class="my-7">
+                    <!-- ANALISE DE SEGMENTOS -->
+                    <div class="m-1">
+                        <div class="text-sm text-gray-500 text-uppercase">Filtros Analise de Segmentos</div>
+                        <hr>
+                    </div>
+                    <div class="mb-7">
                         <x-select
                             placeholder="Selecionar Segmentos"
                             multiselect
@@ -145,7 +178,7 @@
                         />
                     </div>
                 </div>
-
+                <hr class="py-1">
                 <button
                     wire:click="filtrar()"
                     @click="isSettingsPanelOpen = false"

@@ -15,6 +15,7 @@ class TableMetaSegmento extends Component
     public $selectSegmentos = [];
     public $segmentolist = [];
 
+
     protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
@@ -34,27 +35,32 @@ class TableMetaSegmento extends Component
         }
         $this->table = $this->queryMetaSegment($this->month, $this->year, $segmento);
         foreach ($this->table as $t){
-            $t->Meta = floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia);
-            array_push($this->segmentolist,$t->Segmento );
+            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
             unset($t->{'Fator Peso'});
+            unset($t->dias_uteis_hoje);
+            unset($t->dias_uteis);
+            array_push($this->segmentolist,$t->Segmento );
             if($this->maior < $t->Realizado){
                 $this->maior = $t->Realizado;
             }
         }
+
     }
 
 
     public function searchSegmentos()
     {
 
-        $this->media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
+        $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
 
         $this->table = $this->queryMetaSegment($this->month, $this->year);
-        dd($this->table);
-
         foreach ($this->table as $t){
-            $t->Meta = floatval($t->{'Fator Peso'}) * floatval($this->media[0]->vMedia);
+            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
             unset($t->{'Fator Peso'});
+            unset($t->dias_uteis_hoje);
+            unset($t->dias_uteis);
         }
     }
 
@@ -80,12 +86,26 @@ class TableMetaSegmento extends Component
         $this->table = $this->queryMetaSegment($this->month, $this->year, $segmentos);
 
         foreach ($this->table as $t){
-            $t->Meta = floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia);
+            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
             unset($t->{'Fator Peso'});
-            if($this->maior < $t->Realizado){
-                $this->maior = $t->Realizado;
-            }
+            unset($t->dias_uteis_hoje);
+            unset($t->dias_uteis);
         }
+        if(!is_null($filtro['orderDesvios'])){
+            usort($this->table, function($a, $b) use($filtro)
+            {
+                if($filtro['orderDesvios'] == 'asc'){
+                    return $a->{'Desvio (R$)'} > $b->{'Desvio (R$)'};
+                }elseif($filtro['orderDesvios'] == 'desc'){
+                    return $a->{'Desvio (R$)'} < $b->{'Desvio (R$)'};
+                }else{
+                    return $a->{'Desvio (R$)'};
+                }
+            });
+        }
+
+
     }
 
     public function render()
@@ -105,7 +125,9 @@ class TableMetaSegmento extends Component
                                     AND (`nf`.`ano` = YEAR(CURDATE()))),
                                 (SUM(`nf`.`val_frete`) / `mad`.`dias_uteis_hoje`),
                                 (SUM(`nf`.`val_frete`) / `mad`.`dias_uteis`)) AS `Média`,
-                            `mda`.`peso_base` AS `Fator Peso`
+                            `mda`.`peso_base` AS `Fator Peso`,
+                            `mad`.`dias_uteis_hoje`,
+                            `mad`.`dias_uteis`
                         FROM
                             `tabela_ctes` `nf`
                                 LEFT JOIN
@@ -135,44 +157,5 @@ class TableMetaSegmento extends Component
                         WHERE
                             `nf`.`ano` = ".$year." AND `nf`.`mes` = ".$month." ".$segmentos."
                         GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`segmento`");
-//        return DB::select("SELECT
-//                            nf.segmento AS Segmento,
-//                            SUM(nf.val_frete) AS Realizado,
-//                            IF(((nf.mes = MONTH(CURDATE()))
-//                                    AND (nf.ano = YEAR(CURDATE()))),
-//                                (SUM(nf.val_frete) / mad.dias_uteis_hoje),
-//                                (SUM(nf.val_frete) / mad.dias_uteis)) AS Média,
-//                            AVG(mda.peso_base) AS 'Fator Peso'
-//                        FROM
-//                            tabela_ctes nf
-//
-//                        LEFT JOIN (SELECT
-//                            nf.ano,
-//                            nf.mes,
-//                            nf.segmento AS segmento,
-//                            (SUM(nf.val_frete) / tot.receita_total) AS peso_base
-//                        FROM
-//                            (tabela_ctes nf
-//                            LEFT JOIN (SELECT
-//                                nf.ano AS ano,
-//                                    nf.mes AS mes,
-//                                    SUM(nf.val_frete) AS receita_total
-//                            FROM
-//                                tabela_ctes nf
-//                            GROUP BY nf.ano , nf.mes) tot ON (((nf.ano = tot.ano)
-//                                AND (nf.mes = tot.mes))))
-//                        WHERE
-//                            ((nf.mes < ".$month.")
-//                                AND (nf.mes >= ".$month." - 3))
-//                        GROUP BY nf.ano, nf.mes, nf.segmento) mda
-//                        ON nf.segmento = mda.segmento
-//
-//                    LEFT JOIN meta_acumulada_dia mad ON (((nf.ano = mad.ano)
-//                    AND (nf.mes = mad.mes)))
-//
-//
-//                        WHERE nf.ano = ".$year." AND nf.mes = ".$month ." ".$segmentos."
-//
-//                        GROUP BY nf.ano , nf.mes , nf.segmento;");
     }
 }

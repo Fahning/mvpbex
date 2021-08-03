@@ -27,7 +27,7 @@
                                     </div>
                                 </div>
                             </th>
-                        @elseif($key == 'Meta' || $key == 'Média')
+                        @elseif($key == 'Meta' || $key == 'Média' || $key == 'Desvio (R$)')
                             <td class="px-4 py-1 w-22">{{formatReceita($value)}}</th>
                         @elseif($key == 'Mês')
                             <td class="px-4 py-1">{{ monthToString($value) }}</th>
@@ -52,7 +52,7 @@
                                 @endif
                             </th>
                         @else
-                            <td class="px-4 py-1" style="width: 120px !important;">{{$value}}</th>
+                            <td class="px-4 py-1 text-sm" style="width: 320px !important;">{{$value}}</th>
                         @endif
                     @endforeach
                 </tr>

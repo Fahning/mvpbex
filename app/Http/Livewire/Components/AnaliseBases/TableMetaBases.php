@@ -13,7 +13,6 @@ class TableMetaBases extends Component
     public $month;
     public $maior = 0;
 
-    protected $media;
 
     protected $listeners = ['filtros' => 'filtrar'];
 
@@ -21,13 +20,16 @@ class TableMetaBases extends Component
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
 
-        $this->media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
+        $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
 
         $this->tableMetaBases = $this->queryMetaBases($this->month, $this->year);
 
         foreach ($this->tableMetaBases as $t){
-            $t->Meta = floatval($t->{'Fator Peso'}) * floatval($this->media[0]->vMedia);
+            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
             unset($t->{'Fator Peso'});
+            unset($t->dias_uteis_hoje);
+            unset($t->dias_uteis);
             if($this->maior < $t->Realizado){
                 $this->maior = $t->Realizado;
             }
@@ -39,7 +41,7 @@ class TableMetaBases extends Component
     {
         $this->year = $filtro['ano'];
         $this->month = $filtro['mes'];
-        $this->media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
+        $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
         $base = [];
         if(!empty($filtro['searchBase'])){
             foreach($filtro['searchBase'] as $b){
@@ -54,8 +56,24 @@ class TableMetaBases extends Component
         $this->tableMetaBases = $this->queryMetaBases($this->month, $this->year, $base);
 
         foreach ($this->tableMetaBases as $t){
-            $t->Meta = floatval($t->{'Fator Peso'}) * floatval($this->media[0]->vMedia);
+            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
             unset($t->{'Fator Peso'});
+            unset($t->dias_uteis_hoje);
+            unset($t->dias_uteis);
+        }
+
+        if(!is_null($filtro['orderDesvios'])){
+            usort($this->tableMetaBases, function($a, $b) use($filtro)
+            {
+                if($filtro['orderDesvios'] == 'asc'){
+                    return $a->{'Desvio (R$)'} > $b->{'Desvio (R$)'};
+                }elseif($filtro['orderDesvios'] == 'desc'){
+                    return $a->{'Desvio (R$)'} < $b->{'Desvio (R$)'};
+                }else{
+                    return $a->{'Desvio (R$)'};
+                }
+            });
         }
     }
 
@@ -75,7 +93,10 @@ class TableMetaBases extends Component
                                 AND (`nf`.`ano` = YEAR(CURDATE()))),
                             (SUM(`nf`.`val_frete`) / `mad`.`dias_uteis_hoje`),
                             (SUM(`nf`.`val_frete`) / `mad`.`dias_uteis`)) AS `Média`,
-                        `mda`.`peso_base` AS `Fator Peso`
+                        `mda`.`peso_base` AS `Fator Peso`,
+                        `mad`.`dias_uteis_hoje`,
+                        `mad`.`dias_uteis`
+
                     FROM
                         `tabela_ctes` `nf`
                             LEFT JOIN
