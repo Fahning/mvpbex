@@ -17,7 +17,10 @@
         class="fixed inset-y-0 z-20 right-0 w-64 bg-white border-l border-indigo-100 rounded-l-3xl"
     >
         <div class="px-4 py-8">
-            <h2 class="text-lg font-semibold">Filtros</h2>
+            <div class="flex justify-between">
+                <div class="text-lg font-semibold">Filtros</div>
+                <x-button wire:click="resetFilters" xs icon="x" spinner  outline  class="mb-1" label="Limpar"/>
+            </div>
             <hr class="py-2">
             <!--filtros-->
             <div class="flex flex-col" style="height: 86vh">

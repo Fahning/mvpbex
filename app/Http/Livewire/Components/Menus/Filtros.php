@@ -21,6 +21,11 @@ class Filtros extends Component
         'searchSegmentos' => null
     ];
 
+
+    public function resetFilters()
+    {
+        $this->reset('filtros');
+    }
     public function filtrar()
     {
         $this->filtros['ano'] = $this->filtros['ano'] ?? Carbon::today()->year;
