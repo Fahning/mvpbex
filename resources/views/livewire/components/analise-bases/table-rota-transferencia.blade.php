@@ -1,7 +1,16 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
     <div class="text-center font-bold mt-4">Analise de Rota de Transferência por Bases ({{monthToString($month)}} de {{$year}})</div>
+    <div class="flex items-end">
+        <x-input wire:model.defer="rota" name="rota" id="rota" label="Buscar Cidade Origem" placeholder="Buscar Cidade Origem"></x-input>
+        <div wire:click="filtrarRota" class="bg-green-400 rounded-lg h-9 w-9 ml-2 flex justify-center items-center cursor-pointer hover:bg-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+    </div>
     <div class="overflow-auto max-h-80">
-        <table class="table-auto border-collapse w-full mt-4">
+        <x-loading-table/>
+        <table wire:loading.class="hidden" class="table-auto border-collapse w-full mt-4">
             <thead>
             <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
                 @foreach($tableRotaTransferencia[0] ??= [] as $key => $value)

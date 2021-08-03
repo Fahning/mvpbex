@@ -43,4 +43,5 @@ class TabelaDistribuicao extends Component
     {
         return view('livewire.components.analise-clientes.tabela-distribuicao');
     }
+
 }

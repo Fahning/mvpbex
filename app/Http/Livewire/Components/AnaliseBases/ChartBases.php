@@ -52,14 +52,17 @@ class ChartBases extends Component
 
     public function searchBases($filtros)
     {
+
         $this->year = $filtros['ano'];
         $this->month = $filtros['mes'];
         $chartBase = DB::table(DB::raw($this->sql))
             ->select("cc.Ano", "cc.M AS Mes", "cc.Base", DB::raw('SUM(cc.Receita) as Receita'))
-            ->where('cc.Ano', $this->year)
-            ->where('cc.M', $this->month)
             ->when($filtros['searchBase'], function($query) use($filtros) {
-                $query->where('cc.Base','LIKE', "%{$filtros['searchBase']}%");
+                $query->whereIn('cc.Base',$filtros['searchBase']);
+            })
+            ->when(!$filtros['searchBase'], function($query) use($filtros) {
+                $query->where('cc.Ano', $this->year);
+                $query->where('cc.M', $this->month);
             })
             ->when($filtros['ano'], function($query) use($filtros) {
                 $query->where('cc.Ano', $this->year);

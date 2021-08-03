@@ -62,7 +62,7 @@ class ChartSegmento extends Component
             ->where('cc.Ano', $this->year)
             ->where('cc.M', $this->month)
             ->when($filtros['searchSegmentos'], function($query) use($filtros) {
-                $query->where('cc.Segmento','LIKE', "%{$filtros['searchSegmentos']}%");
+                $query->whereIn('cc.Segmento',$filtros['searchSegmentos']);
             })
             ->when($filtros['ano'], function($query) use($filtros) {
                 $query->where('cc.Ano', $this->year);

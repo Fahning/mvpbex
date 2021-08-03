@@ -19,8 +19,11 @@ class TableRpkSegmento extends Component
     {
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
-        $this->table = DB::select("call bexsal_bdsal.tabela_persp_filtros(".$this->year.", ".$this->month.", 'Segmento')");
-
+        $this->table = DB::table('v_indic_segmento')
+            ->select('Segmento', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
+            ->where('ano', $this->year)
+            ->where('mes', $this->month)
+            ->get();
         foreach ($this->table as $t){
             if($this->maior < $t->{"Qtde CTRC"}){
                 $this->maior = $t->{"Qtde CTRC"};
@@ -32,7 +35,14 @@ class TableRpkSegmento extends Component
     {
         $this->year = $filtro['ano'];
         $this->month = $filtro['mes'];
-        $this->table = DB::select("call tabela_persp_filtros(".$this->year.", ".$this->month.", 'Segmento')");
+        $this->table = DB::table('v_indic_segmento')
+            ->select('Segmento', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
+            ->where('ano', $this->year)
+            ->where('mes', $this->month)
+            ->when($filtro['searchSegmentos'], function($query) use($filtro) {
+                $query->whereIn('Segmento', $filtro['searchSegmentos']);
+            })
+            ->get();
 
         foreach ($this->table as $t){
             if($this->maior < $t->{"Qtde CTRC"}){

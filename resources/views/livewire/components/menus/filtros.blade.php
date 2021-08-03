@@ -129,10 +129,20 @@
                         <x-input wire:model.defer="filtros.searchCliente" class="rounded-md" label="Buscar Cliente" id="buscarCliente" name="buscarCliente"></x-input>
                     </div>
                     <div class="my-7">
-                        <x-input wire:model.defer="filtros.seachBase" class="rounded-md" label="Buscar Base" id="seachBase" name="seachBase"></x-input>
+                        <x-select
+                            placeholder="Selecionar Bases"
+                            multiselect
+                            :options="$listBases"
+                            wire:model.defer="filtros.searchBase"
+                        />
                     </div>
                     <div class="my-7">
-                        <x-input wire:model.defer="filtros.seachSegmento" class="rounded-md" label="Buscar Segmento" id="seachSegmento" name="seachSegmento"></x-input>
+                        <x-select
+                            placeholder="Selecionar Segmentos"
+                            multiselect
+                            :options="$segmentolist"
+                            wire:model.defer="filtros.searchSegmentos"
+                        />
                     </div>
                 </div>
 

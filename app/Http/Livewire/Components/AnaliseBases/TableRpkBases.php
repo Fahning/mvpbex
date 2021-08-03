@@ -19,7 +19,11 @@ class TableRpkBases extends Component
     {
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
-        $this->tableRpkBases = DB::select("call tabela_persp_filtros(".$this->year.", ".$this->month.", 'Base')");
+        $this->tableRpkBases = DB::table('v_indic_base')
+            ->select('Base', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
+            ->where('ano', $this->year)
+            ->where('mes', $this->month)
+            ->get();
         foreach ($this->tableRpkBases as $t){
             if($this->maior < $t->{'Qtde CTRC'}){
                 $this->maior = $t->{'Qtde CTRC'};
@@ -31,7 +35,14 @@ class TableRpkBases extends Component
     {
         $this->year = $filtro['ano'];
         $this->month = $filtro['mes'];
-        $this->tableRpkBases = DB::select("CALL tabela_persp_filtros(".$this->year.", ".$this->month.",'Base')");
+        $this->tableRpkBases = DB::table('v_indic_base')
+            ->select('Base', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
+            ->where('ano', $this->year)
+            ->where('mes', $this->month)
+            ->when($filtro['searchBase'], function ($query) use ($filtro) {
+                $query->whereIn('Base', $filtro['searchBase']);
+            })
+            ->get();
         foreach ($this->tableRpkBases as $t){
             if($this->maior < $t->{'Qtde CTRC'}){
                 $this->maior = $t->{'Qtde CTRC'};
@@ -45,3 +56,4 @@ class TableRpkBases extends Component
         return view('livewire.components.analise-bases.table-rpk-bases');
     }
 }
+

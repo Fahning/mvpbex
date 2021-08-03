@@ -1,7 +1,39 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
     <div class="text-center font-bold mp-4">Analise comercial de segmento ({{monthToString($month)}} de {{$year}})</div>
     <div class="overflow-auto max-h-80">
-        <table class="table-auto border-collapse w-full mt-4" >
+        <div  wire:loading class="w-full max-h-80">
+            <div class="animate-pulse flex space-x-4">
+                <div class="flex-1 space-y-4 py-1">
+                    <div class="h-8 bg-gray-400 rounded"></div>
+                </div>
+            </div>
+            <div class="animate-pulse flex space-x-1 mt-5">
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+            </div>
+            <div class="animate-pulse flex space-x-1 mt-5">
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+            </div>
+            <div class="animate-pulse flex space-x-1 mt-5">
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+            </div>
+            <div class="animate-pulse flex space-x-1 mt-5">
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+                <div class="h-4  w-full bg-gray-400 rounded"></div>
+            </div>
+        </div>
+
+        <table wire:loading.class="hidden" class="table-auto border-collapse w-full mt-4" >
             <thead>
             <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
                 @foreach($table[0] ?? [] as $key => $value)
@@ -16,7 +48,7 @@
                             @if($key == "TKM" || $key == "RPK" )
                                 <td class="px-4 py-1">{{formatReceita($value)}}</th>
                             @elseif($key == '% Frete/Valor Mercadoria')
-                                <td class="px-4 py-1">{{ $value}}%</th>
+                                <td class="px-4 py-1">{{formatPorcent($value)}}%</th>
                             @elseif($key == "Qtde CTRC")
                                 <td class="px-4 py-0.5">
                                     <div class="relative">

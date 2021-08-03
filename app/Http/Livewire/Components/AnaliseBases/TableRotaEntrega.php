@@ -13,6 +13,7 @@ class TableRotaEntrega extends Component
     public  $month;
     public $maiorReceita;
     public $maiorCTRC;
+    public $rotaEntrega;
 
     protected $listeners = ['filtros' => 'filtrar'];
 
@@ -20,10 +21,14 @@ class TableRotaEntrega extends Component
     {
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
-        $this->tableRotaEntrega = DB::select("call tabela_receita_rota(".$this->year.", ".$this->month.",'Entrega')");
+        $this->tableRotaEntrega = DB::table('v_receita_entrega_new')
+            ->select('Rota', 'Peso', 'Receita', 'Qte CTRC', 'Volumes')
+            ->where('Ano', $this->year)
+            ->where('M', $this->month)
+            ->get();
         foreach ($this->tableRotaEntrega as $t){
-            if($this->maiorCTRC < $t->{"Qtde CTRC"}){
-                $this->maiorCTRC = $t->{"Qtde CTRC"};
+            if($this->maiorCTRC < $t->{"Qte CTRC"}){
+                $this->maiorCTRC = $t->{"Qte CTRC"};
             }
 
             if($this->maiorReceita < $t->Receita){
@@ -32,14 +37,30 @@ class TableRotaEntrega extends Component
         }
     }
 
+    public function filtroRota()
+    {
+        $this->tableRotaEntrega = DB::table('v_receita_entrega_new')
+            ->select('Rota', 'Peso', 'Receita', 'Qte CTRC', 'Volumes')
+            ->where('Ano', $this->year)
+            ->where('M', $this->month)
+            ->when($this->rotaEntrega, function ($query) {
+                $query->where('Rota', 'LIKE', "%". $this->rotaEntrega ."%");
+            })
+            ->get();
+    }
+
     public function filtrar($filtro)
     {
         $this->year = $filtro['ano'];
         $this->month = $filtro['mes'];
-        $this->tableRotaEntrega = DB::select("CALL tabela_receita_rota(".$this->year.", ".$this->month.",'Entrega')");
+        $this->tableRotaEntrega = DB::table('v_receita_entrega_new')
+            ->select('Rota', 'Peso', 'Receita', 'Qte CTRC', 'Volumes')
+            ->where('Ano', $this->year)
+            ->where('M', $this->month)
+            ->get();
         foreach ($this->tableRotaEntrega as $t){
-            if($this->maiorCTRC < $t->{"Qtde CTRC"}){
-                $this->maiorCTRC = $t->{"Qtde CTRC"};
+            if($this->maiorCTRC < $t->{"Qte CTRC"}){
+                $this->maiorCTRC = $t->{"Qte CTRC"};
             }
 
             if($this->maiorReceita < $t->Receita){

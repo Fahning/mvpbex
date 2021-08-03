@@ -20,7 +20,11 @@ class TableRpkClientes extends Component
     {
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
-        $this->tableRpkClientes = DB::select("call tabela_persp_filtros(".$this->year.", ".$this->month.", 'Cliente')");
+        $this->tableRpkClientes = DB::table('v_indic_cliente')
+            ->select('Cliente', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
+            ->where('ano', $this->year)
+            ->where('mes', $this->month)
+            ->get();
         foreach ($this->tableRpkClientes as $t){
             if($this->maior < $t->{"Qtde CTRC"}){
                 $this->maior = $t->{"Qtde CTRC"};
@@ -32,7 +36,15 @@ class TableRpkClientes extends Component
     {
         $this->year = $filtro['ano'];
         $this->month = $filtro['mes'];
-        $this->tableRpkClientes = DB::select("call tabela_persp_filtros(".$this->year.", ".$this->month.", 'Cliente')");
+        $this->tableRpkClientes = DB::table('v_indic_cliente')
+            ->select('Cliente', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
+            ->where('ano', $this->year)
+            ->where('mes', $this->month)
+            ->when($filtro['searchCliente'], function($query) use($filtro) {
+                $query->where('Cliente','like', "%{$filtro['searchCliente']}%");
+            })
+            ->get();
+
         foreach ($this->tableRpkClientes as $t){
             if($this->maior < $t->{"Qtde CTRC"}){
                 $this->maior = $t->{"Qtde CTRC"};
