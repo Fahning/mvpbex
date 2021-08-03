@@ -50,9 +50,6 @@
                 },
                 responsive: {
                     rules: [{
-                        condition: {
-                            maxWidth: 500
-                        },
                         chartOptions: {
                             legend: {
                                 layout: 'horizontal',
@@ -111,9 +108,6 @@
                 },
                 responsive: {
                     rules: [{
-                        condition: {
-                            maxWidth: 500
-                        },
                         chartOptions: {
                             legend: {
                                 layout: 'horizontal',

@@ -3,7 +3,6 @@
     <div class="flex items-end">
         <x-native-select
             label="Selecionar Perspectiva"
-            placeholder="Escolha a perspectiva"
             :options="['Peso', 'Volumes', 'Cubagem']"
             wire:model.defer="persp"
         />

@@ -32,9 +32,9 @@
                             <option hidden selected value="">Selecionar Período</option>
                             @if(Route::current()->getName() != "financeiro")
                                 <option value="0">Por Data</option>
+                                <option value="2">Trimestre</option>
                             @endif
                             <option value="3" >Ano</option>
-                            <option value="2">Trimestre</option>
                             <option value="1">Mês</option>
                         </select>
                         <label class="absolute left-4 transition-all bg-white px-1">
