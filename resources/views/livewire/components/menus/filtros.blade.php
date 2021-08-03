@@ -30,10 +30,8 @@
                     <div class="relative h-10 my-5 input-component ">
                         <select x-model="selectPeriodo" class="font-bold h-full w-full border-gray-300 px-2 empty transition-all border-blue rounded-lg"  >
                             <option hidden selected value="">Selecionar Período</option>
-                            @if(Route::current()->getName() != "financeiro")
-                                <option value="0">Por Data</option>
-                                <option value="2">Trimestre</option>
-                            @endif
+{{--                            <option value="0">Por Data</option>--}}
+{{--                            <option value="2">Trimestre</option>--}}
                             <option value="3" >Ano</option>
                             <option value="1">Mês</option>
                         </select>
