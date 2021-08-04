@@ -247,118 +247,119 @@
 {{--                    </a>--}}
 
                     <!-- MENU DASHBOARD-->
-                    <a href="{{route('dashboard')}}" class="flex items-center w-full space-x-2 text-white bg-indigo-600 rounded-lg">
-                      <span aria-hidden="true" class="p-2 bg-indigo-700 rounded-lg">
-                        <svg
-                            class="w-6 h-6"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                          <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                          />
-                        </svg>
-                      </span>
-                        <span>Dashboard</span>
-                    </a>
 
-                    <!-- MENU OPERACIONA-->
-                    <div class="flex flex-col" x-data="{ openOperacional: false }">
-                        <a
-                            href="#"
-                            @click="openOperacional = !openOperacional"
-                            class="flex items-center space-x-2 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"
-                            :class="openOperacional ? 'bg-indigo-600 text-white' : 'text-indigo-600'"
-                        >
-                      <span
-                          aria-hidden="true"
-                          :class="'p-2 transition-colors rounded-lg group-hover:bg-indigo-700 group-hover:text-white'"
-                      >
-                        <svg
-                            class="w-6 h-6"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                          <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                          />
-                        </svg>
-                      </span>
-                            <span>Operacional</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} :d="openOperacional ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'" />
-                            </svg>
-                        </a>
-                        <div
-                            class="bg-gray-100 rounded-md m-1"
-                            x-show="openOperacional"
-                            x-transition:enter="transform-gpu ease-out duration-200"
-                            x-transition:enter-start="-translate-y-2 opacity-0"
-                            x-transition:leave="transform-gpu ease-out duration-200"
-                            x-transition:leave-end="-translate-y-2 opacity-0"
-                        >
-                            <a
-                                href="{{route('analise-custos')}}"
-                                class="flex items-center space-x-2 text-indigo-600 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"
-                            >
-                            <span
-                                aria-hidden="true"
-                                class="p-2 transition-colors rounded-lg group-hover:bg-indigo-700 group-hover:text-white"
-                            >
-                                <svg
-                                    class="w-6 h-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                  <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                                  />
-                                </svg>
-                            </span>
-                                <span>Análise de Custos</span>
-                            </a>
-                            <a
-                                href="{{route('inventario')}}"
-                                class="flex items-center space-x-2 text-indigo-600 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"
-                            >
-                                <span
-                                    aria-hidden="true"
-                                    class="p-2 transition-colors rounded-lg group-hover:bg-indigo-700 group-hover:text-white"
-                                >
-                                    <svg
-                                        class="w-6 h-6"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                      <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          stroke-width="2"
-                                          d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                                      />
-                                    </svg>
-                                </span>
-                                <span>Inventario</span>
-                            </a>
-                        </div>
-                    </div>
+{{--                    <a href="{{route('dashboard')}}" class="flex items-center w-full space-x-2 text-white bg-indigo-600 rounded-lg">--}}
+{{--                      <span aria-hidden="true" class="p-2 bg-indigo-700 rounded-lg">--}}
+{{--                        <svg--}}
+{{--                            class="w-6 h-6"--}}
+{{--                            xmlns="http://www.w3.org/2000/svg"--}}
+{{--                            fill="none"--}}
+{{--                            viewBox="0 0 24 24"--}}
+{{--                            stroke="currentColor"--}}
+{{--                        >--}}
+{{--                          <path--}}
+{{--                              stroke-linecap="round"--}}
+{{--                              stroke-linejoin="round"--}}
+{{--                              stroke-width="2"--}}
+{{--                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"--}}
+{{--                          />--}}
+{{--                        </svg>--}}
+{{--                      </span>--}}
+{{--                        <span>Dashboard</span>--}}
+{{--                    </a>--}}
+
+{{--                    <!-- MENU OPERACIONA-->--}}
+{{--                    <div class="flex flex-col" x-data="{ openOperacional: false }">--}}
+{{--                        <a--}}
+{{--                            href="#"--}}
+{{--                            @click="openOperacional = !openOperacional"--}}
+{{--                            class="flex items-center space-x-2 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"--}}
+{{--                            :class="openOperacional ? 'bg-indigo-600 text-white' : 'text-indigo-600'"--}}
+{{--                        >--}}
+{{--                      <span--}}
+{{--                          aria-hidden="true"--}}
+{{--                          :class="'p-2 transition-colors rounded-lg group-hover:bg-indigo-700 group-hover:text-white'"--}}
+{{--                      >--}}
+{{--                        <svg--}}
+{{--                            class="w-6 h-6"--}}
+{{--                            xmlns="http://www.w3.org/2000/svg"--}}
+{{--                            fill="none"--}}
+{{--                            viewBox="0 0 24 24"--}}
+{{--                            stroke="currentColor"--}}
+{{--                        >--}}
+{{--                          <path--}}
+{{--                              stroke-linecap="round"--}}
+{{--                              stroke-linejoin="round"--}}
+{{--                              stroke-width="2"--}}
+{{--                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"--}}
+{{--                          />--}}
+{{--                        </svg>--}}
+{{--                      </span>--}}
+{{--                            <span>Operacional</span>--}}
+{{--                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} :d="openOperacional ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'" />--}}
+{{--                            </svg>--}}
+{{--                        </a>--}}
+{{--                        <div--}}
+{{--                            class="bg-gray-100 rounded-md m-1"--}}
+{{--                            x-show="openOperacional"--}}
+{{--                            x-transition:enter="transform-gpu ease-out duration-200"--}}
+{{--                            x-transition:enter-start="-translate-y-2 opacity-0"--}}
+{{--                            x-transition:leave="transform-gpu ease-out duration-200"--}}
+{{--                            x-transition:leave-end="-translate-y-2 opacity-0"--}}
+{{--                        >--}}
+{{--                            <a--}}
+{{--                                href="{{route('analise-custos')}}"--}}
+{{--                                class="flex items-center space-x-2 text-indigo-600 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"--}}
+{{--                            >--}}
+{{--                            <span--}}
+{{--                                aria-hidden="true"--}}
+{{--                                class="p-2 transition-colors rounded-lg group-hover:bg-indigo-700 group-hover:text-white"--}}
+{{--                            >--}}
+{{--                                <svg--}}
+{{--                                    class="w-6 h-6"--}}
+{{--                                    xmlns="http://www.w3.org/2000/svg"--}}
+{{--                                    fill="none"--}}
+{{--                                    viewBox="0 0 24 24"--}}
+{{--                                    stroke="currentColor"--}}
+{{--                                >--}}
+{{--                                  <path--}}
+{{--                                      stroke-linecap="round"--}}
+{{--                                      stroke-linejoin="round"--}}
+{{--                                      stroke-width="2"--}}
+{{--                                      d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"--}}
+{{--                                  />--}}
+{{--                                </svg>--}}
+{{--                            </span>--}}
+{{--                                <span>Análise de Custos</span>--}}
+{{--                            </a>--}}
+{{--                            <a--}}
+{{--                                href="{{route('inventario')}}"--}}
+{{--                                class="flex items-center space-x-2 text-indigo-600 transition-colors rounded-lg group hover:bg-indigo-600 hover:text-white"--}}
+{{--                            >--}}
+{{--                                <span--}}
+{{--                                    aria-hidden="true"--}}
+{{--                                    class="p-2 transition-colors rounded-lg group-hover:bg-indigo-700 group-hover:text-white"--}}
+{{--                                >--}}
+{{--                                    <svg--}}
+{{--                                        class="w-6 h-6"--}}
+{{--                                        xmlns="http://www.w3.org/2000/svg"--}}
+{{--                                        fill="none"--}}
+{{--                                        viewBox="0 0 24 24"--}}
+{{--                                        stroke="currentColor"--}}
+{{--                                    >--}}
+{{--                                      <path--}}
+{{--                                          stroke-linecap="round"--}}
+{{--                                          stroke-linejoin="round"--}}
+{{--                                          stroke-width="2"--}}
+{{--                                          d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"--}}
+{{--                                      />--}}
+{{--                                    </svg>--}}
+{{--                                </span>--}}
+{{--                                <span>Inventario</span>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <!-- MENU FINANCEIRO-->
                     <div class="flex flex-col" x-data="{ openFinanceiro: false }"

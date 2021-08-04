@@ -125,6 +125,8 @@ class TableMetaBases extends Component
                             AND (`nf`.`mes` = `mad`.`mes`)))
                     WHERE
                         `nf`.`ano` = ".$year." AND `nf`.`mes` = ".$month." ".$bases."
-                    GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`und_emissora`");
+                    GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`und_emissora`
+                    ORDER BY Realizado desc
+                    ");
     }
 }

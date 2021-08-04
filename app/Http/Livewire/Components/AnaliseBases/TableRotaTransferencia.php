@@ -25,6 +25,7 @@ class TableRotaTransferencia extends Component
                     ->select( "Cidade Origem", "Cidade Destino", "Receita", "Quantidade CTRC as Qtde CTRC", "Volumes", "Peso")
                     ->where('Ano', $this->year)
                     ->where('M', $this->month)
+                    ->orderBy('Receita', 'desc')
                     ->get();
         foreach ($this->tableRotaTransferencia as $t){
             if($this->maiorCTRC < $t->{"Qtde CTRC"}){
@@ -46,7 +47,8 @@ class TableRotaTransferencia extends Component
             ->when($this->rota, function ($query){
                 $query->where('Cidade Origem', 'LIKE', '%' . $this->rota . '%');
             })
-        ->get();
+            ->orderBy('Receita', 'desc')
+            ->get();
     }
 
     public function filtrar($filtro)
@@ -60,6 +62,7 @@ class TableRotaTransferencia extends Component
                 $query->where('Cidade Origem', 'LIKE', '%' . $this->rota . '%');
             })
             ->where('M', $this->month)
+            ->orderBy('Receita', 'desc')
             ->get();
 
     }

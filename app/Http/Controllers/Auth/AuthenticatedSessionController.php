@@ -57,6 +57,6 @@ class AuthenticatedSessionController extends Controller
         Cookie::queue(Cookie::forget('name'));
         Cookie::queue(Cookie::forget('photo'));
 
-        return redirect('/');
+        return redirect(RouteServiceProvider::HOME);
     }
 }

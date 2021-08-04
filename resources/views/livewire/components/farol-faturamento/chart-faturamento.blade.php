@@ -6,7 +6,6 @@
     </div>
 </div>
 
-
 <script>
     function formatDate(date){
         return date.replace(/(\d*)-(\d*)-(\d*).*/, '$3-$2-$1');
@@ -15,6 +14,7 @@
         return date.replace(/(\d*)-(\d*)-(\d*).*/, '$3');
     }
     window.addEventListener('renderChartFaturamento', ({ detail }) => {
+        console.log(detail)
         Highcharts.chart('ChartFaturamentoMes', {
             chart: {
                 type: 'line'

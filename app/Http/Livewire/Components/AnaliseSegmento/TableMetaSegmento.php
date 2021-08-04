@@ -156,6 +156,8 @@ class TableMetaSegmento extends Component
                                 AND (`nf`.`mes` = `mad`.`mes`)))
                         WHERE
                             `nf`.`ano` = ".$year." AND `nf`.`mes` = ".$month." ".$segmentos."
-                        GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`segmento`");
+                        GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`segmento`
+                        ORDER BY Realizado desc
+                        ");
     }
 }

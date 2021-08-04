@@ -22,6 +22,7 @@ class ChartFaturamento extends Component
     {
         $faturamento = DB::select("CALL faturamento_dia(".$filtros['ano'].",".$filtros['mes'].")");
         $this->fatoraFaturamento($faturamento);
+        $this->dispatchData();
     }
 
     private function fatoraFaturamento($faturamento)

@@ -25,6 +25,7 @@ class TableRotaEntrega extends Component
             ->select('Rota', 'Peso', 'Receita', 'Qte CTRC', 'Volumes')
             ->where('Ano', $this->year)
             ->where('M', $this->month)
+            ->orderBy('Receita', 'desc')
             ->get();
         foreach ($this->tableRotaEntrega as $t){
             if($this->maiorCTRC < $t->{"Qte CTRC"}){
@@ -46,6 +47,7 @@ class TableRotaEntrega extends Component
             ->when($this->rotaEntrega, function ($query) {
                 $query->where('Rota', 'LIKE', "%". $this->rotaEntrega ."%");
             })
+            ->orderBy('Receita', 'desc')
             ->get();
     }
 
@@ -57,6 +59,7 @@ class TableRotaEntrega extends Component
             ->select('Rota', 'Peso', 'Receita', 'Qte CTRC', 'Volumes')
             ->where('Ano', $this->year)
             ->where('M', $this->month)
+            ->orderBy('Receita', 'desc')
             ->get();
         foreach ($this->tableRotaEntrega as $t){
             if($this->maiorCTRC < $t->{"Qte CTRC"}){

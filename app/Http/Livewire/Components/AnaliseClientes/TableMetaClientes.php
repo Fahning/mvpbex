@@ -147,6 +147,7 @@ class TableMetaClientes extends Component
             WHERE
                 `nf`.`ano` = ".$year." AND `nf`.`mes` = ".$month." ".$cliente."
             GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`nome_pagador`
+            ORDER BY Realizado desc
         ");
     }
 }
