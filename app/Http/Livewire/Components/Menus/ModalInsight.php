@@ -13,7 +13,8 @@ class ModalInsight extends Component
 
     protected $listeners = ['mostraModal'];
 
-    public function mostraModal(Insights $insight) {
+    public function mostraModal($insight_id) {
+        dd($insight_id);
         $ins = Insight::find($insight->insight_id);
         if(!empty($ins)){
             $this->insightModal = [

@@ -51,6 +51,11 @@
             >
                 @livewire('components.menus.filtros')
             </div>
+
+            <!-- MODAL INSIGHTS -->
+
+            @livewire('modal-insight')
+
         </div>
 
         @livewireChartsScripts
@@ -69,6 +74,7 @@
             isSidebarOpen: false,
             currentSidebarTab: null,
             isSettingsPanelOpen: false,
+            isModelInsightOpen: false,
             isSubHeaderOpen: false,
             watchScreen() {
                 if (window.innerWidth <= 1024) {
