@@ -31,7 +31,7 @@
                 emitFormatted
             ></x-inputs.maskable>
 
-            <x-button class="mx-2 border border-gray-400 rounded-md p-1 hover:bg-gray-500 h-10" >Definir Meta</x-button>
+            <x-button-p class="mx-2 border border-gray-400 rounded-md p-1 hover:bg-gray-500 h-10" >Definir Meta</x-button-p>
         </form>
     </div>
     <div class="text-center text-red-600 mt-2">
