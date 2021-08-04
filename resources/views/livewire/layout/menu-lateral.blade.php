@@ -16,17 +16,17 @@
         </button>
 
         <!-- Github link -->
-                    <a
-                        href=""
-                        target="_blank"
-                        class="p-2 text-white bg-blue-600 rounded-lg shadow-md hover:text-gray-200 focus:outline-none focus:ring focus:ring-black focus:ring-offset-gray-100 focus:ring-offset-2"
-                    >
-                        <span class="sr-only">Banco Conectado</span>
-                        <div>
-                            {{ Config::get('database.connections.tenant.database') }}
-                        </div>
+{{--                    <a--}}
+{{--                        href=""--}}
+{{--                        target="_blank"--}}
+{{--                        class="p-2 text-white bg-blue-600 rounded-lg shadow-md hover:text-gray-200 focus:outline-none focus:ring focus:ring-black focus:ring-offset-gray-100 focus:ring-offset-2"--}}
+{{--                    >--}}
+{{--                        <span class="sr-only">Banco Conectado</span>--}}
+{{--                        <div>--}}
+{{--                            {{ Config::get('database.connections.tenant.database') }}--}}
+{{--                        </div>--}}
 
-                    </a>
+{{--                    </a>--}}
     </div>
 
     <!-- Mobile sub header button -->
