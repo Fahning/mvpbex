@@ -8,13 +8,17 @@ use Livewire\Component;
 
 class ModalInsight extends Component
 {
-    public $insight;
     public $insightModal;
+    public $cardInsight = false;
+    public $insight;
 
-    protected $listeners = ['mostraModal'];
+    protected $listeners = [
+        'carregaInsight'
+    ];
 
-    public function mostraModal($insight_id) {
-        dd($insight_id);
+
+    public function carregaInsight(Insights $insight) {
+        $this->cardInsight = true;
         $ins = Insight::find($insight->insight_id);
         if(!empty($ins)){
             $this->insightModal = [
@@ -33,8 +37,17 @@ class ModalInsight extends Component
                 'chart_tres' => ''
             ];
         }
-        $this->dispatchBrowserEvent('abreModal', ['abreModal' => true]);
+        $this->dispatchBrowserEvent(
+            'renderDataInsight',
+            [
+                'faturamento' => $this->insightModal['faturamento'],
+                'chart_um' => $this->insightModal['chart_um'],
+                'chart_dois' => $this->insightModal['chart_dois'],
+                'chart_tres' => $this->insightModal['chart_tres']
+            ]
+        );
     }
+
     public function render()
     {
         return view('livewire.components.menus.modal-insight');

@@ -14,8 +14,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('css/floatInput.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">r
 
         @livewireStyles
 
@@ -54,7 +54,7 @@
 
             <!-- MODAL INSIGHTS -->
 
-            @livewire('modal-insight')
+            @livewire('components.menus.modal-insight')
 
         </div>
 
