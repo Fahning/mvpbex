@@ -21,12 +21,12 @@
             <!-- Email Address -->
             <div>
                 <!--suppress CheckEmptyScriptTag -->
-                <x-input-p id="email" label="Email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input-p id="email" label="Email" class="block mt-1 w-full rounded-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
             <!-- Password -->
             <div class="mt-4">
                   <!--suppress CheckEmptyScriptTag -->
-                <x-input-p id="password" class="block mt-1 w-full"
+                <x-input-p id="password" class="block mt-1 w-full rounded-full"
                                 type="password"
                                 name="password"
                                 label="Senha"

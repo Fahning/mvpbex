@@ -191,9 +191,9 @@
 
 {{--                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Configurações</a>--}}
 
-                <form method="POST" action="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                <form method="POST" action="{{ route('logout') }}" class="block  py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                     @csrf
-                    <button type="submit" >Sair</button>
+                    <button type="submit" class="w-full text-left px-4" >Sair</button>
                 </form>
 
             </div>
