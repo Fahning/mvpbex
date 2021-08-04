@@ -1,6 +1,10 @@
 /node_modules
 /public/hot
-/public/storage
+/public/storage/livewire-tmp
+/public/storage/.gitignore
+/public/storage/framework
+/public/storage/profile-photos/.gitignore
+/public/storage/logs
 /config/tenant.php
 /storage/*.key
 /vendor
