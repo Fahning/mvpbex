@@ -19,9 +19,9 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::view('/404-tenant','errors.404-tenant')->name('404.tenant');
 
-//Route::middleware(['auth'])->get('/', function () {
-//    return view('livewire.farol-faturamento');
-//})->name('dashboard');
+Route::middleware(['auth'])->get('/', function () {
+    return view('livewire.farol-faturamento');
+})->name('dashboard');
 //
 //Route::middleware(['auth'])->get('/inventario', function () {
 //    return view('livewire.operacional');
