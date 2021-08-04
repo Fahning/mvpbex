@@ -11,6 +11,7 @@ class ChartFaturamento extends Component
 {
     public $data;
     protected $listeners = ['filtros' => 'filtrar'];
+
     public function mount()
     {
         $faturamento = DB::select("CALL faturamento_dia(".Carbon::today()->year.",".Carbon::today()->month.")");
@@ -21,7 +22,6 @@ class ChartFaturamento extends Component
     {
         $faturamento = DB::select("CALL faturamento_dia(".$filtros['ano'].",".$filtros['mes'].")");
         $this->fatoraFaturamento($faturamento);
-        $this->dispatchBrowserEvent('atualizaChart');
     }
 
     private function fatoraFaturamento($faturamento)
@@ -30,8 +30,16 @@ class ChartFaturamento extends Component
         $faturamento = (array)$faturamento;
         foreach ($faturamento as $fat){
             array_push($this->data['day'], $fat->Dia);
-            array_push($this->data['value'], intval($fat->Receita));
+            array_push($this->data['value'], floatval($fat->Receita));
         }
+    }
+
+    public function dispatchData()
+    {
+        $this->dispatchBrowserEvent('renderChartFaturamento',[
+            'categories' => $this->data['day'],
+            'series' => $this->data['value']
+        ]);
     }
 
     public function render()

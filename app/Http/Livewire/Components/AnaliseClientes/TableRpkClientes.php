@@ -24,6 +24,7 @@ class TableRpkClientes extends Component
             ->select('Cliente', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
             ->where('ano', $this->year)
             ->where('mes', $this->month)
+            ->orderBy('Qtde CTRC', 'desc')
             ->get();
         foreach ($this->tableRpkClientes as $t){
             if($this->maior < $t->{"Qtde CTRC"}){
@@ -43,6 +44,7 @@ class TableRpkClientes extends Component
             ->when($filtro['searchCliente'], function($query) use($filtro) {
                 $query->where('Cliente','like', "%{$filtro['searchCliente']}%");
             })
+            ->orderBy('Qtde CTRC', 'desc')
             ->get();
 
         foreach ($this->tableRpkClientes as $t){

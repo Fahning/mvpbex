@@ -23,6 +23,7 @@ class TableRpkSegmento extends Component
             ->select('Segmento', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
             ->where('ano', $this->year)
             ->where('mes', $this->month)
+            ->orderBy('Qtde CTRC', 'desc')
             ->get();
         foreach ($this->table as $t){
             if($this->maior < $t->{"Qtde CTRC"}){
@@ -42,6 +43,7 @@ class TableRpkSegmento extends Component
             ->when($filtro['searchSegmentos'], function($query) use($filtro) {
                 $query->whereIn('Segmento', $filtro['searchSegmentos']);
             })
+            ->orderBy('Qtde CTRC', 'desc')
             ->get();
 
         foreach ($this->table as $t){

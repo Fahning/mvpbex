@@ -25,10 +25,9 @@ class ChartRealizadoOrcado extends Component
         $this->year = $filtros['ano'];
         $faturamento = DB::select("call realizado_orcado(".$this->year.")");
         $this->formatData($faturamento);
-        $this->dispatchBrowserEvent('atualizaChart');
     }
 
-    public function formatData($faturamento){
+    private function formatData($faturamento){
         Carbon::setLocale('pt_BR');
         $this->data2 = [
             'mes'       => [],
@@ -40,6 +39,15 @@ class ChartRealizadoOrcado extends Component
             array_push($this->data2['receita'], intval($fat->receita));
             array_push($this->data2['meta'], intval($fat->meta));
         }
+    }
+
+    public function dispatchDataRO()
+    {
+        $this->dispatchBrowserEvent('renderChartRO',[
+            'categories' => $this->data2['mes'],
+            'series' => $this->data2['receita'],
+            'series2' => $this->data2['meta']
+        ]);
     }
 
     public function render()

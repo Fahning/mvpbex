@@ -23,6 +23,7 @@ class TableRpkBases extends Component
             ->select('Base', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
             ->where('ano', $this->year)
             ->where('mes', $this->month)
+            ->orderBy('Qtde CTRC', 'desc')
             ->get();
         foreach ($this->tableRpkBases as $t){
             if($this->maior < $t->{'Qtde CTRC'}){
@@ -42,6 +43,7 @@ class TableRpkBases extends Component
             ->when($filtro['searchBase'], function ($query) use ($filtro) {
                 $query->whereIn('Base', $filtro['searchBase']);
             })
+            ->orderBy('Qtde CTRC', 'desc')
             ->get();
         foreach ($this->tableRpkBases as $t){
             if($this->maior < $t->{'Qtde CTRC'}){

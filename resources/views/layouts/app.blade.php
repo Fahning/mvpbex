@@ -14,19 +14,19 @@
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
+        <wireui:styles />
         <link rel="stylesheet" href="{{ URL::asset('css/floatInput.css') }}">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">r
-
         @livewireStyles
 
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
 
-
+        <wireui:scripts />
         <!-- HighCharts -->
         <script type="text/javascript" src="https://code.highcharts.com/stock/highstock.js"></script>
-        <wireui:scripts />
+
     </head>
 
 
@@ -64,6 +64,7 @@
         @stack('modals')
         <livewire:scripts />
         @stack('scripts')
+
 
     </body>
 </html>

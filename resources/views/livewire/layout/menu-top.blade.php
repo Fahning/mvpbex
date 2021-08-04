@@ -460,7 +460,7 @@
 
         <section x-show="currentSidebarTab === 'notificationsTab'" class="px-2 py-5">
             <h2 class="text-xl">Insights</h2>
-                <div class="overflow-auto " style="max-height: 87vh">
+                <div class="overflow-auto" style="max-height: 87vh">
                     @foreach($insights as $insight)
                         <div class="border-t-2 border-white"></div>
                         <div @click="currentSidebarTab = 'notificationsTab'; abreInsight({{$insight->id}}); isModelInsightOpen = true" class="grid grid-cols-1 bg-blue-100 p-2 rounded-md cursor-pointer hover:bg-blue-200 w-56"  title="{{$insight->descricao}}">

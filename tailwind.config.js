@@ -1,8 +1,8 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors')
 
 module.exports = {
     presets: [
-        ...
             require('./vendor/ph7jack/wireui/tailwind.config.js')
     ],
     purge: [
@@ -16,6 +16,14 @@ module.exports = {
 
     theme: {
         extend: {
+            colors: {
+                primary: colors.indigo,
+                secondary: colors.gray,
+                positive: colors.emerald,
+                negative: colors.red,
+                warning: colors.amber,
+                info: colors.blue
+            },
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },

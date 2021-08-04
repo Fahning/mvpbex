@@ -92,7 +92,7 @@
                             <div class="flex-1 border shadow-sm rounded-md">
                                 <div id="chartTres" style="height:280px;"></div>
                             </div>
-                            <div class="ml-2 w-96 border shadow-sm rounded-md bg-gray-200 text-gray-500 p-2" style="height:280px;">
+                            <div class="ml-2 w-96 border text-sm rshadow-sm rounded-md bg-gray-200 text-gray-500 p-2" style="height:280px;">
                                 {{$insightModal['chart_tres']->description ?? ''}}
                             </div>
                         </div>
@@ -198,7 +198,7 @@
             },
             series: [{
                 name: 'Faturamento',
-                data: detail.chart_um.quantidade_cte
+                data: detail.chart_um.valores
             }],
             tooltip: {
                 formatter:function(){
@@ -256,7 +256,7 @@
             },
             series: [{
                 name: 'Faturamento',
-                data: detail.chart_dois.quantidade_no_prazo
+                data: detail.chart_dois.valores
             }],
             tooltip: {
                 formatter:function(){
@@ -314,7 +314,7 @@
             },
             series: [{
                 name: 'Faturamento',
-                data: detail.chart_tres.faturamento
+                data: detail.chart_tres.valores
             }],
             tooltip: {
                 formatter:function(){
