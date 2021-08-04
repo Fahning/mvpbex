@@ -36,8 +36,8 @@ class ChartRealizadoOrcado extends Component
         ];
         foreach ($faturamento as $fat){
             array_push($this->data2['mes'], ucfirst(Carbon::create(0, $fat->mes)->monthName));
-            array_push($this->data2['receita'], intval($fat->receita));
-            array_push($this->data2['meta'], intval($fat->meta));
+            array_push($this->data2['receita'], floatval($fat->receita));
+            array_push($this->data2['meta'], floatval($fat->meta));
         }
     }
 

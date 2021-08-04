@@ -45,7 +45,7 @@ class ChartClientes extends Component
         foreach ($chartClient as $t)
         {
             array_push($this->categories, $t->Cliente);
-            array_push($this->series, intval($t->Receita));
+            array_push($this->series, floatval($t->Receita));
         }
 
     }
@@ -79,7 +79,7 @@ class ChartClientes extends Component
         foreach ($chartClient as $t)
         {
             array_push($this->categories, $t->Cliente);
-            array_push($this->series, intval($t->Receita));
+            array_push($this->series, floatval($t->Receita));
         }
 
         $this->dispatchBrowserEvent(

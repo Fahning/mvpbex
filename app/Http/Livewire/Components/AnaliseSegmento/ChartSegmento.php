@@ -47,7 +47,7 @@ class ChartSegmento extends Component
         foreach ($chartSegmento as $t)
         {
             array_push($this->categories, $t->Segmento);
-            array_push($this->series, intval($t->Receita));
+            array_push($this->series, floatval($t->Receita));
         }
 
     }
@@ -82,7 +82,7 @@ class ChartSegmento extends Component
         foreach ($chartSegmento as $t)
         {
             array_push($this->categories, $t->Segmento);
-            array_push($this->series, intval($t->Receita));
+            array_push($this->series, floatval($t->Receita));
         }
 
         $this->dispatchBrowserEvent(

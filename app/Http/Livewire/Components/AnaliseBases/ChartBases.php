@@ -38,14 +38,14 @@ class ChartBases extends Component
             ->select("cc.Ano", "cc.M AS Mes", "cc.Base", DB::raw('SUM(cc.Receita) as Receita'))
             ->where('cc.Ano', $this->year)
             ->where('cc.M', $this->month)
-            ->orderBy('cc.Receita', 'desc')
+            ->orderBy('Receita', 'desc')
             ->groupBy('Ano' , 'Mes' , 'Base')
             ->get();
 
         foreach ($chartBase as $t)
         {
             array_push($this->categories, $t->Base);
-            array_push($this->series, intval($t->Receita));
+            array_push($this->series, floatval($t->Receita));
         }
 
     }
@@ -73,7 +73,7 @@ class ChartBases extends Component
             ->when($filtros['trimestre'], function($query) use($filtros) {
                 $query->where('cc.trimestre', $filtros['trimestre']);
             })
-            ->orderBy('cc.Receita', 'desc')
+            ->orderBy('Receita', 'desc')
             ->groupBy('Ano' , 'Mes' , 'Base')
             ->get();
 
@@ -82,7 +82,7 @@ class ChartBases extends Component
         foreach ($chartBase as $t)
         {
             array_push($this->categories, $t->Base);
-            array_push($this->series, intval($t->Receita));
+            array_push($this->series, floatval($t->Receita));
         }
 
         $this->dispatchBrowserEvent(

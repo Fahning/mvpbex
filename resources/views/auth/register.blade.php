@@ -16,21 +16,35 @@
             <div>
                 <x-label for="name" :value="__('Name')" />
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <x-input-p label="Nome" id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+            </div>
+
+            <!-- CNPJ -->
+            <div class="mt-4">
+                <x-label for="cnpj" :value="__('Email')" />
+
+                <x-input-p  label="CNPJ" id="cnpj" class="block mt-1 w-full" type="number" name="cnpj" :value="old('cnpj')" required />
+            </div>
+
+            <!-- Name -->
+            <div>
+                <x-label for="nivel" :value="__('nivel')" />
+
+                <x-input-p  label="Nivel" id="nivel" class="block mt-1 w-full" type="number" name="nivel" :value="old('nivel')" required />
             </div>
 
             <!-- Email Address -->
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-input-p  label="Email" id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />
 
-                <x-input id="password" class="block mt-1 w-full"
+                <x-input-p label="Senha" id="password" class="block mt-1 w-full"
                                 type="password"
                                 name="password"
                                 required autocomplete="new-password" />
@@ -38,9 +52,8 @@
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
 
-                <x-input id="password_confirmation" class="block mt-1 w-full"
+                <x-input-p label="Confirmar Senha" id="password_confirmation" class="block mt-1 w-full"
                                 type="password"
                                 name="password_confirmation" required />
             </div>
@@ -50,9 +63,9 @@
                     {{ __('Already registered?') }}
                 </a>
 
-                <x-button class="ml-4">
+                <x-button-p class="ml-4">
                     {{ __('Register') }}
-                </x-button>
+                </x-button-p>
             </div>
         </form>
     </x-auth-card>
