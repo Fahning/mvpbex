@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\AnaliseClientes;
 
+use App\Models\TabelaCtes;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -12,8 +13,6 @@ class ChartClientes extends Component
     public $categories = [];
     public $year;
     public $month;
-
-    protected $sql = "(SELECT nf.ano AS Ano, nf.mes AS M, nf.trimestre, nf.segmento AS Segmento,nf.nome_pagador AS Cliente,nf.und_emissora AS Base,SUM(nf.val_frete) AS Receita FROM tabela_ctes nf GROUP BY nf.segmento, nf.nome_pagador, nf.und_emissora, nf.ano , nf.mes) as cc";
 
     protected $listeners = [
         'filtros' => 'searchClientes'
@@ -34,18 +33,18 @@ class ChartClientes extends Component
     {
         $this->year = Carbon::today()->year;
         $this->month = Carbon::today()->month;
-        $chartClient = DB::table(DB::raw($this->sql))
-            ->select("cc.Ano", "cc.M AS Mes", "cc.Cliente", "cc.Receita")
-            ->where('cc.Ano', $this->year)
-            ->where('cc.M', $this->month)
-            ->orderBy('cc.Receita', 'desc')
-            ->groupBy('Ano' , 'Mes' , 'Cliente')
+        $chartClient = TabelaCtes::select('nome_pagador', DB::raw('sum(val_frete) as receita'))
+            ->where('mes', $this->month)
+            ->where('ano', $this->year)
+            ->orderBy('receita', 'desc')
+            ->groupBy('nome_pagador')
+            ->take(50)
             ->get();
 
         foreach ($chartClient as $t)
         {
-            array_push($this->categories, $t->Cliente);
-            array_push($this->series, floatval($t->Receita));
+            array_push($this->categories, $t->nome_pagador);
+            array_push($this->series, floatval($t->receita));
         }
 
     }
@@ -53,33 +52,21 @@ class ChartClientes extends Component
     public function searchClientes($filtros)
     {
 
-        $this->year = $filtros['ano'];
-        $this->month = $filtros['mes'];
+        $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
+        $filtros['mes'] = $filtros['mes'] ?? Carbon::today()->month;
 
-        $chartClient = DB::table(DB::raw($this->sql))
-            ->select("cc.Ano", "cc.M AS Mes", "cc.Cliente", "cc.Receita")
-            ->when($filtros['searchCliente'], function($query) use($filtros) {
-                $query->where('cc.Cliente','LIKE', "%{$filtros['searchCliente']}%");
-            })
-            ->when($filtros['ano'], function($query) use($filtros) {
-                $query->where('cc.Ano', $this->year);
-            })
-            ->when($filtros['mes'], function($query) use($filtros) {
-                $query->where('cc.M', $this->month);
-            })
-            ->when($filtros['trimestre'], function($query) use($filtros) {
-                $query->where('cc.trimestre', $filtros['trimestre']);
-            })
-            ->orderBy('cc.Receita', 'desc')
-            ->groupBy('Ano' , 'Mes' , 'Cliente')
+        $chartClient = TabelaCtes::select('nome_pagador', DB::raw('sum(val_frete) as receita'))
+            ->Search($filtros)
+            ->orderBy('receita', 'desc')
+            ->groupBy('nome_pagador')
             ->get();
 
         $this->categories = [];
         $this->series = [];
         foreach ($chartClient as $t)
         {
-            array_push($this->categories, $t->Cliente);
-            array_push($this->series, floatval($t->Receita));
+            array_push($this->categories, $t->nome_pagador);
+            array_push($this->series, floatval($t->receita));
         }
 
         $this->dispatchBrowserEvent(

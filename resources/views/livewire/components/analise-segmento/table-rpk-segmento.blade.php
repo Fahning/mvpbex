@@ -1,5 +1,5 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
-    <div class="text-center font-bold mp-4">Analise comercial de segmento ({{monthToString($month)}} de {{$year}})</div>
+    <div class="text-center font-bold mp-4">Analise comercial de segmento</div>
     <div class="overflow-auto max-h-80">
         <div  wire:loading class="w-full max-h-80">
             <div class="animate-pulse flex space-x-4">
@@ -43,6 +43,7 @@
             </thead>
             <tbody class="text-sm font-normal text-gray-700 w-full">
                 @foreach($table as $row)
+
                     <tr class="hover:bg-gray-100 border-b border-gray-200 py-2">
                         @foreach($row as $key => $value)
                             @if($key == "TKM" || $key == "RPK" )

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\AnaliseBases;
 
+use App\Models\TabelaCtes;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -32,57 +33,37 @@ class ChartBases extends Component
 
     public function mount()
     {
-        $this->year = Carbon::today()->year;
-        $this->month = Carbon::today()->month;
-        $chartBase = DB::table(DB::raw($this->sql))
-            ->select("cc.Ano", "cc.M AS Mes", "cc.Base", DB::raw('SUM(cc.Receita) as Receita'))
-            ->where('cc.Ano', $this->year)
-            ->where('cc.M', $this->month)
-            ->orderBy('Receita', 'desc')
-            ->groupBy('Ano' , 'Mes' , 'Base')
+        $chartBase = TabelaCtes::select('und_emissora as base', DB::raw('sum(val_frete) as receita'))
+            ->where('ano', Carbon::today()->year)
+            ->where('mes', Carbon::today()->month)
+            ->orderBy('receita', 'desc')
+            ->groupBy('und_emissora')
             ->get();
 
         foreach ($chartBase as $t)
         {
-            array_push($this->categories, $t->Base);
-            array_push($this->series, floatval($t->Receita));
+            array_push($this->categories, $t->base);
+            array_push($this->series, floatval($t->receita));
         }
 
     }
 
     public function searchBases($filtros)
     {
-
-        $this->year = $filtros['ano'];
-        $this->month = $filtros['mes'];
-        $chartBase = DB::table(DB::raw($this->sql))
-            ->select("cc.Ano", "cc.M AS Mes", "cc.Base", DB::raw('SUM(cc.Receita) as Receita'))
-            ->when($filtros['searchBase'], function($query) use($filtros) {
-                $query->whereIn('cc.Base',$filtros['searchBase']);
-            })
-            ->when(!$filtros['searchBase'], function($query) use($filtros) {
-                $query->where('cc.Ano', $this->year);
-                $query->where('cc.M', $this->month);
-            })
-            ->when($filtros['ano'], function($query) use($filtros) {
-                $query->where('cc.Ano', $this->year);
-            })
-            ->when($filtros['mes'], function($query) use($filtros) {
-                $query->where('cc.M', $this->month);
-            })
-            ->when($filtros['trimestre'], function($query) use($filtros) {
-                $query->where('cc.trimestre', $filtros['trimestre']);
-            })
-            ->orderBy('Receita', 'desc')
-            ->groupBy('Ano' , 'Mes' , 'Base')
+        $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
+        $filtros['mes'] = $filtros['mes'] ?? Carbon::today()->month;
+        $chartBase = TabelaCtes::select('und_emissora as base', DB::raw('sum(val_frete) as receita'))
+            ->Search($filtros)
+            ->orderBy('receita', 'desc')
+            ->groupBy('und_emissora')
             ->get();
 
         $this->categories = [];
         $this->series = [];
         foreach ($chartBase as $t)
         {
-            array_push($this->categories, $t->Base);
-            array_push($this->series, floatval($t->Receita));
+            array_push($this->categories, $t->base);
+            array_push($this->series, floatval($t->receita));
         }
 
         $this->dispatchBrowserEvent(

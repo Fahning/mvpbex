@@ -28,8 +28,7 @@ class Filtros extends Component
     }
     public function filtrar()
     {
-        $this->filtros['ano'] = $this->filtros['ano'] ?? Carbon::today()->year;
-        $this->filtros['mes'] = $this->filtros['mes'] ?? Carbon::today()->month;
+
         $this->emit('filtros', $this->filtros);
 
     }

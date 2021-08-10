@@ -7,12 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class TabelaCtes extends Model
 {
-    use HasFactory;
-
     protected $table = 'tabela_ctes';
+    public $timestamps = false;
 
-    public function getCtrcAttribute()
-{
-    return $this->attributes['name'];
-}
+
+    public function scopeSearch($query, $filtros)
+    {
+
+        $query->when($filtros['ano'], function($query) use($filtros) {
+            $query->where('ano', $filtros['ano']);
+        });
+        $query->when($filtros['mes'], function($query) use($filtros) {
+            $query->where('mes', $filtros['mes']);
+        });
+        $query->when($filtros['searchSegmentos'], function($query) use($filtros) {
+            $query->whereIn('segmento',$filtros['searchSegmentos']);
+        });
+        $query->when($filtros['searchBase'], function($query) use($filtros) {
+            $query->whereIn('und_emissora', $filtros['searchBase']);
+        });
+        $query->when($filtros['searchCliente'], function($query) use($filtros) {
+            $query->where('nome_pagador', $filtros['searchCliente']);
+        });
+    }
 }

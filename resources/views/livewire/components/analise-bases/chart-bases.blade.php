@@ -9,7 +9,7 @@
         </div>
     </div>
     <div wire:loading.class="hidden" class="bg-white p-3 border shadow-md rounded-md z-0">
-        <div class="text-center font-bold mt-4">Faturamento Por Bases ({{monthToString($month)}} de {{$year}})</div>
+        <div class="text-center font-bold mt-4">Faturamento Por Bases</div>
         <div id="charBases" style="height:280px;"></div>
     </div>
 </div>

@@ -14,9 +14,14 @@ class Indicadores extends Component
     public function mount()
     {
         $indicators = DB::select("CALL faturamento_farol(".Carbon::today()->year.",".Carbon::today()->month.")");
+
         if(!empty($indicators)){
             $this->indicators = (array)$indicators[0];
         }
+        $this->indicators['Meta'] = $indicators['Meta'] ?? 0;
+        $this->indicators['Média Diária'] = $indicators['Média Diária'] ?? 0;
+        $this->indicators['Desvio'] = $indicators['Desvio'] ?? 0;
+        $this->indicators['Desvio (R$)'] = $indicators['Desvio (R$)'] ?? 0;
     }
 
 

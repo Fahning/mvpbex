@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\AnaliseSegmento;
 
+use App\Models\TabelaCtes;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -17,38 +18,45 @@ class TableRpkSegmento extends Component
 
     public function mount()
     {
-        $this->year = Carbon::today()->year;
-        $this->month = Carbon::today()->month;
-        $this->table = DB::table('v_indic_segmento')
-            ->select('Segmento', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
-            ->where('ano', $this->year)
-            ->where('mes', $this->month)
+        $this->table = TabelaCtes::select("segmento",
+                                DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
+                                DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
+                                DB::raw("((100 * SUM(val_frete)) / SUM(val_mercadoria)) AS '% Frete/Valor Mercadoria'"),
+                                DB::raw("COUNT(0) AS 'Qtde CTRC'")
+            )
+            ->where('ano',Carbon::today()->year)
+            ->where('mes',Carbon::today()->month)
             ->orderBy('Qtde CTRC', 'desc')
-            ->get();
+            ->groupBy('segmento')
+            ->get()
+            ->toArray();
+
         foreach ($this->table as $t){
-            if($this->maior < $t->{"Qtde CTRC"}){
-                $this->maior = $t->{"Qtde CTRC"};
+            if($this->maior < $t["Qtde CTRC"]){
+                $this->maior = $t["Qtde CTRC"];
             }
         }
     }
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['ano'];
-        $this->month = $filtro['mes'];
-        $this->table = DB::table('v_indic_segmento')
-            ->select('Segmento', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
-            ->where('ano', $this->year)
-            ->where('mes', $this->month)
-            ->when($filtro['searchSegmentos'], function($query) use($filtro) {
-                $query->whereIn('Segmento', $filtro['searchSegmentos']);
-            })
+        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+        $this->table = TabelaCtes::select("segmento",
+                DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
+                DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
+                DB::raw("((100 * SUM(val_frete)) / SUM(val_mercadoria)) AS '% Frete/Valor Mercadoria'"),
+                DB::raw("COUNT(0) AS 'Qtde CTRC'")
+            )
+            ->Search($filtro)
             ->orderBy('Qtde CTRC', 'desc')
-            ->get();
+            ->groupBy('segmento')
+            ->get()
+            ->toArray();
 
         foreach ($this->table as $t){
-            if($this->maior < $t->{"Qtde CTRC"}){
-                $this->maior = $t->{"Qtde CTRC"};
+            if($this->maior < $t["Qtde CTRC"]){
+                $this->maior = $t["Qtde CTRC"];
             }
         }
     }
