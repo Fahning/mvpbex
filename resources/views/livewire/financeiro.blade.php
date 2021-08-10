@@ -86,9 +86,9 @@
         <div class="col-span-9 my-3">
             @livewire('components.analise-bases.chart-bases')
         </div>
-{{--        <div class="col-span-9 my-3">--}}
-{{--            @livewire('components.analise-bases.table-rpk-bases')--}}
-{{--        </div>--}}
+        <div class="col-span-9 my-3">
+            @livewire('components.analise-bases.table-rpk-bases')
+        </div>
 {{--        <div class="col-span-9 my-3">--}}
 {{--            @livewire('components.analise-bases.table-meta-bases')--}}
 {{--        </div>--}}

@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire\Components\Menus;
 
-use Carbon\Carbon;
+use App\Models\TabelaCtes;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Filtros extends Component
 {
+    public $search, $isEmpty = '';
 
-    public $filtros = [
+    public array $filtros = [
         'dataStart' => null,
         'dataEnd' => null,
         'ano' => null,
@@ -21,21 +22,35 @@ class Filtros extends Component
         'searchSegmentos' => null
     ];
 
-
     public function resetFilters()
     {
-        $this->reset('filtros');
+        $this->reset('filtros', 'search');
     }
+
     public function filtrar()
     {
-
         $this->emit('filtros', $this->filtros);
-
     }
 
+    public function changeSearch($search)
+    {
+        $this->filtros['searchCliente'] = $search;
+        $this->search = $search;
+    }
 
     public function render()
     {
+
+        if (!empty($this->search)) {
+            $articles = TabelaCtes::select(DB::raw('distinct(nome_pagador)'))
+                ->where('nome_pagador', 'LIKE', '%' . $this->search . '%')
+                ->get();
+            $this->isEmpty = '';
+        } else {
+            $articles = [];
+            $this->isEmpty = __('Nothings Found.');
+        }
+
         $segmentos = DB::table('tabela_ctes')
             ->select('segmento')
             ->distinct()
@@ -55,7 +70,8 @@ class Filtros extends Component
         }
         return view('livewire.components.menus.filtros', [
             'segmentolist' => $listSegmentos,
-            'listBases' => $listBases
+            'listBases' => $listBases,
+            'articles' => $articles,
         ]);
     }
 }

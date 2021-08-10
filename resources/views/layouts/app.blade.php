@@ -64,8 +64,6 @@
         @stack('modals')
         <livewire:scripts />
         @stack('scripts')
-
-
     </body>
 </html>
 <script>

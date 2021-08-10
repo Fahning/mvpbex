@@ -53,12 +53,6 @@ class TableRpkSegmento extends Component
             ->groupBy('segmento')
             ->get()
             ->toArray();
-
-        foreach ($this->table as $t){
-            if($this->maior < $t["Qtde CTRC"]){
-                $this->maior = $t["Qtde CTRC"];
-            }
-        }
     }
 
     public function render()

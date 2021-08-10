@@ -150,9 +150,42 @@
                                 <div class="text-sm text-gray-500">Filtros Analise de Clientes</div>
                                 <hr>
                             </div>
-                            <div class="mb-7">
-                                <x-input placeholder="Buscar Cliente" wire:model.defer="filtros.searchCliente" class="rounded-md" id="buscarCliente" name="buscarCliente"></x-input>
+                            <div x-data="{isTyped: false}">
+                                <div>
+                                    <div class="relative">
+                                        <x-input type="text"
+                                               placeholder="{{__('Buscar Cliente ...')}}"
+                                               x-on:input.debounce.400ms="isTyped = ($event.target.value != '')"
+                                               autocomplete="off"
+                                               wire:model.debounce.500ms="search"
+                                               aria-label="Search input" />
+                                    </div>
+                                    {{-- search box --}}
+                                    <div x-show="isTyped" x-cloak>
+                                        <div>
+                                            <div class="fixed bg-white rounded-md shadow border z-20 w-52">
+                                                @forelse($articles as $article)
+                                                    <div>
+                                                        <ul>
+                                                            <li class="cursor-pointer hover:bg-blue-500" x-on:click="isTyped = false">
+                                                                <a wire:click="changeSearch('{{$article->nome_pagador}}')">
+                                                                    {{$article->nome_pagador}}
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                @empty
+                                                    <div x-cloak>
+                                                        {{$isEmpty}}
+                                                    </div>
+                                                @endforelse
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+
                             <!-- ANALISE DE BASES -->
                             <div class="m-1">
                                 <div class="text-sm text-gray-500 text-upper">Filtros Analise de Bases</div>

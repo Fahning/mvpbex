@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\AnaliseBases;
 
+use App\Models\TabelaCtes;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -17,40 +18,42 @@ class TableRpkBases extends Component
 
     public function mount()
     {
-        $this->year = Carbon::today()->year;
-        $this->month = Carbon::today()->month;
-        $this->tableRpkBases = DB::table('v_indic_base')
-            ->select('Base', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
-            ->where('ano', $this->year)
-            ->where('mes', $this->month)
+        $this->tableRpkBases = TabelaCtes::select("und_emissora as Base",
+            DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
+            DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
+            DB::raw("((100 * SUM(val_frete)) / SUM(val_mercadoria)) AS '% Frete/Valor Mercadoria'"),
+            DB::raw("COUNT(0) AS 'Qtde CTRC'")
+        )
+            ->where('ano',Carbon::today()->year)
+            ->where('mes',Carbon::today()->month)
             ->orderBy('Qtde CTRC', 'desc')
-            ->get();
+            ->groupBy('und_emissora')
+            ->get()
+            ->toArray();
+
         foreach ($this->tableRpkBases as $t){
-            if($this->maior < $t->{'Qtde CTRC'}){
-                $this->maior = $t->{'Qtde CTRC'};
+            if($this->maior < $t["Qtde CTRC"]){
+                $this->maior = $t["Qtde CTRC"];
             }
         }
     }
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['ano'];
-        $this->month = $filtro['mes'];
-        $this->tableRpkBases = DB::table('v_indic_base')
-            ->select('Base', 'TKM', 'RPK', '% Frete/Valor Mercadoria', 'Qtde CTRC')
-            ->where('ano', $this->year)
-            ->where('mes', $this->month)
-            ->when($filtro['searchBase'], function ($query) use ($filtro) {
-                $query->whereIn('Base', $filtro['searchBase']);
-            })
+        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+        $this->tableRpkBases = TabelaCtes::select("und_emissora as Base",
+            DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
+            DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
+            DB::raw("((100 * SUM(val_frete)) / SUM(val_mercadoria)) AS '% Frete/Valor Mercadoria'"),
+            DB::raw("COUNT(0) AS 'Qtde CTRC'")
+        )
+            ->Search($filtro)
             ->orderBy('Qtde CTRC', 'desc')
-            ->get();
-        foreach ($this->tableRpkBases as $t){
-            if($this->maior < $t->{'Qtde CTRC'}){
-                $this->maior = $t->{'Qtde CTRC'};
-            }
+            ->groupBy('und_emissora')
+            ->get()
+            ->toArray();
 
-        }
     }
 
     public function render()
