@@ -27,6 +27,7 @@ class Filtros extends Component
         $this->reset('filtros', 'search');
     }
 
+
     public function filtrar()
     {
         $this->emit('filtros', $this->filtros);
