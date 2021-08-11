@@ -68,9 +68,9 @@ class TableMetaClientes extends Component
             $cliente = '';
         }
 
-        $this->year = $filtro['ano'];
-        $this->month = $filtro['mes'];
-        $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
+        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+        $media = DB::select("call calcula_media3(". $filtro['ano'].", ".$filtro['mes'].")");
 
         $this->table = $this->queryMetaClientes($this->month, $this->year, $cliente);
         foreach ($this->table as $t){

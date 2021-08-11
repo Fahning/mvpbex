@@ -19,9 +19,11 @@ class Farol extends Component
 
     }
 
-    public function filtrar($filtros)
+    public function filtrar($filtro)
     {
-        $farol = DB::select("CALL farol(".$filtros['ano'].",".$filtros['mes'].")");
+        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+        $farol = DB::select("CALL farol(".$filtro['ano'].",".$filtro['mes'].")");
         $farol = (array)$farol[0]->vMensagem;
         $this->farol = $farol[0];
     }

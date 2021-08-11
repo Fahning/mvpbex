@@ -20,10 +20,10 @@ class ChartRealizadoOrcado extends Component
         $this->formatData($faturamento);
     }
 
-    public function filtrar($filtros)
+    public function filtrar($filtro)
     {
-        $this->year = $filtros['ano'];
-        $faturamento = DB::select("call realizado_orcado(".$this->year.")");
+        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+        $faturamento = DB::select("call realizado_orcado(".$filtro['ano'].")");
         $this->formatData($faturamento);
         $this->dispatchDataRO();
     }

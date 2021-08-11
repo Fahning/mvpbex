@@ -25,13 +25,15 @@ class Indicadores extends Component
     }
 
 
-    public function filtrar($filtros)
+    public function filtrar($filtro)
     {
-        $indicators = DB::select("CALL faturamento_farol(".$filtros['ano'].",".$filtros['mes'].")");
+        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+        $indicators = DB::select("CALL faturamento_farol(".$filtro['ano'].",".$filtro['mes'].")");
         if(!empty($indicators)){
             $indicators = (array)$indicators[0];
             $this->indicators['Receita'] = $indicators['Receita'] ?? 0;
-            if($filtros['mes'] == Carbon::today()->month){
+            if($filtro['mes'] == Carbon::today()->month){
                 $this->indicators['Meta Acumulada'] = $indicators['Meta Acumulada'];
             }else{
                 unset($this->indicators['Meta Acumulada']);

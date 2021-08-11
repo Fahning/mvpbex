@@ -39,9 +39,9 @@ class TableMetaBases extends Component
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['ano'];
-        $this->month = $filtro['mes'];
-        $media = DB::select("call calcula_media3(".$this->year.", ".$this->month.")");
+        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+        $media = DB::select("call calcula_media3(".$filtro['ano'].", ".$filtro['mes'].")");
         $base = [];
         if(!empty($filtro['searchBase'])){
             foreach($filtro['searchBase'] as $b){
