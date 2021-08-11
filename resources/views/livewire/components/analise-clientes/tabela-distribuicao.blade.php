@@ -1,5 +1,5 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
-    <div class="text-center font-bold mp-4">Frequência por peso no faturamento ({{monthToString($month)}} de {{$year}})</div>
+    <div class="text-center font-bold mp-4">Frequência por peso no faturamento </div>
     <div class="flex items-end">
         <x-native-select
             label="Selecionar Perspectiva"
@@ -18,17 +18,21 @@
             <thead>
             <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
                 @foreach($tableDistribuicao[0] ??= [] as $key => $value)
+
+
                     <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">{{$key}}</th>
                 @endforeach
             </tr>
             </thead>
             <tbody class="text-sm font-normal text-gray-700 w-full">
             @foreach($tableDistribuicao as $row)
+
                 <tr class="hover:bg-gray-100 border-b border-gray-200 py-2">
                     @foreach($row as $key => $value)
+
                         @if($key == "Receita" )
                             <td class="px-4 py-1">{{formatReceita($value)}}</th>
-                        @elseif($key == '% Total Receita' || $key == '% Total')
+                        @elseif($key == '% Total Receita' || $key == '% Total Qtde')
                             <td class="px-4 py-1"> {{formatPorcent($value)}}%</th>
                         @elseif($key == "Qtde de CTRC")
                             <td class="px-4 py-0.5">
@@ -36,7 +40,7 @@
                                     <div class="overflow-hidden h-7 text-xs flex rounded bg-pink-200">
                                         <div style="width:{{number_format(($value/$maior) * 100, 2, '.', '')}}%" class="shadow-none flex flex-col  whitespace-nowrap text-white justify-center bg-pink-500">
                                             <div class="font-bold text-black px-3">
-                                                {{formatReceita($value)}}
+                                                {{$value}}
                                             </div>
                                         </div>
                                     </div>
