@@ -53,12 +53,12 @@ class TableRotaEntrega extends Component
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['ano'];
-        $this->month = $filtro['mes'];
+        $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
+        $filtros['mes'] = $filtros['mes'] ?? Carbon::today()->month;
         $this->tableRotaEntrega = DB::table('v_receita_entrega_new')
             ->select('Rota', 'Peso', 'Receita', 'Qte CTRC', 'Volumes')
-            ->where('Ano', $this->year)
-            ->where('M', $this->month)
+            ->where('Ano',  $filtros['ano'])
+            ->where('M',  $filtros['mes'])
             ->orderBy('Receita', 'desc')
             ->get();
         foreach ($this->tableRotaEntrega as $t){

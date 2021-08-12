@@ -53,15 +53,15 @@ class TableRotaTransferencia extends Component
 
     public function filtrar($filtro)
     {
-        $this->year = $filtro['ano'];
-        $this->month = $filtro['mes'];
+        $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
+        $filtros['mes'] = $filtros['mes'] ?? Carbon::today()->month;
         $this->tableRotaTransferencia = DB::table("v_receita_transf_new")
             ->select( "Cidade Origem", "Cidade Destino", "Receita", "Quantidade CTRC as Qtde CTRC", "Volumes", "Peso")
-            ->where('Ano', $this->year)
+            ->where('Ano', $filtros['ano'])
             ->when($this->rota, function ($query){
                 $query->where('Cidade Origem', 'LIKE', '%' . $this->rota . '%');
             })
-            ->where('M', $this->month)
+            ->where('M',  $filtros['mes'])
             ->orderBy('Receita', 'desc')
             ->get();
 

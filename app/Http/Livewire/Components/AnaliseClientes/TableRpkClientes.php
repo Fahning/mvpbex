@@ -19,8 +19,6 @@ class TableRpkClientes extends Component
 
     public function mount()
     {
-        $this->year = Carbon::today()->year;
-        $this->month = Carbon::today()->month;
         $this->tableRpkClientes = TabelaCtes::select("nome_pagador as Cliente",
             DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
             DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
@@ -45,7 +43,7 @@ class TableRpkClientes extends Component
     {
         $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
         $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
-        $this->tableRpkClientes = TabelaCtes::select("nome_pagador",
+        $this->tableRpkClientes = TabelaCtes::select("nome_pagador as Cliente",
             DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
             DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
             DB::raw("((100 * SUM(val_frete)) / SUM(val_mercadoria)) AS '% Frete/Valor Mercadoria'"),

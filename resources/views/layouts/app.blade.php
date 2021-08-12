@@ -42,6 +42,7 @@
                 </div>
 
                 <!-- Sidebar -->
+{{--                {{ $slot }}--}}
                 @include('livewire.sidebar')
 
             </div>

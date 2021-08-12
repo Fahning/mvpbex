@@ -18,10 +18,10 @@ class Indicadores extends Component
         if(!empty($indicators)){
             $this->indicators = (array)$indicators[0];
         }
-        $this->indicators['Meta'] = $indicators['Meta'] ?? 0;
-        $this->indicators['Média Diária'] = $indicators['Média Diária'] ?? 0;
-        $this->indicators['Desvio'] = $indicators['Desvio'] ?? 0;
-        $this->indicators['Desvio (R$)'] = $indicators['Desvio (R$)'] ?? 0;
+        $this->indicators['Meta'] = $this->indicators['Meta'] ?? 0;
+        $this->indicators['Média Diária'] = $this->indicators['Média Diária'] ?? 0;
+        $this->indicators['Desvio'] = $this->indicators['Desvio'] ?? 0;
+        $this->indicators['Desvio (R$)'] = $this->indicators['Desvio (R$)'] ?? 0;
     }
 
 

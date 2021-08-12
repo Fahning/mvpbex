@@ -14,7 +14,7 @@ class ChartBases extends Component
     public $year;
     public $month;
 
-    protected $sql = "(SELECT nf.ano AS Ano, nf.mes AS M, nf.trimestre, nf.segmento AS Segmento,nf.nome_pagador AS Cliente,nf.und_emissora AS Base,SUM(nf.val_frete) AS Receita FROM tabela_ctes nf GROUP BY nf.segmento, nf.nome_pagador, nf.und_emissora, nf.ano , nf.mes) as cc";
+    protected $sql = "(SELECT nf.ano AS Ano, nf.mes AS M, nf.trimestre, nf.segmento AS Segmento,nf.nome_pagador AS Cliente,nf.und_receptora AS Base,SUM(nf.val_frete) AS Receita FROM tabela_ctes nf GROUP BY nf.segmento, nf.nome_pagador, nf.und_receptora, nf.ano , nf.mes) as cc";
 
     protected $listeners = [
         'filtros' => 'searchBases'
@@ -33,11 +33,11 @@ class ChartBases extends Component
 
     public function mount()
     {
-        $chartBase = TabelaCtes::select('und_emissora as base', DB::raw('sum(val_frete) as receita'))
+        $chartBase = TabelaCtes::select('und_receptora as base', DB::raw('sum(val_frete) as receita'))
             ->where('ano', Carbon::today()->year)
             ->where('mes', Carbon::today()->month)
             ->orderBy('receita', 'desc')
-            ->groupBy('und_emissora')
+            ->groupBy('und_receptora')
             ->get();
 
         foreach ($chartBase as $t)
@@ -52,10 +52,10 @@ class ChartBases extends Component
     {
         $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
         $filtros['mes'] = $filtros['mes'] ?? Carbon::today()->month;
-        $chartBase = TabelaCtes::select('und_emissora as base', DB::raw('sum(val_frete) as receita'))
+        $chartBase = TabelaCtes::select('und_receptora as base', DB::raw('sum(val_frete) as receita'))
             ->Search($filtros)
             ->orderBy('receita', 'desc')
-            ->groupBy('und_emissora')
+            ->groupBy('und_receptora')
             ->get();
 
         $this->categories = [];

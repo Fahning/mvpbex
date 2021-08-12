@@ -24,7 +24,7 @@ class TabelaCtes extends Model
             $query->whereIn('segmento',$filtros['searchSegmentos']);
         });
         $query->when($filtros['searchBase'], function($query) use($filtros) {
-            $query->whereIn('und_emissora', $filtros['searchBase']);
+            $query->whereIn('und_receptora', $filtros['searchBase']);
         });
         $query->when($filtros['searchCliente'], function($query) use($filtros) {
             $query->where('nome_pagador', $filtros['searchCliente']);

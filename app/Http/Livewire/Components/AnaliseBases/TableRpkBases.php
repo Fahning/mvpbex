@@ -18,7 +18,7 @@ class TableRpkBases extends Component
 
     public function mount()
     {
-        $this->tableRpkBases = TabelaCtes::select("und_emissora as Base",
+        $this->tableRpkBases = TabelaCtes::select("und_receptora as Base",
             DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
             DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
             DB::raw("((100 * SUM(val_frete)) / SUM(val_mercadoria)) AS '% Frete/Valor Mercadoria'"),
@@ -27,7 +27,7 @@ class TableRpkBases extends Component
             ->where('ano',Carbon::today()->year)
             ->where('mes',Carbon::today()->month)
             ->orderBy('Qtde CTRC', 'desc')
-            ->groupBy('und_emissora')
+            ->groupBy('und_receptora')
             ->get()
             ->toArray();
 
@@ -42,7 +42,7 @@ class TableRpkBases extends Component
     {
         $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
         $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
-        $this->tableRpkBases = TabelaCtes::select("und_emissora as Base",
+        $this->tableRpkBases = TabelaCtes::select("und_receptora as Base",
             DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
             DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
             DB::raw("((100 * SUM(val_frete)) / SUM(val_mercadoria)) AS '% Frete/Valor Mercadoria'"),
@@ -50,7 +50,7 @@ class TableRpkBases extends Component
         )
             ->Search($filtro)
             ->orderBy('Qtde CTRC', 'desc')
-            ->groupBy('und_emissora')
+            ->groupBy('und_receptora')
             ->get()
             ->toArray();
 

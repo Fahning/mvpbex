@@ -106,24 +106,29 @@
 
 
 <script>
+
     window.addEventListener('renderDataInsight', ({ detail }) => {
+        console.log(detail.faturamento.sk_data)
         Highcharts.chart('charModal', {
+            chart: {
+                type: 'area'
+            },
             title: {
-                text: null
+                text: 'Evolução do Faturamento Ultimos 3 Meses'
             },
             subtitle: {
                 text: null
             },
             yAxis: {
+                labels:{
+                    enabled:false
+                },
                 title: {
                     text: null
                 }
             },
             xAxis: {
-                labels:{
-                    enabled:false
-                },
-                categories: detail.faturamento.sk_data
+                categories: detail.faturamento.sk_data,
             },
             legend: {
                 enabled: false,
@@ -132,10 +137,29 @@
                 verticalAlign: 'middle'
             },
             plotOptions: {
-                series: {
-                    label: {
-                        connectorAllowed: false
-                    }
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
                 }
             },
             series: [{
@@ -166,6 +190,9 @@
             }
         });
         Highcharts.chart('chartUm', {
+            chart: {
+                type: 'bar'
+            },
             title: {
                 text: null
             },
@@ -173,13 +200,16 @@
                 text: null
             },
             yAxis: {
+                labels:{
+                    enabled:false
+                },
                 title: {
                     text: null
                 }
             },
             xAxis: {
                 labels:{
-                    enabled:false
+                    enabled:true
                 },
                 categories: detail.chart_um.sk_data
             },
@@ -193,7 +223,8 @@
                 series: {
                     label: {
                         connectorAllowed: false
-                    }
+                    },
+                    borderRadius: 5
                 }
             },
             series: [{
@@ -224,6 +255,9 @@
             }
         });
         Highcharts.chart('chartDois', {
+            chart: {
+                type: 'bar'
+            },
             title: {
                 text: null
             },
@@ -231,13 +265,16 @@
                 text: null
             },
             yAxis: {
+                labels:{
+                    enabled:false
+                },
                 title: {
                     text: null
                 }
             },
             xAxis: {
                 labels:{
-                    enabled:false
+                    enabled:true
                 },
                 categories: detail.chart_dois.sk_data
             },
@@ -251,8 +288,9 @@
                 series: {
                     label: {
                         connectorAllowed: false
-                    }
-                }
+                    },
+                    borderRadius: 5
+                },
             },
             series: [{
                 name: 'Faturamento',
@@ -282,6 +320,9 @@
             }
         });
         Highcharts.chart('chartTres', {
+            chart: {
+                type: 'bar'
+            },
             title: {
                 text: null
             },
@@ -289,13 +330,16 @@
                 text: null
             },
             yAxis: {
+                labels:{
+                    enabled:false
+                },
                 title: {
                     text: null
                 }
             },
             xAxis: {
                 labels:{
-                    enabled:false
+                    enabled:true
                 },
                 categories: detail.chart_tres.sk_data
             },
@@ -309,7 +353,8 @@
                 series: {
                     label: {
                         connectorAllowed: false
-                    }
+                    },
+                    borderRadius: 5
                 }
             },
             series: [{

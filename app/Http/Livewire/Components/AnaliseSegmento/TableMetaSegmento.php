@@ -148,7 +148,7 @@ class TableMetaSegmento extends Component
         )
             ->where('ano', $filtro['ano'])
             ->when($filtro['searchBase'], function ($query) use($filtro) {
-                $query->whereIn('und_emissora', $filtro['searchBase']);
+                $query->whereIn('und_receptora', $filtro['searchBase']);
             })
             ->where('mes', '<',  $filtro['mes'])
             ->where('mes','>=', Carbon::create($filtro['ano'],$filtro['mes'])->subMonths(3)->month)
@@ -167,7 +167,7 @@ class TableMetaSegmento extends Component
                 $join->on('tabela_ctes.mes', '=', 'meta_acumulada_dia.mes');
             })
             ->when($filtro['searchBase'], function ($query) use($filtro) {
-                $query->whereIn('und_emissora', $filtro['searchBase']);
+                $query->whereIn('und_receptora', $filtro['searchBase']);
             })
             ->where('tabela_ctes.ano', $filtro['ano'])
             ->where('tabela_ctes.mes', '<',  $filtro['mes'])
@@ -193,7 +193,7 @@ class TableMetaSegmento extends Component
                 $join->on('tabela_ctes.mes', '=', 'meta_acumulada_dia.mes');
             })
             ->when($filtro['searchBase'], function ($query) use($filtro) {
-                $query->whereIn('und_emissora', $filtro['searchBase']);
+                $query->whereIn('und_receptora', $filtro['searchBase']);
             })
             ->where('tabela_ctes.ano', $filtro['ano'])
             ->where('tabela_ctes.mes', $filtro['mes'])
@@ -282,7 +282,7 @@ class TableMetaSegmento extends Component
             ->where('tabela_ctes.ano', $filtro['ano'])
             ->where('tabela_ctes.mes', '<', $filtro['mes'])
             ->when($filtro['searchBase'], function ($query) use($filtro){
-                $query->whereIn('und_emissora', $filtro['searchBase']);
+                $query->whereIn('und_receptora', $filtro['searchBase']);
             })
             ->where('tabela_ctes.mes', '>=', Carbon::create($filtro['ano'], $filtro['mes'])->subMonths(3)->month)
             ->groupBy('mes')

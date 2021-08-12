@@ -11,11 +11,10 @@
         return date.replace(/(\d*)-(\d*)-(\d*).*/, '$3-$2-$1');
     }
     function formatDateDay(date){
-        return date.replace(/(\d*)-(\d*)-(\d*).*/, '$3');
+        return date.replace(/(\d*)-(\d*)-(\d*).*/, '$2');
     }
 
     window.addEventListener('renderChartRO', ({ detail }) => {
-        console.log(detail.categories)
         Highcharts.chart('chartRo', {
             title: {
                 text: null

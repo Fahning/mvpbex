@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Components\Menus;
 
 use App\Models\Insight;
 use App\Models\Insights;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class ModalInsight extends Component
@@ -36,6 +37,22 @@ class ModalInsight extends Component
                 'chart_dois' => '',
                 'chart_tres' => ''
             ];
+        }
+
+        foreach ($this->insightModal['faturamento']->sk_data as $key => $data){
+            $this->insightModal['faturamento']->sk_data[$key] = ucfirst(Carbon::create($data)->monthName);
+        }
+
+        foreach ($this->insightModal['chart_um']->sk_data as $key => $data){
+            $this->insightModal['chart_um']->sk_data[$key] = ucfirst(Carbon::create($data)->monthName);
+        }
+
+        foreach ($this->insightModal['chart_dois']->sk_data as $key => $data){
+            $this->insightModal['chart_dois']->sk_data[$key] = ucfirst(Carbon::create($data)->monthName);
+        }
+
+        foreach ($this->insightModal['chart_tres']->sk_data as $key => $data){
+            $this->insightModal['chart_tres']->sk_data[$key] = ucfirst(Carbon::create($data)->monthName);
         }
         $this->dispatchBrowserEvent(
             'renderDataInsight',

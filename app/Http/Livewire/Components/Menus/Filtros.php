@@ -62,12 +62,12 @@ class Filtros extends Component
         }
 
         $bases = DB::table('tabela_ctes')
-            ->select('und_emissora')
+            ->select('und_receptora')
             ->distinct()
             ->get();
         $listBases = [];
         foreach($bases as $ls){
-            array_push($listBases, $ls->und_emissora);
+            array_push($listBases, $ls->und_receptora);
         }
         return view('livewire.components.menus.filtros', [
             'segmentolist' => $listSegmentos,

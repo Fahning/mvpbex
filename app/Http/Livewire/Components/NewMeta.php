@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components;
 
+use App\Models\DimMeta;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -14,6 +15,7 @@ class NewMeta extends Component
     public $dinheiro;
     public $porcentagem;
     public $newMeta;
+    protected $value;
 
     public function mount(){
         $this->newMeta = DB::select("select META from dim_meta WHERE ANO = ".Carbon::today()->year." AND MES = ".Carbon::today()->addMonth()->month);
@@ -23,34 +25,14 @@ class NewMeta extends Component
     }
     public function newMeta(){
         if(!is_null($this->dinheiro) && is_null($this->porcentagem)){
-            DB::select("INSERT INTO dim_meta VALUES(YEAR(CURRENT_DATE() + INTERVAL 1 MONTH), MONTH(CURRENT_DATE() + INTERVAL 1 MONTH), {$this->dinheiro}, 0, 0, 0, 0)");
-            $this->newMeta = DB::select("select META from dim_meta WHERE ANO = ".Carbon::today()->year." AND MES = ".Carbon::today()->addMonth()->month);
-            $this->newMeta = $this->newMeta[0]->META;
-            $this->dinheiro = null;
-            $this->porcentagem = null;
-            $this->notification()->notify([
-                'title'       => 'Sucesso',
-                'description' => 'Meta definida com sucesso',
-                'icon'        => 'success',
-                'iconColor'   => 'green',
-                'timeout'     => 2000
-
-            ]);
+            $this->value = $this->dinheiro;
         }elseif (!is_null($this->porcentagem) && is_null($this->dinheiro)) {
-            $value = floatval($this->porcentagem) / 100 + 1;
-            DB::select("INSERT INTO dim_meta VALUES(YEAR(CURRENT_DATE() + INTERVAL 1 MONTH), MONTH(CURRENT_DATE() + INTERVAL 1 MONTH), (SELECT {$value}*SUM(val_frete) FROM tabela_ctes WHERE ano = YEAR(CURRENT_DATE()) AND mes = MONTH(CURRENT_DATE())-1), 0, 0, 0, 0);");
-            $this->newMeta = DB::select("select META from dim_meta WHERE ANO = ".Carbon::today()->year." AND MES = ".Carbon::today()->addMonth()->month);
-            $this->newMeta = $this->newMeta[0]->META;
-            $this->dinheiro =  null;
-            $this->porcentagem = null;
-            $this->notification()->notify([
-                'title'       => 'Sucesso',
-                'description' => 'Meta definida com sucesso',
-                'icon'        => 'success',
-                'iconColor'   => 'green',
-                'timeout'     => 2000
-
-            ]);
+            $this->newMeta = DB::table('tabela_ctes')
+                ->select(DB::raw('SUM(val_frete) as fat'))
+                ->where('ano', Carbon::today()->subMonth()->year)
+                ->where('mes', Carbon::today()->subMonth()->month)
+                ->first();
+            $this->value = (floatval($this->porcentagem) / 100 + 1) * floatval($this->newMeta->fat) ;
         }else{
             $this->notification()->notify([
                 'title'       => 'Erro',
@@ -63,6 +45,29 @@ class NewMeta extends Component
             $this->dinheiro =  null;
             $this->porcentagem = null;
         }
+
+        $retorno = DB::table('dim_meta')
+            ->updateOrInsert([
+                'ANO'   => Carbon::today()->addMonth()->year,
+                'MES'   => Carbon::today()->addMonth()->month,
+            ],
+            [
+                'META'  => $this->value
+            ]
+        );
+        if($retorno){
+            $this->newMeta = $this->value;
+            $this->dinheiro = null;
+            $this->porcentagem = null;
+        }
+        $this->notification()->notify([
+            'title'       => 'Sucesso',
+            'description' => 'Meta definida com sucesso',
+            'icon'        => 'success',
+            'iconColor'   => 'green',
+            'timeout'     => 2000
+
+        ]);
     }
     public function render()
     {

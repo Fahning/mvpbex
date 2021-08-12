@@ -48,7 +48,7 @@ class TableMetaBases extends Component
                 array_push($base, $b );
             }
             $base = "'" . implode ( "', '", $base ) . "'";
-            $base = "AND nf.und_emissora IN ({$base})";
+            $base = "AND nf.und_receptora IN ({$base})";
         }else{
             $base = '';
         }
@@ -87,7 +87,7 @@ class TableMetaBases extends Component
     private function queryMetaBases($month, $year, $bases = ''): array
     {
         return DB::select("SELECT
-                        `nf`.`und_emissora` AS `Base`,
+                        `nf`.`und_receptora` AS `Base`,
                         SUM(`nf`.`val_frete`) AS `Realizado`,
                         IF(((`nf`.`mes` = MONTH(CURDATE()))
                                 AND (`nf`.`ano` = YEAR(CURDATE()))),
@@ -100,10 +100,10 @@ class TableMetaBases extends Component
                     FROM
                         `tabela_ctes` `nf`
                             LEFT JOIN
-                        (SELECT `ps`.`und_emissora`, AVG(`ps`.`peso_base`) as `peso_base` FROM (SELECT
+                        (SELECT `ps`.`und_receptora`, AVG(`ps`.`peso_base`) as `peso_base` FROM (SELECT
                             `nf`.`ano`,
                                 `nf`.`mes`,
-                                `nf`.`und_emissora` AS `und_emissora`,
+                                `nf`.`und_receptora` AS `und_receptora`,
                                 (SUM(`nf`.`val_frete`) / `tot`.`receita_total`) AS `peso_base`
                         FROM
                             (`tabela_ctes` `nf`
@@ -118,14 +118,14 @@ class TableMetaBases extends Component
                         WHERE
                             ((`nf`.`mes` < ".$month.")
                                 AND (`nf`.`mes` >= ".$month." - 3))
-                        GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`und_emissora`) as ps
-                        GROUP BY `ps`.`und_emissora`) `mda` ON `nf`.`und_emissora` = `mda`.`und_emissora`
+                        GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`und_receptora`) as ps
+                        GROUP BY `ps`.`und_receptora`) `mda` ON `nf`.`und_receptora` = `mda`.`und_receptora`
                             LEFT JOIN
                         `meta_acumulada_dia` `mad` ON (((`nf`.`ano` = `mad`.`ano`)
                             AND (`nf`.`mes` = `mad`.`mes`)))
                     WHERE
                         `nf`.`ano` = ".$year." AND `nf`.`mes` = ".$month." ".$bases."
-                    GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`und_emissora`
+                    GROUP BY `nf`.`ano` , `nf`.`mes` , `nf`.`und_receptora`
                     ORDER BY Realizado desc
                     ");
     }

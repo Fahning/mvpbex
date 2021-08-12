@@ -47,7 +47,7 @@
             >
                 <img
                     class="w-10 h-10 rounded-lg shadow-md object-cover"
-                    src="{{$avatar['avatar']}}"
+                    src="{{ asset('logo/bex-avatar.svg') }}"
                     alt="{{$avatar['name']}}"
                 />
                 <span class="sr-only">User menu</span>
@@ -169,7 +169,7 @@
             >
                 <img
                     class="w-10 h-10 rounded-lg shadow-md object-cover"
-                    src="{{ asset('storage/'.$avatar['avatar']) }}"
+                    src="{{ asset('logo/bex-avatar.svg') }}"
                     alt="{{$avatar['name']}}"
                 />
                 <span class="sr-only">Menu do Usuario</span>

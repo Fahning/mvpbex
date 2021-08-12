@@ -9,6 +9,14 @@ use Livewire\Component;
 class Financeiro extends Component
 {
 
+
+//    protected $listeners = ['filtros'];
+//
+//
+//    public function filtros($filtros)
+//    {
+//        dd($filtros);
+//    }
     public function render()
     {
         return view('livewire.financeiro');
