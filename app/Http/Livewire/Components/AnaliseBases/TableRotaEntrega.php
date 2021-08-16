@@ -15,6 +15,7 @@ class TableRotaEntrega extends Component
     public $maiorCTRC;
     public $rotaEntrega;
 
+    protected $hide = false;
     protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
@@ -53,27 +54,41 @@ class TableRotaEntrega extends Component
 
     public function filtrar($filtro)
     {
-        $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
-        $filtros['mes'] = $filtros['mes'] ?? Carbon::today()->month;
-        $this->tableRotaEntrega = DB::table('v_receita_entrega_new')
-            ->select('Rota', 'Peso', 'Receita', 'Qte CTRC', 'Volumes')
-            ->where('Ano',  $filtros['ano'])
-            ->where('M',  $filtros['mes'])
-            ->orderBy('Receita', 'desc')
-            ->get();
-        foreach ($this->tableRotaEntrega as $t){
-            if($this->maiorCTRC < $t->{"Qte CTRC"}){
-                $this->maiorCTRC = $t->{"Qte CTRC"};
-            }
+        if(
+            !is_null($filtro['searchBase'])
+            || !is_null($filtro['searchSegmentos'])
+            || !is_null($filtro['searchCliente'])
+        ){
+            $this->hide = true;
+        }else {
+            $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
+            $filtros['mes'] = $filtros['mes'] ?? Carbon::today()->month;
+            $this->tableRotaEntrega = DB::table('v_receita_entrega_new')
+                ->select('Rota', 'Peso', 'Receita', 'Qte CTRC', 'Volumes')
+                ->where('Ano', $filtros['ano'])
+                ->where('M', $filtros['mes'])
+                ->orderBy('Receita', 'desc')
+                ->get();
+            foreach ($this->tableRotaEntrega as $t) {
+                if ($this->maiorCTRC < $t->{"Qte CTRC"}) {
+                    $this->maiorCTRC = $t->{"Qte CTRC"};
+                }
 
-            if($this->maiorReceita < $t->Receita){
-                $this->maiorReceita = $t->Receita;
+                if ($this->maiorReceita < $t->Receita) {
+                    $this->maiorReceita = $t->Receita;
+                }
             }
         }
     }
 
     public function render()
     {
-        return view('livewire.components.analise-bases.table-rota-entrega');
+        if($this->hide) {
+            return <<<'blade'
+                <span></span>
+            blade;
+        }else {
+            return view('livewire.components.analise-bases.table-rota-entrega');
+        }
     }
 }

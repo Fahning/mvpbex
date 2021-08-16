@@ -10,6 +10,7 @@ class ChartRealizadoOrcado extends Component
 {
     public $year;
     public $data2;
+    protected $hide = false;
 
     protected $listeners = ['filtros' => 'filtrar'];
 
@@ -22,10 +23,18 @@ class ChartRealizadoOrcado extends Component
 
     public function filtrar($filtro)
     {
-        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
-        $faturamento = DB::select("call realizado_orcado(".$filtro['ano'].")");
-        $this->formatData($faturamento);
-        $this->dispatchDataRO();
+        if(
+            !is_null($filtro['searchBase'])
+            || !is_null($filtro['searchSegmentos'])
+            || !is_null($filtro['searchCliente'])
+        ){
+            $this->hide = true;
+        }else {
+            $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+            $faturamento = DB::select("call realizado_orcado(" . $filtro['ano'] . ")");
+            $this->formatData($faturamento);
+            $this->dispatchDataRO();
+        }
     }
 
     private function formatData($faturamento){
@@ -53,6 +62,12 @@ class ChartRealizadoOrcado extends Component
 
     public function render()
     {
-        return view('livewire.components.farol-faturamento.chart-realizado-orcado');
+        if($this->hide) {
+            return <<<'blade'
+                <span></span>
+            blade;
+        }else {
+            return view('livewire.components.farol-faturamento.chart-realizado-orcado');
+        }
     }
 }

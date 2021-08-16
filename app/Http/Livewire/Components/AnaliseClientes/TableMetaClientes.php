@@ -14,6 +14,8 @@ class TableMetaClientes extends Component
     public $maior = 0;
     public $clientes = '';
 
+    protected $hide = false;
+
     protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
@@ -26,8 +28,8 @@ class TableMetaClientes extends Component
         $this->table = $this->queryMetaClientes($this->month, $this->year);
 
         foreach ($this->table as $t){
-            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
-            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
+            $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta Sugerida'});
             unset($t->{'Fator Peso'});
             unset($t->dias_uteis_hoje);
             unset($t->dias_uteis);
@@ -50,8 +52,8 @@ class TableMetaClientes extends Component
         $this->table = $this->queryMetaClientes($this->month, $this->year);
 
         foreach ($this->table as $t){
-            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
-            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
+            $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta Sugerida'});
             unset($t->{'Fator Peso'});
             unset($t->dias_uteis_hoje);
             unset($t->dias_uteis);
@@ -62,45 +64,58 @@ class TableMetaClientes extends Component
 
     public function filtrar($filtro)
     {
-        if(!empty($filtro['searchCliente'])){
-            $cliente = "AND nf.nome_pagador LIKE '%".$filtro['searchCliente']."%'";
-        }else{
-            $cliente = '';
-        }
-
-        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
-        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
-        $media = DB::select("call calcula_media3(". $filtro['ano'].", ".$filtro['mes'].")");
-
-        $this->table = $this->queryMetaClientes($this->month, $this->year, $cliente);
-        foreach ($this->table as $t){
-            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
-            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
-            unset($t->{'Fator Peso'});
-            unset($t->dias_uteis_hoje);
-            unset($t->dias_uteis);
-            if($this->maior < $t->Realizado){
-                $this->maior = $t->Realizado;
+        if(
+            !is_null($filtro['searchBase'])
+            || !is_null($filtro['searchSegmentos'])
+            || !is_null($filtro['searchCliente'])
+        ){
+            $this->hide = true;
+        }else {
+            if (!empty($filtro['searchCliente'])) {
+                $cliente = "AND nf.nome_pagador LIKE '%" . $filtro['searchCliente'] . "%'";
+            } else {
+                $cliente = '';
             }
-        }
 
-        if(!is_null($filtro['orderDesvios'])){
-            usort($this->table, function($a, $b) use($filtro)
-            {
-                if($filtro['orderDesvios'] == 'asc'){
-                    return $a->{'Desvio (R$)'} > $b->{'Desvio (R$)'};
-                }elseif($filtro['orderDesvios'] == 'desc'){
-                    return $a->{'Desvio (R$)'} < $b->{'Desvio (R$)'};
-                }else{
-                    return $a->{'Desvio (R$)'};
+            $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+            $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+            $media = DB::select("call calcula_media3(" . $filtro['ano'] . ", " . $filtro['mes'] . ")");
+
+            $this->table = $this->queryMetaClientes($this->month, $this->year, $cliente);
+            foreach ($this->table as $t) {
+                $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+                $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta Sugerida'});
+                unset($t->{'Fator Peso'});
+                unset($t->dias_uteis_hoje);
+                unset($t->dias_uteis);
+                if ($this->maior < $t->Realizado) {
+                    $this->maior = $t->Realizado;
                 }
-            });
+            }
+
+            if (!is_null($filtro['orderDesvios'])) {
+                usort($this->table, function ($a, $b) use ($filtro) {
+                    if ($filtro['orderDesvios'] == 'asc') {
+                        return $a->{'Desvio (R$)'} > $b->{'Desvio (R$)'};
+                    } elseif ($filtro['orderDesvios'] == 'desc') {
+                        return $a->{'Desvio (R$)'} < $b->{'Desvio (R$)'};
+                    } else {
+                        return $a->{'Desvio (R$)'};
+                    }
+                });
+            }
         }
     }
 
     public function render()
     {
-        return view('livewire.components.analise-clientes.table-meta-clientes');
+        if($this->hide) {
+            return <<<'blade'
+                <span></span>
+            blade;
+        }else {
+            return view('livewire.components.analise-clientes.table-meta-clientes');
+        }
     }
 
 

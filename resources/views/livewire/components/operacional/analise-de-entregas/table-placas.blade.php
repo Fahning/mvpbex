@@ -28,7 +28,7 @@
         </div>
 
     </div>
-    <div class="overflow-auto max-h-80">
+    <div>
         @if(count($table) > 0)
         <table class="table-auto border-collapse w-full mt-4" >
             <thead>
@@ -42,7 +42,8 @@
                 @endforeach
             </tr>
             </thead>
-            <tbody class="text-sm font-normal text-gray-700 w-full">
+            <div >
+                <tbody class="text-sm font-normal text-gray-700 w-full">
             @foreach($table as $row)
                 <tr class="hover:bg-gray-100 border-b border-gray-200 py-2">
                     @foreach($row as $key => $value)
@@ -78,6 +79,7 @@
                 </tr>
             @endforeach
             </tbody>
+            </div>
         </table>
         @else
             <div class="container flex flex-col mt-36 items-center justify-center text-2xl font-bold text-gray-400" >

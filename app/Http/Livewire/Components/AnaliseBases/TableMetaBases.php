@@ -12,6 +12,7 @@ class TableMetaBases extends Component
     public $year;
     public $month;
     public $maior = 0;
+    protected $hide = false;
 
 
     protected $listeners = ['filtros' => 'filtrar'];
@@ -25,8 +26,8 @@ class TableMetaBases extends Component
         $this->tableMetaBases = $this->queryMetaBases($this->month, $this->year);
 
         foreach ($this->tableMetaBases as $t){
-            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
-            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
+            $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta Sugerida'});
             unset($t->{'Fator Peso'});
             unset($t->dias_uteis_hoje);
             unset($t->dias_uteis);
@@ -39,48 +40,61 @@ class TableMetaBases extends Component
 
     public function filtrar($filtro)
     {
-        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
-        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
-        $media = DB::select("call calcula_media3(".$filtro['ano'].", ".$filtro['mes'].")");
-        $base = [];
-        if(!empty($filtro['searchBase'])){
-            foreach($filtro['searchBase'] as $b){
-                array_push($base, $b );
-            }
-            $base = "'" . implode ( "', '", $base ) . "'";
-            $base = "AND nf.und_receptora IN ({$base})";
-        }else{
-            $base = '';
-        }
-
-        $this->tableMetaBases = $this->queryMetaBases($this->month, $this->year, $base);
-
-        foreach ($this->tableMetaBases as $t){
-            $t->Meta = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
-            $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta'});
-            unset($t->{'Fator Peso'});
-            unset($t->dias_uteis_hoje);
-            unset($t->dias_uteis);
-        }
-
-        if(!is_null($filtro['orderDesvios'])){
-            usort($this->tableMetaBases, function($a, $b) use($filtro)
-            {
-                if($filtro['orderDesvios'] == 'asc'){
-                    return $a->{'Desvio (R$)'} > $b->{'Desvio (R$)'};
-                }elseif($filtro['orderDesvios'] == 'desc'){
-                    return $a->{'Desvio (R$)'} < $b->{'Desvio (R$)'};
-                }else{
-                    return $a->{'Desvio (R$)'};
+        if(
+            !is_null($filtro['searchBase'])
+            || !is_null($filtro['searchSegmentos'])
+            || !is_null($filtro['searchCliente'])
+        ){
+            $this->hide = true;
+        }else {
+            $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+            $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+            $media = DB::select("call calcula_media3(" . $filtro['ano'] . ", " . $filtro['mes'] . ")");
+            $base = [];
+            if (!empty($filtro['searchBase'])) {
+                foreach ($filtro['searchBase'] as $b) {
+                    array_push($base, $b);
                 }
-            });
+                $base = "'" . implode("', '", $base) . "'";
+                $base = "AND nf.und_receptora IN ({$base})";
+            } else {
+                $base = '';
+            }
+
+            $this->tableMetaBases = $this->queryMetaBases($this->month, $this->year, $base);
+
+            foreach ($this->tableMetaBases as $t) {
+                $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+                $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta Sugerida'});
+                unset($t->{'Fator Peso'});
+                unset($t->dias_uteis_hoje);
+                unset($t->dias_uteis);
+            }
+
+            if (!is_null($filtro['orderDesvios'])) {
+                usort($this->tableMetaBases, function ($a, $b) use ($filtro) {
+                    if ($filtro['orderDesvios'] == 'asc') {
+                        return $a->{'Desvio (R$)'} > $b->{'Desvio (R$)'};
+                    } elseif ($filtro['orderDesvios'] == 'desc') {
+                        return $a->{'Desvio (R$)'} < $b->{'Desvio (R$)'};
+                    } else {
+                        return $a->{'Desvio (R$)'};
+                    }
+                });
+            }
         }
     }
 
 
     public function render()
     {
-        return view('livewire.components.analise-bases.table-meta-bases');
+        if($this->hide) {
+            return <<<'blade'
+                <span></span>
+            blade;
+        }else {
+            return view('livewire.components.analise-bases.table-meta-bases');
+        }
     }
 
 

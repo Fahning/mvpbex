@@ -42,8 +42,11 @@
                 </div>
 
                 <!-- Sidebar -->
-{{--                {{ $slot }}--}}
-                @include('livewire.sidebar')
+                @livewire('sidebar')
+
+                @section('corpo-site')
+                {{ $slot }}
+                @stop
 
             </div>
             <!-- Filters Panel -->

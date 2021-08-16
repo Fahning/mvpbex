@@ -27,7 +27,7 @@
                                     </div>
                                 </div>
                             </th>
-                        @elseif($key == 'Meta' || $key == 'Média' )
+                        @elseif($key == 'Meta Sugerida' || $key == 'Média' )
                             <td class="px-4 py-1 w-22">{{formatReceita($value)}}</th>
                         @elseif($key == 'Desvio (R$)')
                             <td class="px-4 py-1">

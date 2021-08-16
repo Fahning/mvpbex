@@ -16,5 +16,5 @@ class DimMeta extends Model
     public $incrementing = false;
     public $keyType = 'string';
 
-    protected $fillable = ['ANO', 'MES', 'META'];
+    protected $fillable = ['ANO', 'MES', 'META', 'META_COLETA', 'META_ENTREGA', 'META_TRANSFERENCIA', 'META_CUSTO_GERAL'];
 }

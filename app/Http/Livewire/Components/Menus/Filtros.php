@@ -30,6 +30,7 @@ class Filtros extends Component
 
     public function filtrar()
     {
+        $this->emit('teste', $this->filtros);
         $this->emit('filtros', $this->filtros);
     }
 

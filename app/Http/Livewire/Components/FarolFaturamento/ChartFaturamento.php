@@ -10,6 +10,8 @@ use Livewire\Component;
 class ChartFaturamento extends Component
 {
     public $data;
+    protected $hide = false;
+
     protected $listeners = ['filtros' => 'filtrar'];
 
     public function mount()
@@ -20,11 +22,19 @@ class ChartFaturamento extends Component
 
     public function filtrar($filtro)
     {
-        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
-        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
-        $faturamento = DB::select("CALL faturamento_dia(".$filtro['ano'].",".$filtro['mes'].")");
-        $this->fatoraFaturamento($faturamento);
-        $this->dispatchData();
+        if(
+            !is_null($filtro['searchBase'])
+            || !is_null($filtro['searchSegmentos'])
+            || !is_null($filtro['searchCliente'])
+        ){
+            $this->hide = true;
+        }else {
+            $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+            $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+            $faturamento = DB::select("CALL faturamento_dia(" . $filtro['ano'] . "," . $filtro['mes'] . ")");
+            $this->fatoraFaturamento($faturamento);
+            $this->dispatchData();
+        }
     }
 
     private function fatoraFaturamento($faturamento)
@@ -47,6 +57,12 @@ class ChartFaturamento extends Component
 
     public function render()
     {
-        return view('livewire.components.farol-faturamento.chart-faturamento');
+        if($this->hide) {
+            return <<<'blade'
+                <span></span>
+            blade;
+        }else {
+            return view('livewire.components.farol-faturamento.chart-faturamento');
+        }
     }
 }

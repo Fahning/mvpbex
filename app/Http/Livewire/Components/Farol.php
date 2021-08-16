@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Farol extends Component
 {
     public $farol;
+    protected $hide = false;
 
     protected $listeners = ['filtros' => 'filtrar'];
     public function mount()
@@ -21,15 +22,30 @@ class Farol extends Component
 
     public function filtrar($filtro)
     {
-        $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
-        $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
-        $farol = DB::select("CALL farol(".$filtro['ano'].",".$filtro['mes'].")");
-        $farol = (array)$farol[0]->vMensagem;
-        $this->farol = $farol[0];
+        if(
+               !is_null($filtro['searchBase'])
+            || !is_null($filtro['searchSegmentos'])
+            || !is_null($filtro['searchCliente'])
+        ){
+            $this->hide = true;
+        }else{
+            $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
+            $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
+            $farol = DB::select("CALL farol(".$filtro['ano'].",".$filtro['mes'].")");
+            $farol = (array)$farol[0]->vMensagem;
+            $this->farol = $farol[0];
+        }
     }
 
     public function render()
     {
-        return view('livewire.components.farol');
+        if($this->hide) {
+            return <<<'blade'
+                <span></span>
+            blade;
+        }else{
+            return view('livewire.components.farol');
+        }
+
     }
 }

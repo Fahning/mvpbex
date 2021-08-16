@@ -10,17 +10,13 @@ class Sidebar extends Component
 {
 
     public $slot;
+    public $insights = 0;
 
 
     public function mount()
     {
-        $this->avatar = Auth::user()->profile_photo_url ?? '';
+//        dd(Insights::where('status', 0)->get());
         $this->insights = Insights::where('status', 0)->get();
-    }
-
-    public function toOperacional()
-    {
-        return redirect()->to('/operacional');
     }
 
     public function render()

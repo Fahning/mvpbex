@@ -9,5 +9,6 @@ class FarolFaturamento extends Component
     public function render()
     {
         return view('livewire.farol-faturamento');
+//            ->layout('livewire.sidebar');;
     }
 }
