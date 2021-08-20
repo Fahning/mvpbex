@@ -13,7 +13,6 @@ class TabelaCtes extends Model
 
     public function scopeSearch($query, $filtros)
     {
-
         $query->when($filtros['ano'], function($query) use($filtros) {
             $query->where('ano', $filtros['ano']);
         });

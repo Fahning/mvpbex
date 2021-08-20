@@ -31,6 +31,7 @@
 
 
     <body class="h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
+        <x-dialog />
         <div class="w-full" x-data="setupMenu()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
             <div  class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
                 <!-- Loading screen -->

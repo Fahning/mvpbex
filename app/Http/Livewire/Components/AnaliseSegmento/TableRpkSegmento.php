@@ -18,7 +18,7 @@ class TableRpkSegmento extends Component
 
     public function mount()
     {
-        $this->table = TabelaCtes::select("segmento",
+        $this->table = TabelaCtes::select("segmento as Segmento",
                                 DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
                                 DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
                                 DB::raw("((100 * SUM(val_frete)) / SUM(val_mercadoria)) AS '% Frete/Valor Mercadoria'"),
@@ -27,7 +27,7 @@ class TableRpkSegmento extends Component
             ->where('ano',Carbon::today()->year)
             ->where('mes',Carbon::today()->month)
             ->orderBy('Qtde CTRC', 'desc')
-            ->groupBy('segmento')
+            ->groupBy('Segmento')
             ->get()
             ->toArray();
 
@@ -42,7 +42,7 @@ class TableRpkSegmento extends Component
     {
         $filtro['ano'] = $filtro['ano'] ?? Carbon::today()->year;
         $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
-        $this->table = TabelaCtes::select("segmento",
+        $this->table = TabelaCtes::select("segmento as Segmento",
                 DB::raw('(SUM(val_frete) / COUNT(0)) AS TKM'),
                 DB::raw("(SUM(val_frete) / SUM(peso_cal_kg)) AS RPK"),
                 DB::raw("((100 * SUM(val_frete)) / SUM(val_mercadoria)) AS '% Frete/Valor Mercadoria'"),
@@ -50,7 +50,7 @@ class TableRpkSegmento extends Component
             )
             ->Search($filtro)
             ->orderBy('Qtde CTRC', 'desc')
-            ->groupBy('segmento')
+            ->groupBy('Segmento')
             ->get()
             ->toArray();
     }

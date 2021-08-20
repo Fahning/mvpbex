@@ -10,7 +10,7 @@ class TableCustos extends Component
 
     public function render()
     {
-        return view('livewire.components.operacional.analise-de-entregas.table-custos', [
+        return view('livewire.components.operacional.analise-de-coletas.table-custos', [
             'table' => DB::table('conhecimento_baixa', 'cb')
                 ->leftJoin('movromaneio as mv',function($join) {
                     $join->on(DB::raw("CONCAT(cb.unidade,cb.ctrb_os)"), 'mv.ctrb');

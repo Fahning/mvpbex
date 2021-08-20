@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\Operacional\AnaliseDeEntregas;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -13,50 +14,66 @@ class TablePlacas extends Component
         'dataEnd' => null,
         'ano' => null,
         'mes' => null,
-        'trimestre' => null
+        'trimestre' => null,
+        'searchCliente' => null,
+        'searchBase' => null,
+        'orderDesvios' => null,
+        'searchSegmentos' => null
     ];
+
 
     protected $listeners = ['filtros' => 'filtrar'];
 
+
     public function filtrar($filtros)
     {
+        $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
+        $filtros['mes'] = $filtros['mes'] ?? Carbon::today()->month;
         $this->filtros = $filtros;
-    }
+     }
 
     public function render()
     {
-        return view('livewire.components.operacional.analise-de-entregas.table-placas'
-            , [
-            'table' => DB::table('conhecimento_baixa', 'cb')
-                ->leftJoin('movromaneio as mv',function($join) {
+        $this->filtros['ano'] = $this->filtros['ano'] ?? Carbon::today()->year;
+        $this->filtros['mes'] = $this->filtros['mes'] ?? Carbon::today()->month;
+        if($this->tipoTable == null){
+            $this->tipoTable = 'cb.placa';
+        }
+        return view('livewire.components.operacional.analise-de-entregas.table-placas', [
+            'tablePlacas' => DB::table('bexsal_reports.report_076', 'cb')
+                ->join('bexsal_reports.report_073 as mv',function($join) {
                     $join->on(DB::raw("CONCAT(cb.unidade,cb.ctrb_os)"), 'mv.ctrb');
                 })
-                ->leftJoin(DB::raw("(SELECT cb.unidade, cb.ctrb_os, SUM(nf.cubagem) as cubagem_total FROM notas nf LEFT JOIN conhecimento_baixa cb ON nf.ctrc = cb.ctrc GROUP BY cb.unidade, cb.ctrb_os) as cub"), function($q) {
-                    $q->on('cb.ctrb_os', '=', 'cub.ctrb_os');
-                    $q->on('cb.unidade', '=', 'cub.unidade');
+                ->leftJoin('bexsal_reports.cubagem_total_ctrb as cub', DB::raw('CONCAT(cb.unidade,cb.ctrb_os)'), '=', 'cub.ctrb')
+                ->leftJoin('bexsal_reports.report_455 as nf', DB::raw("REPLACE(cb.ctrc,'/','')"), '=', 'nf.numero_ctrc')
+                ->leftJoin('bexsal_bdsal.relacao_veiculos as veic', 'cb.placa', '=', 'veic.PLACA')
+                ->selectRaw($this->tipoTable.",
+                        (SUM(mv.valor_a_pagar) * 100)/SUM(mv.frete_ctrcs_ctrb_coleta_entrega) as 'Diária/Frete',
+                        SUM(cb.peso_calculo) as Peso,
+                        SUM(nf.cubagem_m3) as Cubagem,
+                        SUM(cb.qtvol) as 'Qtd Volumes',
+                        SUM(cb.val_merc) as '(R$) Mercadoria',
+                        SUM(cb.vlr_frete) as '(R$) Frete',
+                        SUM((mv.valor_a_pagar/mv.peso_ctrcs_ctrb_coleta_entrega)*(cb.peso_calculo)) as 'Custo (KG)',
+                        SUM((mv.valor_a_pagar/cub.cubagem_total)*(nf.cubagem_m3)) as 'Custo (M3)'")
+                ->where('cb.tipo_baixa', 'E')
+                ->when($this->filtros['ano'], function ($query){
+                    $query->where(DB::raw("IF((nf.data_emissao IS NOT NULL), YEAR(nf.data_emissao), YEAR(cb.data_baixa))"), $this->filtros['ano']);
                 })
-                ->leftJoin('tabela_ctes as nf', 'cb.ctrc', '=', 'nf.ctrc')
-                ->leftJoin('relacao_veiculos as veic', 'cb.placa', '=', 'veic.PLACA')
-                ->selectRaw($this->tipoTable.", (mv.valor_pagar*100)/mv.frete_ctrc as 'Diária/Frete', SUM(cb.pesocalc) as Peso, SUM(nf.cubagem) as Cubagem, SUM(cb.qtdvol) as 'Qtd Volumes', SUM(cb.valmerc) as '(R$) Mercadoria', SUM(cb.valfrete) as '(R$) Frete', SUM((mv.valor_pagar/mv.peso_ctrc)*(cb.pesocalc)) as 'Custo (KG)', SUM((mv.valor_pagar/cub.cubagem_total)*(nf.cubagem)) as 'Custo (M3)'")
-                ->where('cb.ctrb_os', '<>', '')->where('cb.tipobaixa', 'E')
-                ->when($this->filtros['dataStart'], function ($query) {
-                    $query->where('nf.data_emissao', '>', $this->filtros['dataStart']);
+                ->when($this->filtros['mes'], function ($query){
+                    $query->where(DB::raw("IF((nf.data_emissao IS NOT NULL), MONTH(nf.data_emissao), MONTH(cb.data_baixa))"), $this->filtros['mes']);
                 })
-                ->when($this->filtros['dataEnd'], function ($query) {
-                    $query->where('nf.data_emissao', '<', $this->filtros['dataEnd']);
+                ->when($this->filtros['searchCliente'], function ($query) {
+                    $query->where('nf.cliente_pagador', $this->filtros['searchCliente']);
                 })
-                ->when($this->filtros['ano'], function ($query) {
-                    $query->where('nf.ano', '=', $this->filtros['ano']);
+                ->when($this->filtros['searchBase'], function ($query) {
+                    $query->whereIn('cb.unidade', $this->filtros['searchBase']);
                 })
-                ->when($this->filtros['mes'], function ($query) {
-                    $query->where('nf.mes', '=', $this->filtros['mes']);
-                })
-                ->when($this->filtros['trimestre'], function ($query) {
-                    $query->where('nf.trimestre', '=', $this->filtros['trimestre']);
+                ->when($this->filtros['searchSegmentos'], function ($query) {
+                    $query->whereIn(DB::raw("IF(nf.segmento_pagador IS NOT NULL, nf.segmento_pagador, 'OUTROS')"), $this->filtros['searchSegmentos']);
                 })
                 ->groupBy($this->tipoTable)
                 ->get()
-        ]
-        );
+        ]);
     }
 }

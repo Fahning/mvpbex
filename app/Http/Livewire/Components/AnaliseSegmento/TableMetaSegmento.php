@@ -133,7 +133,6 @@ class TableMetaSegmento extends Component
     {
         if(
             !is_null($filtro['searchBase'])
-            || !is_null($filtro['searchSegmentos'])
             || !is_null($filtro['searchCliente'])
         ){
             $this->hide = true;

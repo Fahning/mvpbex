@@ -41,8 +41,7 @@ class TableMetaBases extends Component
     public function filtrar($filtro)
     {
         if(
-            !is_null($filtro['searchBase'])
-            || !is_null($filtro['searchSegmentos'])
+            !is_null($filtro['searchSegmentos'])
             || !is_null($filtro['searchCliente'])
         ){
             $this->hide = true;

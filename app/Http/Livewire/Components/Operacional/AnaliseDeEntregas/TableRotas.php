@@ -9,7 +9,7 @@ class TableRotas extends Component
 {
     public function render()
     {
-        return view('livewire.components.operacional.analise-de-entregas.table-rotas', [
+        return view('livewire.components.operacional.analise-de-coletas.table-rotas', [
             'tableRotas' =>DB::table('conhecimento_baixa', 'cb')
             ->leftJoin('movromaneio',function($join) {
                     $join->on(DB::raw("CONCAT(cb.unidade,cb.ctrb_os)"), 'movromaneio.ctrb');

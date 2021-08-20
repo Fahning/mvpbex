@@ -37,3 +37,9 @@ if (! function_exists('formatPeso')) {
         return number_format($value,1,",", '.').' Kg';
     }
 }
+
+if (! function_exists('formatM3')) {
+    function formatM3($value){
+        return number_format($value,1,",", '.').' m³';
+    }
+}

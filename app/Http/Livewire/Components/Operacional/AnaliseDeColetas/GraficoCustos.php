@@ -9,120 +9,94 @@ use Livewire\Component;
 class GraficoCustos extends Component
 {
     public $dataGraf;
-    public $filtros = [
-        'dataStart' => null,
-        'dataEnd' => null,
-        'ano' => null,
-        'mes' => null,
-        'trimestre' => null
-    ];
 
     protected $listeners = ['filtros' => 'filtrar'];
 
     public function montaChart()
     {
         $this->dispatchBrowserEvent(
-            'renderData',
+            'renderDataCustColeta',
             [
-                'newData' => $this->dataGraf
+                'newData' => $this->formatData($this->dataGraf)
             ]
         );
     }
+
+    public function mount()
+    {
+        $this->dataGraf = DB::table('bexsal_reports.report_076', 'cb')
+            ->select(
+                DB::raw('DATE_FORMAT(IF((con.data_emissao IS NOT NULL), con.data_emissao, cb.data_baixa), "%Y-%m") AS data_emis'),
+                DB::raw('SUM((cb.peso_calculo * (mv.valor_a_pagar / mv.peso_ctrcs_ctrb_coleta_entrega))) AS custo_peso'),
+                DB::raw('SUM((con.cubagem_m3 * (mv.valor_a_pagar / bexsal_reports.cub.cubagem_total)))AS custo_cubagem'),
+            )
+            ->join('bexsal_reports.report_073 as mv', DB::raw('CONCAT(cb.unidade, cb.ctrb_os)'), '=', 'mv.ctrb')
+            ->leftJoin('bexsal_reports.report_455 as con', DB::raw("REPLACE(cb.ctrc, '/', '')"), '=', 'con.numero_ctrc')
+            ->join('bexsal_reports.cubagem_total_ctrb as cub', 'mv.ctrb', '=', 'bexsal_reports.cub.ctrb')
+            ->where('cb.tipo_baixa', '=', 'C')
+            ->orderBy('data_emis', 'asc')
+            ->groupBy(DB::raw('IF((con.data_emissao IS NOT NULL), YEAR(con.data_emissao), YEAR(cb.data_baixa)), IF((con.data_emissao IS NOT NULL), MONTH(con.data_emissao), MONTH(cb.data_baixa))'))
+            ->get();
+
+    }
+
+    public function formatData($data)
+    {
+        $dataGraf = [
+            'data_emis' => [],
+            'custo_cubagem' => [],
+            'custo_peso' => []
+        ];
+        foreach ($data as $value){
+            $value = collect($value);
+            array_push($dataGraf['data_emis'], Carbon::create($value['data_emis'] )->format('F Y'));
+            array_push($dataGraf['custo_cubagem'], $value['custo_cubagem']);
+            array_push($dataGraf['custo_peso'], $value['custo_peso']);
+        }
+        return $dataGraf;
+    }
+
+
 
     public function filtrar($filtros)
     {
-        $this->filtros = $filtros;
-
-        $data = DB::table('conhecimento_baixa', 'cb')
-            ->leftJoin('movromaneio',function($join) {
-                $join->on(DB::raw("CONCAT(cb.unidade,cb.ctrb_os)"), 'movromaneio.ctrb');
+        $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
+        $this->dataGraf = DB::table('bexsal_reports.report_076', 'cb')
+            ->select(
+                DB::raw('DATE_FORMAT(IF((con.data_emissao IS NOT NULL), con.data_emissao, cb.data_baixa), "%Y-%m") AS data_emis'),
+                DB::raw('SUM((cb.peso_calculo * (mv.valor_a_pagar / mv.peso_ctrcs_ctrb_coleta_entrega))) AS custo_peso'),
+                DB::raw('SUM((con.cubagem_m3 * (mv.valor_a_pagar / bexsal_reports.cub.cubagem_total)))AS custo_cubagem'),
+            )
+            ->join('bexsal_reports.report_073 as mv', DB::raw('CONCAT(cb.unidade, cb.ctrb_os)'), '=', 'mv.ctrb')
+            ->leftJoin('bexsal_reports.report_455 as con', DB::raw("REPLACE(cb.ctrc, '/', '')"), '=', 'con.numero_ctrc')
+            ->join('bexsal_reports.cubagem_total_ctrb as cub', 'mv.ctrb', '=', 'bexsal_reports.cub.ctrb')
+            ->where('cb.tipo_baixa', '=', 'C')
+            ->when($filtros['ano'], function ($query) use($filtros){
+                $query->whereYear('con.data_emissao', $filtros['ano']);
             })
-            ->leftJoin(DB::raw("(SELECT cb.unidade, cb.ctrb_os, SUM(nf.cubagem) as cubagem_total FROM notas nf LEFT JOIN conhecimento_baixa cb ON nf.ctrc = cb.ctrc GROUP BY cb.unidade, cb.ctrb_os) as cub"), function($q) {
-                $q->on('cb.ctrb_os', '=', 'cub.ctrb_os');
-                $q->on('cb.unidade', '=', 'cub.unidade');
+            ->when($filtros['searchCliente'], function ($query) use($filtros){
+                $query->where('con.cliente_pagador', $filtros['searchCliente']);
             })
-            ->leftJoin('tabela_ctes as nf', 'cb.ctrc', '=', 'nf.ctrc')
-            ->selectRaw('month(nf.data_emissao) as mes, year(nf.data_emissao) as ano, SUM(cb.valfrete) as faturamento, SUM((movromaneio.valor_pagar/movromaneio.peso_ctrc)*(cb.pesocalc)) as custo_peso, SUM((movromaneio.valor_pagar/cub.cubagem_total)*(nf.cubagem)) as custo_cubagem')
-            ->where('cb.ctrb_os', '<>', '')->where('cb.tipobaixa', 'C')
-            ->when($this->filtros['dataStart'], function ($query) {
-                $query->where('nf.data_emissao', '>', $this->filtros['dataStart']);
+            ->when($filtros['searchBase'], function ($query) use($filtros){
+                $query->whereIn('cb.unidade', $filtros['searchBase']);
             })
-            ->when($this->filtros['dataEnd'], function ($query) {
-                $query->where('nf.data_emissao', '<', $this->filtros['dataEnd']);
+            ->when($filtros['searchSegmentos'], function ($query) use($filtros){
+                $query->whereIn(DB::raw("IF(con.segmento_pagador IS NOT NULL, con.segmento_pagador, 'OUTROS')"), $filtros['searchSegmentos']);
             })
-            ->when($this->filtros['ano'], function ($query) {
-                $query->where('nf.ano', '=', $this->filtros['ano']);
-            })
-            ->when($this->filtros['mes'], function ($query) {
-                $query->where('nf.mes', '=', $this->filtros['mes']);
-            })
-            ->when($this->filtros['trimestre'], function ($query) {
-                $query->where('nf.trimestre', '=', $this->filtros['trimestre']);
-            })
-            ->groupBy('mes', 'ano')
-            ->orderBy('nf.data_emissao', 'ASC')
+            ->orderBy('data_emis', 'asc')
+            ->groupBy(DB::raw('IF((con.data_emissao IS NOT NULL), YEAR(con.data_emissao), YEAR(cb.data_baixa)), IF((con.data_emissao IS NOT NULL), MONTH(con.data_emissao), MONTH(cb.data_baixa))'))
             ->get();
-
-        $this->dataGraf = $this->formatData($data);
         $this->dispatchBrowserEvent(
-            'renderData',
+            'renderDataCustColeta',
             [
-                'newData' => $this->dataGraf
+                'newData' => $this->formatData($this->dataGraf)
             ]
         );
     }
 
-    public function formatData($faturamento){
-        $data = [
-            'databaixa'       => [],
-            'faturamento'   => [],
-            'custo_peso'   => [],
-            'custo_cubagem'      => []
-        ];
-        foreach ($faturamento as $fat){
-            array_push($data['databaixa'], Carbon::create($fat->ano, $fat->mes)->format('m/Y'));
-            array_push($data['faturamento'], floatval($fat->faturamento));
-            array_push($data['custo_peso'], floatval($fat->custo_peso));
-            array_push($data['custo_cubagem'], floatval($fat->custo_cubagem));
-        }
-        $this->emit('populaGrafico');
-        return $data;
-    }
 
     public function render()
     {
-        $data = DB::table('conhecimento_baixa', 'cb')
-            ->leftJoin('movromaneio',function($join) {
-                $join->on(DB::raw("CONCAT(cb.unidade,cb.ctrb_os)"), 'movromaneio.ctrb');
-            })
-            ->leftJoin(DB::raw("(SELECT cb.unidade, cb.ctrb_os, SUM(nf.cubagem) as cubagem_total FROM notas nf LEFT JOIN conhecimento_baixa cb ON nf.ctrc = cb.ctrc GROUP BY cb.unidade, cb.ctrb_os) as cub"), function($q) {
-                $q->on('cb.ctrb_os', '=', 'cub.ctrb_os');
-                    $q->on('cb.unidade', '=', 'cub.unidade');
-            })
-            ->leftJoin('tabela_ctes as nf', 'cb.ctrc', '=', 'nf.ctrc')
-            ->selectRaw('month(nf.data_emissao) as mes, year(nf.data_emissao) as ano, SUM(cb.valfrete) as faturamento, SUM((movromaneio.valor_pagar/movromaneio.peso_ctrc)*(cb.pesocalc)) as custo_peso, SUM((movromaneio.valor_pagar/cub.cubagem_total)*(nf.cubagem)) as custo_cubagem')
-            ->where('cb.ctrb_os', '<>', '')->where('cb.tipobaixa', 'C')
-            ->when($this->filtros['dataStart'], function ($query) {
-                $query->where('nf.data_emissao', '>', $this->filtros['dataStart']);
-            })
-            ->when($this->filtros['dataEnd'], function ($query) {
-                $query->where('nf.data_emissao', '<', $this->filtros['dataEnd']);
-            })
-            ->when($this->filtros['ano'], function ($query) {
-                $query->where('nf.ano', '=', $this->filtros['ano']);
-            })
-            ->when($this->filtros['mes'], function ($query) {
-                $query->where('nf.mes', '=', $this->filtros['mes']);
-            })
-            ->when($this->filtros['trimestre'], function ($query) {
-                $query->where('nf.trimestre', '=', $this->filtros['trimestre']);
-            })
-            ->groupBy('mes', 'ano')
-            ->orderBy('nf.data_emissao', 'ASC')
-            ->get();
-
-        $this->dataGraf = $this->formatData($data);
-
         return view('livewire.components.operacional.analise-de-coletas.grafico-custos');
     }
 }

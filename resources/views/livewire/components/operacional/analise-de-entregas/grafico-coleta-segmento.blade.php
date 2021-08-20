@@ -9,21 +9,31 @@
         </div>
     </div>
     <div wire:loading.class="hidden" class="bg-white p-3 border shadow-md rounded-md">
-        <div id="chartFatCustE" style="height:280px;"></div>
+        <div id="chartEntregaSeg" style="height:280px;"></div>
     </div>
+
 </div>
 
 <script>
-        window.addEventListener('renderDataCustE', ({ detail }) => {
-            Highcharts.chart('chartFatCustE', {
+        window.addEventListener('renderDataEntregaSegmento', ({ detail }) => {
+            Highcharts.chart('chartEntregaSeg', {
+                chart: {
+                    type: 'bar'
+                },
                 title: {
-                    text: 'Evolução do Custo'
+                    text: 'Custo Coleta x Segmento'
                 },
                 xAxis: {
-                    categories: detail.newData.data_emis,
+                    categories: detail.newData.segmento,
                     title: {
                         text: null
-                    }
+                    },
+                    min: 0,
+                    max: 5,
+                    scrollbar: {
+                        enabled: true
+                    },
+                    tickLength: 0,
                 },
                 yAxis: {
                     min: 0,
@@ -37,7 +47,10 @@
                 plotOptions: {
                     bar: {
                         dataLabels: {
-                            enabled: true
+                            enabled: true,
+                            formatter: function() {
+                                return Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(this.y);
+                            }
                         },
                     }
                 },
@@ -67,3 +80,4 @@
             })
         })
     </script>
+

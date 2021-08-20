@@ -9,15 +9,16 @@
         </div>
     </div>
     <div wire:loading.class="hidden" class="bg-white p-3 border shadow-md rounded-md">
-        <div id="chartFatCustColeta" style="height:280px;"></div>
+        <div id="chartcustMeta" style="height:280px;"></div>
     </div>
+
 </div>
 
 <script>
-    window.addEventListener('renderDataCustColeta', ({ detail }) => {
-        Highcharts.chart('chartFatCustColeta', {
+    window.addEventListener('renderDataCustMeta', ({ detail }) => {
+        Highcharts.chart('chartcustMeta', {
             title: {
-                text: 'Evolução do Custo'
+                text: 'Custo x Meta'
             },
             xAxis: {
                 categories: detail.newData.data_emis,
@@ -53,18 +54,17 @@
             }, {
                 name: 'Custo Cubagem',
                 data: detail.newData.custo_cubagem
+            }, {
+                name: 'Meta',
+                data: detail.newData.meta
             }],
             tooltip: {
                 pointFormatter: function () {
                     var s = '<b>' + this.series.name + '</b>';
-                    s += '<br/> ' + Intl.NumberFormat('pt-br', {
-                        style: 'currency',
-                        currency: 'BRL'
-                    }).format(this.y);
+                    s += '<br/> ' + this.y.toFixed(2) + ' %';
                     return s;
                 }
             },
         })
     })
 </script>
-

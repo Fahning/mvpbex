@@ -26,10 +26,6 @@
                     <!--filtros-->
                     <div class="flex flex-col" style="height: 76vh">
                         <div  class="flex-1 overflow-y-auto px-1" >
-                            <div>
-                                <div class="text-sm text-gray-500">Filtros Globais</div>
-                                <hr>
-                            </div>
                             <!-- Periodos -->
                             <div class="relative h-10 my-5 input-component ">
                                 <select x-model="selectPeriodo" class="font-bold h-full w-full border-gray-300 px-2 empty transition-all border-blue rounded-lg"  >
@@ -80,12 +76,10 @@
                                 <div class="flex items-center w-full" x-show="selectPeriodo === '1' || selectPeriodo === '2' ||selectPeriodo === '3' ">
                                     <div class="relative h-10 input-component w-full">
                                         <select class="font-bold h-full w-full border-gray-300 px-2 transition-all border-blue rounded-md"  name="ano" id="ano" wire:model.defer="filtros.ano">
-                                            <option value="">Todos</option>
-                                            <option value="2021">2021</option>
-                                            <option value="2020">2020</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2018">2018</option>
-                                            <option value="2017">2017</option>
+                                            <option value="">Atual</option>
+                                            @foreach ($period['year'] as $year)
+                                            <option value="{{$year}}">{{$year}}</option>
+                                            @endforeach
                                         </select>
                                         <label for="address" class="absolute left-4 transition-all bg-white rounded-t-md px-1">
                                             Ano
@@ -96,19 +90,10 @@
                                 <div class="flex items-center w-full mt-4" x-show="selectPeriodo === '1'">
                                     <div class="relative h-10 input-component w-full">
                                         <select class="font-bold h-full w-full border-gray-300 px-2 transition-all border-blue rounded-lg" wire:model.defer="filtros.mes"  >
-                                            <option value="">Todos</option>
-                                            <option value="1">Janeiro</option>
-                                            <option value="2">Fevereiro</option>
-                                            <option value="3">Março</option>
-                                            <option value="4">Abril</option>
-                                            <option value="5">Maio</option>
-                                            <option value="6">Junho</option>
-                                            <option value="7">Julho</option>
-                                            <option value="8">Agosto</option>
-                                            <option value="9">Setembro</option>
-                                            <option value="10">Outubro</option>
-                                            <option value="11">Novembro</option>
-                                            <option value="12">Dezembro</option>
+                                            <option value="">Atual</option>
+                                            @foreach($period['month'] as $key => $month)
+                                                <option value="{{$key}}">{{$month}}</option>
+                                            @endforeach
                                         </select>
                                         <label class="absolute left-4 transition-all bg-white rounded-t-md px-1">
                                             Mês
@@ -132,7 +117,7 @@
                                 </div>
                             </div>
 
-                            <div class="my-5">
+                            <div class="mb-5">
                                 <x-select
                                     placeholder="Ordenar Desvios"
                                     :options="[
@@ -146,11 +131,7 @@
                             </div>
                             <!-- /Periodos -->
                             <!-- ANALISE DE CLIENTES -->
-                            <div class="m-1">
-                                <div class="text-sm text-gray-500">Filtros Analise de Clientes</div>
-                                <hr>
-                            </div>
-                            <div x-data="{isTyped: false}">
+                            <div x-data="{isTyped: false}" class="mb-5">
                                 <div>
                                     <div class="relative">
                                         <x-input type="text"
@@ -187,11 +168,7 @@
                             </div>
 
                             <!-- ANALISE DE BASES -->
-                            <div class="m-1">
-                                <div class="text-sm text-gray-500 text-upper">Filtros Analise de Bases</div>
-                                <hr>
-                            </div>
-                            <div class="mb-7">
+                            <div class="mb-5">
                                 <x-select
                                     placeholder="Selecionar Bases"
                                     multiselect
@@ -200,11 +177,7 @@
                                 />
                             </div>
                             <!-- ANALISE DE SEGMENTOS -->
-                            <div class="m-1">
-                                <div class="text-sm text-gray-500 text-uppercase">Filtros Analise de Segmentos</div>
-                                <hr>
-                            </div>
-                            <div class="mb-7">
+                            <div class="mb-5">
                                 <x-select
                                     placeholder="Selecionar Segmentos"
                                     multiselect

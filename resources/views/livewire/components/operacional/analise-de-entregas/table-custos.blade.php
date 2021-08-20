@@ -1,4 +1,6 @@
 <div>
+
+
     <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
         <div class="text-center font-bold mt-4">Analise de desvios no faturamento por segmento </div>
         <div class="overflow-auto max-h-80">
