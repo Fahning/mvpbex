@@ -11,11 +11,11 @@ class Sidebar extends Component
 
     public $slot;
     public $insights = 0;
+    public $tipoCusto;
 
 
     public function mount()
     {
-//        dd(Insights::where('status', 0)->get());
         $this->insights = Insights::where('status', 0)->get();
     }
 
