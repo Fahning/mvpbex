@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class TabsAnalise extends Component
 {
-    public $tab = 1;
+    public $tab = 2;
 
     public function tab($tab)
     {

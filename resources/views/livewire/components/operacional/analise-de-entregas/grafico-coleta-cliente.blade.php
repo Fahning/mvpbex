@@ -21,7 +21,7 @@
                     type: 'bar'
                 },
                 title: {
-                    text: 'Custo Coleta x Cliente'
+                    text: 'Custo Entrega x Cliente'
                 },
                 xAxis: {
                     categories: detail.newData.pagador,

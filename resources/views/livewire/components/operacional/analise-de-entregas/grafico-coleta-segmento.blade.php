@@ -21,7 +21,7 @@
                     type: 'bar'
                 },
                 title: {
-                    text: 'Custo Coleta x Segmento'
+                    text: 'Custo Entrega x Segmento'
                 },
                 xAxis: {
                     categories: detail.newData.segmento,

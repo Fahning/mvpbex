@@ -3,9 +3,9 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\{
-    Companies,
+use App\Http\Livewire\{Companies,
     Components\Operacional\AnaliseDeCustos,
+    Components\Operacional\DefineMetaCustos,
     DefinirMeta,
     FarolFaturamento,
     Financeiro,
@@ -23,10 +23,6 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::view('/404-tenant','errors.404-tenant')->name('404.tenant');
 
-//Route::middleware(['auth'])->get('/', function () {
-//    return view('livewire.farol-faturamento');
-//})->name('dashboard');
-
 Route::middleware(['auth'])
     ->get('/', FarolFaturamento::class)
     ->name('dashboard');
@@ -39,6 +35,9 @@ Route::middleware(['auth'])
 Route::middleware(['auth'])
     ->get('/analise-custos', AnaliseDeCustos::class)
     ->name('analise-custos');
+Route::middleware(['auth'])
+    ->get('/definir-meta-custos', DefineMetaCustos::class)
+    ->name('meta-custos');
 
 Route::middleware(['auth'])
     ->get('/definir-meta', DefinirMeta::class)

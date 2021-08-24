@@ -94,7 +94,6 @@ class GraficoCustos extends Component
         );
     }
 
-
     public function render()
     {
         return view('livewire.components.operacional.analise-de-coletas.grafico-custos');

@@ -79,6 +79,9 @@ class GraficoRealizadoMeta extends Component
 
     public function filtrar($filtros)
     {
+        $filtros['ano'] = $filtros['ano'] ?? Carbon::today()->year;
+        $filtros['mes'] = $filtros['mes'] ?? Carbon::today()->month;
+
         $this->dataGraf = DB::table('bexsal_reports.report_076', 'cb')
             ->select(
                 DB::raw('DATE_FORMAT(IF((con.data_emissao IS NOT NULL), con.data_emissao, cb.data_baixa), "%Y-%m") AS data_emis'),

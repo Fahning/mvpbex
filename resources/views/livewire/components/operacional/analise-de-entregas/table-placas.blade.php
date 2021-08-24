@@ -1,5 +1,15 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
-    <div class="text-center font-bold pt-3">Custos por Veículo</div>
+    @if($tipoTable == 'cb.placa')
+        <div class="text-center font-bold pt-3">Custos por Veículo</div>
+    @elseif($tipoTable == 'cb.unidade')
+        <div class="text-center font-bold pt-3">Custos por Unidade</div>
+    @elseif($tipoTable == 'cb.set_')
+        <div class="text-center font-bold pt-3">Custos por Rota</div>
+    @elseif($tipoTable == 'veic.RELACIONAMENTO')
+        <div class="text-center font-bold pt-3">Custos por Relacionamento</div>
+    @elseif($tipoTable == 'veic.TIPO')
+        <div class="text-center font-bold pt-3">Custos por Modelo</div>
+    @endif
     <div  class="flex mb-2">
         <div class="relative h-10 input-component">
             <x-select

@@ -17,8 +17,7 @@
             @if($tab == 1)
                 @livewire('components.operacional.analise-de-coleta')
             @elseif($tab == 2)
-                Aqui vai Analise De Transferencia
-{{--                @livewire('components.operacional.analise-de-coletas.table-custo-mes')--}}
+                @livewire('components.operacional.analise-de-transferencia')
             @elseif($tab == 3)
                 @livewire('components.operacional.analise-de-entrega')
             @endif

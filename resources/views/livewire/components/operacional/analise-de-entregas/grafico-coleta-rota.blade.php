@@ -21,7 +21,7 @@
                     type: 'bar'
                 },
                 title: {
-                    text: 'Custo Coleta x Rota'
+                    text: 'Custo Entrega x Rota'
                 },
                 xAxis: {
                     categories: detail.newData.rota,

@@ -141,6 +141,8 @@ class Cards extends Component
                 '% Custo/Fat. (Peso)' => 0,
                 '% Custo/Fat. (Cubagem)' => 0,
                 'Meta de Custo' => 0,
+                'Margem Op./Kg' => 0,
+                'Margem Op./m³' => 0
             ];
         }else {
             $data = DB::table('bexsal_reports.report_076', 'cb')
@@ -156,13 +158,19 @@ class Cards extends Component
                 ->join('bexsal_reports.cubagem_total_ctrb as cub', 'mv.ctrb', '=', 'cub.ctrb')
                 ->leftJoin('bexsal_reports.report_455 as con', DB::raw("REPLACE(cb.ctrc, '/', '')"), '=', 'con.numero_ctrc')
                 ->where('cb.tipo_baixa', '=', 'C')
+                ->where(function($query) use($filtros){
+                    $query->where(DB::raw('IF(con.data_emissao IS NOT NULL, year(con.data_emissao), year(cb.data_baixa))'), $filtros['ano'])
+                        ->where(DB::raw('IF(con.data_emissao IS NOT NULL, month(con.data_emissao), month(cb.data_baixa))'), $filtros['mes']);
+                })
                 ->when($filtros['searchCliente'], function ($query) use($filtros){
                     $query->where('con.cliente_pagador', $filtros['searchCliente']);
                 })
-            ->where(function($query){
-                $query->where(DB::raw('IF(con.data_emissao IS NOT NULL, year(con.data_emissao), year(cb.data_baixa))'), $filtros['ano'])
-                    ->where(DB::raw('IF(con.data_emissao IS NOT NULL, month(con.data_emissao), month(cb.data_baixa))'), $filtros['mes']);
-            })
+                ->when($filtros['searchSegmentos'], function($query) use($filtros) {
+                    $query->whereIn(DB::raw('IF(con.segmento_pagador IS NOT NULL, con.segmento_pagador, "OUTROS")'), $filtros['searchSegmentos']);
+                })
+                ->when($filtros['searchBase'], function($query) use($filtros) {
+                    $query->whereIn('cb.unidade', $filtros['searchBase']);
+                })
                 ->get();
             $this->cards['Custo Peso'] = 0;
             $this->cards['Custo Cubagem'] = 0;
@@ -208,14 +216,20 @@ class Cards extends Component
                 COUNT(cb.ctrb_os) as Validos'
                 ))
                 ->leftJoin('bexsal_reports.report_455 as con', DB::raw("REPLACE(cb.ctrc, '/', '')"), '=', 'con.numero_ctrc')
+                ->where('cb.tipo_baixa', 'C')
+                ->where(function($query) use($filtros){
+                    $query->where(DB::raw('IF(con.data_emissao IS NOT NULL, year(con.data_emissao), year(cb.data_baixa))'), $filtros['ano'])
+                        ->where(DB::raw('IF(con.data_emissao IS NOT NULL, month(con.data_emissao), month(cb.data_baixa))'), $filtros['mes']);
+                })
                 ->when($filtros['searchCliente'], function ($query) use($filtros){
                     $query->where('con.cliente_pagador', $filtros['searchCliente']);
                 })
-            ->where(function($query){
-                $query->where(DB::raw('IF(con.data_emissao IS NOT NULL, year(con.data_emissao), year(cb.data_baixa))'), $filtros['ano'])
-                    ->where(DB::raw('IF(con.data_emissao IS NOT NULL, month(con.data_emissao), month(cb.data_baixa))'), $filtros['mes']);
-            })
-                ->where('cb.tipo_baixa', 'C')
+                ->when($filtros['searchSegmentos'], function($query) use($filtros) {
+                    $query->whereIn(DB::raw('IF(con.segmento_pagador IS NOT NULL, con.segmento_pagador, "OUTROS")'), $filtros['searchSegmentos']);
+                })
+                ->when($filtros['searchBase'], function($query) use($filtros) {
+                    $query->whereIn('cb.unidade', $filtros['searchBase']);
+                })
                 ->first();
 
 
