@@ -73,7 +73,7 @@ class Cards extends Component
                 $query->where('cc.nome_pagador', $filtros['searchCliente']);
             })
             ->when($filtros['searchBase'], function ($query) use($filtros){
-                $query->where('cc.und_origem', $filtros['searchBasex']);
+                $query->where('cc.und_origem', $filtros['searchBase']);
             })
             ->when($filtros['searchSegmentos'], function ($query) use($filtros){
                 $query->where('cc.segmento', $filtros['searchSegmentos']);
