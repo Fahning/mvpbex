@@ -106,9 +106,7 @@
 
 
 <script>
-
     window.addEventListener('renderDataInsight', ({ detail }) => {
-        console.log(detail.faturamento.sk_data)
         Highcharts.chart('charModal', {
             chart: {
                 type: 'area'
