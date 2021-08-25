@@ -3,13 +3,16 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\{Companies,
+use App\Http\Livewire\{
+    Companies,
     Components\Operacional\AnaliseDeCustos,
     Components\Operacional\DefineMetaCustos,
     DefinirMeta,
     FarolFaturamento,
     Financeiro,
-    Operacional};
+    Movimentacoes,
+    Operacional
+};
 
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -26,6 +29,10 @@ Route::view('/404-tenant','errors.404-tenant')->name('404.tenant');
 Route::middleware(['auth'])
     ->get('/', FarolFaturamento::class)
     ->name('dashboard');
+
+Route::middleware(['auth'])
+    ->get('/movimentacoes', Movimentacoes::class)
+    ->name('movimentacoes');
 
 
 Route::middleware(['auth'])

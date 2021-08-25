@@ -51,12 +51,12 @@
         @stop
 
     </div>
-    <!-- Filters Panel -->
-    <div
-        x-show="isSettingsPanelOpen"
-    >
-        @livewire('components.menus.filtros')
-    </div>
+{{--    <!-- Filters Panel -->--}}
+{{--    <div--}}
+{{--        x-show="isSettingsPanelOpen"--}}
+{{--    >--}}
+{{--        @livewire('components.menus.filtros')--}}
+{{--    </div>--}}
 
     <!-- MODAL INSIGHTS -->
 
