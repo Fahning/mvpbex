@@ -63,7 +63,11 @@ class TableMetaBases extends Component
             $this->tableMetaBases = $this->queryMetaBases($this->month, $this->year, $base);
 
             foreach ($this->tableMetaBases as $t) {
-                $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+                if($filtro['mes'] == Carbon::today()->month &&  $filtro['ano'] == Carbon::today()->year){
+                    $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+                }else{
+                    $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia));
+                }
                 $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta Sugerida'});
                 unset($t->{'Fator Peso'});
                 unset($t->dias_uteis_hoje);

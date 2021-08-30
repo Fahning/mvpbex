@@ -10,8 +10,9 @@
     function formatDate(date){
         return date.replace(/(\d*)-(\d*)-(\d*).*/, '$3-$2-$1');
     }
-    function formatDateDay(date){
-        return date.replace(/(\d*)-(\d*)-(\d*).*/, '$3');
+    function formatDateDayFat(date){
+        date =  date.split('-')
+        return date[2].split(' ')[0]
     }
     window.addEventListener('renderChartFaturamento', ({ detail }) => {
         Highcharts.chart('ChartFaturamentoMes', {
@@ -25,7 +26,7 @@
                 categories: detail.categories,
                 labels: {
                     formatter: function() {
-                        return formatDateDay(this.value);
+                        return formatDateDayFat(this.value);
                     }
                 },
 

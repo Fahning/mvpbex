@@ -12,12 +12,12 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "joshhanley/livewire-autocomplete": "^0.1.4",
         "laravel/framework": "^8.40",
         "laravel/jetstream": "^2.3",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.0",
+        "mediconesystems/livewire-datatables": "^0.6.3",
         "ph7jack/wireui": "^0.11.0"
     },
     "require-dev": {

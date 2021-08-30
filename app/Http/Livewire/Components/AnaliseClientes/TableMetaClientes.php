@@ -52,7 +52,11 @@ class TableMetaClientes extends Component
         $this->table = $this->queryMetaClientes($this->month, $this->year);
 
         foreach ($this->table as $t){
-            $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            if($filtro['mes'] == Carbon::today()->month &&  $filtro['ano'] == Carbon::today()->year){
+                $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+            }else{
+                $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia));
+            }
             $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta Sugerida'});
             unset($t->{'Fator Peso'});
             unset($t->dias_uteis_hoje);
@@ -80,9 +84,13 @@ class TableMetaClientes extends Component
             $filtro['mes'] = $filtro['mes'] ?? Carbon::today()->month;
             $media = DB::select("call calcula_media3(" . $filtro['ano'] . ", " . $filtro['mes'] . ")");
 
-            $this->table = $this->queryMetaClientes($this->month, $this->year, $cliente);
+            $this->table = $this->queryMetaClientes($filtro['mes'], $filtro['ano'], $cliente);
             foreach ($this->table as $t) {
-                $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+                if($filtro['mes'] == Carbon::today()->month &&  $filtro['ano'] == Carbon::today()->year){
+                    $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia)) * $t->dias_uteis_hoje / $t->dias_uteis;
+                }else{
+                    $t->{'Meta Sugerida'} = (floatval($t->{'Fator Peso'}) * floatval($media[0]->vMedia));
+                }
                 $t->{'Desvio (R$)'} = floatval($t->{'Realizado'}) - floatval($t->{'Meta Sugerida'});
                 unset($t->{'Fator Peso'});
                 unset($t->dias_uteis_hoje);

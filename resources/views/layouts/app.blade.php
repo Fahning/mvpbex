@@ -16,7 +16,7 @@
     <!-- Styles -->
     <wireui:styles />
     <link rel="stylesheet" href="{{ URL::asset('css/floatInput.css') }}">
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">r
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 @livewireStyles
 
 
@@ -51,12 +51,15 @@
         @stop
 
     </div>
-{{--    <!-- Filters Panel -->--}}
-{{--    <div--}}
-{{--        x-show="isSettingsPanelOpen"--}}
-{{--    >--}}
-{{--        @livewire('components.menus.filtros')--}}
-{{--    </div>--}}
+
+    <!-- Filters Panel -->
+    @if(\Illuminate\Support\Facades\Route::current()->getName() != 'movimentacoes')
+        <div
+            x-show="isSettingsPanelOpen"
+        >
+            @livewire('components.menus.filtros')
+        </div>
+    @endif
 
     <!-- MODAL INSIGHTS -->
 
@@ -98,6 +101,10 @@
     * {
         scrollbar-width: thin;
         scrollbar-color: #6d6df3;
+    }
+
+    [x-cloak] {
+        display: none;
     }
 
     /* Works on Chrome, Edge, and Safari */

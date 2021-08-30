@@ -1,5 +1,5 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
-    <div class="text-center font-bold mt-4">Analise de Rota de Entrega por Bases ({{monthToString($month)}} de {{$year}})</div>
+    <div class="text-center font-bold mt-4">Analise de Rota de Entrega por Bases</div>
     <div class="flex items-end">
         <x-input wire:model.defer="rotaEntrega" name="rota" id="rota" label="Buscar Rota" placeholder="Buscar Rota"></x-input>
         <div wire:click="filtroRota" class="bg-green-400 rounded-lg h-9 w-9 ml-2 flex justify-center items-center cursor-pointer hover:bg-green-500">

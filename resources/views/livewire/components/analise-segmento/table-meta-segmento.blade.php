@@ -1,5 +1,5 @@
 <div class="bg-white shadow-md pb-4 px-4 rounded-md w-full">
-    <div class="text-center font-bold mt-4">Analise de desvios no faturamento por segmento ({{monthToString($month)}} de {{$year}})</div>
+    <div class="text-center font-bold mt-4">Analise de desvios no faturamento por segmento</div>
     <div class="overflow-auto max-h-80">
         <x-loading-table />
         <table wire:loading.class="hidden" class="table-auto border-collapse w-full mt-4">
