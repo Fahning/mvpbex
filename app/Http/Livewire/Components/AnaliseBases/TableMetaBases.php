@@ -60,7 +60,7 @@ class TableMetaBases extends Component
                 $base = '';
             }
 
-            $this->tableMetaBases = $this->queryMetaBases($this->month, $this->year, $base);
+            $this->tableMetaBases = $this->queryMetaBases($filtro['mes'], $filtro['ano'], $base);
 
             foreach ($this->tableMetaBases as $t) {
                 if($filtro['mes'] == Carbon::today()->month &&  $filtro['ano'] == Carbon::today()->year){
