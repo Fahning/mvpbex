@@ -168,7 +168,7 @@
                         </div>
 
                         <div class="flex justify-end text-gray-600">
-                            {{__('Results')}} {{ $this->results->firstItem() }} - {{ $this->results->lastItem() }} {{__('of')}}
+                            {{__('Resultados')}} {{ $this->results->firstItem() }} - {{ $this->results->lastItem() }} {{__('de')}}
                             {{ $this->results->total() }}
                         </div>
                     @endif
